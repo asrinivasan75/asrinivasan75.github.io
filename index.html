@@ -2,131 +2,291 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/uikit.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/uikit.js"></script>
     <script src="js/uikit-icons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script> <!-- Typed.js CDN -->
 
     <title>Portfolio</title>
 </head>
 <body>
+
+<!-- Scroll Progress Bar -->
+<div id="progress-bar"></div>
+
 <!-- Navigation Bar -->
-    <nav class="uk-navbar-container uk-margin-small-left uk-margin-small-right uk-visible@m uk-margin-xlarge-left uk-margin-xlarge-right" uk-navbar uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
-    
+<nav class="uk-navbar-container uk-margin-small-left uk-margin-small-right uk-visible@m uk-margin-xlarge-left uk-margin-xlarge-right" uk-navbar uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
     <div class="uk-navbar-left">
         <a href="" class="uk-navbar-item uk-logo uk-light">asrinivasan75</a>
     </div>
     <div class="uk-navbar-right">
-
         <ul class="uk-navbar-nav uk-light">
             <li><a class="uk-button-text uk-text-capitalize" href="#about" uk-scroll>About</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#projects" uk-scroll>Projects</a></li>
-            <li><a class="uk-button-text uk-text-capitalize" href="mailto:aadithya.srinivasan@gmail.com">Contact</a></li>
-
+            <li><a class="uk-button-text uk-text-capitalize" href="#resume" uk-scroll>Resume</a></li>
+            <li><a class="uk-button-text uk-text-capitalize" href="#github-activity" uk-scroll>GitHub Activity</a></li> <!-- Added GitHub Activity link -->
+            <li><a class="uk-button-text uk-text-capitalize" href="#contact" uk-scroll>Contact</a></li>
         </ul>
-
     </div>
 </nav>
-<!-- Navigation Bar Ends  -->
 
-<!-- Navigation Bar Mobile -->
-<nav class="uk-navbar-container uk-margin-small-left uk-margin-small-right uk-hidden@m uk-margin-xlarge-left uk-margin-xlarge-right" uk-navbar uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
-    
-    <div class="uk-navbar-left">
-        <a href="" class="uk-navbar-item uk-logo uk-light">asrinivasan75</a>
-    </div>
-    <div class="uk-navbar-right">
-
-        <ul class="uk-navbar-nav uk-light">
-            <li><button uk-toggle="target: #offcanvas-nav" type="button" uk-navbar-toggle-icon></button></li>
-
-        </ul>
-
-    </div>
-</nav>
-<!-- Change This -->
-<div id="offcanvas-nav" uk-offcanvas="overlay: true">
-    <div class="uk-offcanvas-bar uk-flex uk-flex-column">
-
-        <ul class="uk-nav uk-nav-primary uk-nav-center uk-margin-auto-vertical">
-            <li class="uk-active"><a href="#" uk-scroll>Home</a></li>
-            <li class="uk-active"><a href="#about" uk-scroll>About</a></li>
-            <li class="uk-active"><a href="#projects" uk-scroll>Projects</a></li>
-            <li class="uk-active"><a href="mailto:">Contact</a></li> <!--- change to ur email-->
-
-        </ul>
-
-
-
-
-    </div>
-</div>
-
-<!-- Navigation Bar Mobile Ends -->
-<!-- Home -->
-<section class="uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
-    <h1 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right">Aadithya Srinivasan</h1>
-    <h3 class = "uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right"> Programmer, CTF Fanatic, AI/ML Enthusiast</h3>
+<!-- Home Section with Animated Name and Typed.js -->
+<section class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
+    <h1 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right animate-name">Aadithya Srinivasan</h1> <!-- Animated Name -->
+    <h3 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right">
+        <span id="typed"></span> <!-- Typed.js text will appear here -->
+    </h3>
     <a href="#about" class="uk-margin-xlarge-left uk-text-capitalize uk-button uk-button-secondary" uk-scroll>About Me</a>
-
-
 </section>
-
-<!-- Home Ends -->
-
-
 
 <hr class="uk-margin-xlarge-top uk-margin-xlarge-left uk-margin-xlarge-right">
 
-<!-- About Me -->
-<section id="about" class="uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
-<h3 class="uk-margin-xlarge-left uk-light">About Me</h3>
-<!-- Change here to ur paragraph -->
-
-<p class="uk-margin-xlarge-left uk-margin-xlarge-right">My name is Aadithya Srinivasan and I am currently a senior at the Wardlaw+Hartridge high school. Apart from schoolwork, I spend my free time working on programming projects, participating in ethical hacking competitions (CTFs), reading books, and playing tennis.</p>
-<a href="" class="uk-margin-xlarge-left uk-light uk-button-text" uk-icon="instagram"></a> &nbsp;<a href="" class="uk-light uk-button-text" uk-icon="dribbble"></a> &nbsp;<a href="https://github.com/asrinivasan75" class="uk-button-text uk-light" uk-icon="github"></a> &nbsp;<a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" class=" uk-light uk-button-text" uk-icon="linkedin"></a>
-
-<!-- About Me Ends -->
-
-
-
-
+<!-- About Me Section -->
+<section id="about" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
+    <h3 class="uk-margin-xlarge-left uk-light">About Me</h3>
+    <p class="uk-margin-xlarge-left uk-margin-xlarge-right">I'm Aadithya Srinivasan, a freshman at the University of Pennsylvania studying Computer Science, with a passion for using technology to drive social impact. I founded EcoHarmony, a global platform promoting recycling awareness, and co-founded IvyRise, a college consulting company helping students navigate the admissions process. My technical experience includes web development, AI/ML, and cybersecurity, with projects ranging from client persona generation to neural networks for skin cancer classification. I’ve also led educational initiatives for middle schoolers and underserved communities, teaching math and computer science. I’m committed to creating sustainable tech-driven solutions that address societal challenges, blending innovation with a desire to help others.</p>
 </section>
+
+<!-- Skills Section -->
+<section id="skills" class="fade-in uk-margin-large-top uk-margin-large-bottom">
+    <h3 class="uk-margin-xlarge-left uk-light">Skills</h3>
+    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+        <div class="skill">
+            <h4>Python</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="90"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>AI/ML</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="85"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>Web Development</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="80"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>Cybersecurity</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="75"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
 
 <!-- Projects Section -->
-<hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
-<section id="projects" class="uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
-<h3 class="uk-margin-xlarge-left uk-light">Projects</h3>
-<p class="uk-margin-xlarge-left">Projects that i've been working on include:</p>
-
-<div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-    <!-- Change all of this to ur projects -->
-    <div class="uk-margin uk-card uk-card-secondary uk-card-body ">
-        <h4><b>Speed Typing Game</b></h4>
-        <p>This is a typing game/website I created using Javascript, HTML, and CSS. The game autogenerates quotes for the user to type out in order to measure their wpm speed, and creates a leaderboard using local cookies.</p>
-        <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io/speedtyping/">
-            <span uk-icon="icon: link">
-            </span> https://asrinivasan75.github.io/speedtyping/ </a>
+<section id="projects" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
+    <h3 class="uk-margin-xlarge-left uk-light">Projects</h3>
+    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+        
+        <!-- Project 1 -->
+        <div class="uk-margin uk-card uk-card-secondary uk-card-body">
+            <h4><b>Speed Typing Game</b></h4>
+            <p>This is a typing game/website I created using Javascript, HTML, and CSS. The game autogenerates quotes for the user to type out in order to measure their WPM speed, and creates a leaderboard using local cookies.</p>
+            <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io/speedtyping/">
+                <span uk-icon="icon: link"></span> https://asrinivasan75.github.io/speedtyping/
+            </a>
         </div>
-        <div class="uk-margin uk-card uk-card-secondary uk-card-body ">
-            <h4><b>Project Name</b></h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            <a class="uk-button-text uk-text-decoration-none" href="">
-                <span uk-icon="icon: link">
-                </span> Website Link </a>
-            </div></div>
+        
+        <!-- Project 2: EcoHarmony -->
+        <div class="uk-margin uk-card uk-card-secondary uk-card-body">
+            <h4><b>EcoHarmony</b></h4>
+            <p>EcoHarmony is a global web platform I founded for recycling awareness. It has over 150 members and has tracked more than 18,500 pounds recycled, fostering environmental responsibility worldwide.</p>
+            <a class="uk-button-text uk-text-decoration-none" href="https://ecoharmony.us">
+                <span uk-icon="icon: link"></span> https://ecoharmony.us
+            </a>
+        </div>
 
+        <!-- Project 3: Client Persona Generator -->
+        <div class="uk-margin uk-card uk-card-secondary uk-card-body">
+            <h4><b>Client Persona Generator</b></h4>
+            <p>A machine learning project where I built a client persona generator using GANs. This model was designed during my internship at Aristotle to generate realistic client personas for marketing and research purposes.</p>
+        </div>
 
+        <!-- Project 4: Skin Cancer Classification -->
+        <div class="uk-margin uk-card uk-card-secondary uk-card-body">
+            <h4><b>Skin Cancer Classification Using CNNs</b></h4>
+            <p>A deep learning model designed to classify skin cancer types using convolutional neural networks (CNNs). This project was part of my exploration into AI/ML in healthcare.</p>
+            <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/Skin-Cancer-Recognition-CNN">
+                <span uk-icon="icon: link"></span> https://github.com/asrinivasan75/Skin-Cancer-Recognition-CNN
+            </a>
+        </div>
 
-    <br>
-
-
+    </div>
 </section>
-<hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
-</div>
-<!-- Projects Section Ends -->
-    
+
+<!-- Resume Download Section with Animation -->
+<section id="resume" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
+    <h3 class="uk-margin-xlarge-left uk-light">Download My Resume</h3>
+    <div class="uk-margin-xlarge-left">
+        <a href="resume.pdf" download class="resume-button-animated">
+            <span uk-icon="file-pdf"></span> Download Resume
+        </a>
+    </div>
+</section>
+
+<!-- GitHub Activity Section -->
+<section id="github-activity" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
+    <h3 class="uk-margin-xlarge-left uk-light">GitHub Activity</h3>
+    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+        <iframe src="https://ghbtns.com/github-btn.html?user=asrinivasan75&type=follow&count=true" frameborder="0" scrolling="0" width="200" height="30" title="GitHub Follow"></iframe>
+
+        <!-- GitHub Recent Commits Widget -->
+        <iframe src="https://github.com/users/asrinivasan75/contributions" frameborder="0" width="100%" height="300px"></iframe>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section id="contact" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
+    <h3 class="uk-margin-xlarge-left uk-light">Contact Me</h3>
+    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+        <form action="mailto:aadithya.srinivasan@gmail.com" method="post" enctype="text/plain">
+            <div class="uk-margin">
+                <input class="uk-input" type="text" placeholder="Your Name" required>
+            </div>
+            <div class="uk-margin">
+                <input class="uk-input" type="email" placeholder="Your Email" required>
+            </div>
+            <div class="uk-margin">
+                <textarea class="uk-textarea" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+            <div class="uk-margin">
+                <button class="uk-button uk-button-primary" type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Particles.js Background -->
+<div id="particles-js"></div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#ffffff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false
+      },
+      "size": {
+        "value": 5,
+        "random": true
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 6,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false
+      }
+    },
+    "interactivity": {
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        }
+      }
+    },
+    "retina_detect": true
+  });
+
+  // Typed.js initialization
+  new Typed('#typed', {
+    strings: ['Programmer', 'CTF Fanatic', 'AI/ML Enthusiast'],
+    typeSpeed: 60,
+    backSpeed: 40,
+    loop: true,
+    backDelay: 1500,
+    startDelay: 500,
+    showCursor: true,
+    cursorChar: '|',
+  });
+
+  // Scroll Progress Indicator
+  window.addEventListener('scroll', function () {
+    let scroll = document.documentElement.scrollTop || document.body.scrollTop;
+    let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let progress = (scroll / scrollHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+  });
+
+  // Skill bar animation on scroll
+  document.addEventListener("DOMContentLoaded", function() {
+    const skillLevels = document.querySelectorAll('.skill-level');
+    window.addEventListener('scroll', () => {
+        skillLevels.forEach(skill => {
+            const skillValue = skill.getAttribute('data-skill');
+            const skillPosition = skill.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight;
+            if (skillPosition < screenPosition) {
+                skill.style.width = skillValue + '%';
+            }
+        });
+    });
+  });
+
+  // Scroll Animation
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -100px 0px"
+  };
+
+  const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        return;
+      } else {
+        entry.target.classList.add('appear');
+        appearOnScroll.unobserve(entry.target);
+      }
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+</script>
+
+<!-- Back-to-Top Button -->
+<a href="#" id="back-to-top" title="Back to Top">&uarr;</a>
+
+<script src="js/scripts.js"></script>
+
 </body>
 </html>

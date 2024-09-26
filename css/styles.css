@@ -1,3 +1,148 @@
-html{
+html {
     font-family: IBM Plex Mono;
+}
+
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* Fade-in Animation */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.appear {
+    opacity: 1;
+}
+
+/* Skill Bars */
+.skill {
+    margin-bottom: 20px;
+}
+.skill-bar {
+    background-color: #333;
+    height: 20px;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.skill-level {
+    background-color: #4CAF50;
+    height: 100%;
+    width: 0;
+    border-radius: 10px;
+    transition: width 2s;
+}
+
+/* Resume Download Button - Greenish */
+.resume-button {
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #4CAF50; /* Same Green as Skills */
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.resume-button:hover {
+    background-color: #45A049; /* Darker Green on Hover */
+    transform: scale(1.05);
+}
+
+/* Interactive Resume Button */
+.resume-button-animated {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.resume-button-animated:hover {
+    background-color: #45A049;
+    transform: scale(1.05);
+}
+
+.resume-button-animated span {
+    margin-right: 10px;
+}
+
+
+/* Send Button in Contact Form - Greenish */
+.uk-button-primary {
+    background-color: #4CAF50; /* Same Green as Skills */
+    border: none;
+    color: white;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.uk-button-primary:hover {
+    background-color: #45A049; /* Darker Green on Hover */
+}
+
+/* Back-to-Top Button */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    font-size: 20px;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#back-to-top:hover {
+    background-color: #45A049; /* Darker Green on Hover */
+}
+
+#back-to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Scroll Progress Bar */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-color: #4CAF50; /* Same Green as Skills */
+    z-index: 9999;
+    transition: width 0.25s ease;
+}
+
+/* Typed.js */
+#typed {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+/* Name Animation */
+.animate-name {
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
