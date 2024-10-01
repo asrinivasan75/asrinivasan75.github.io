@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/uikit.js"></script>
     <script src="js/uikit-icons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script> <!-- Typed.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
     <title>Portfolio</title>
 </head>
@@ -26,7 +26,7 @@
             <li><a class="uk-button-text uk-text-capitalize" href="#about" uk-scroll>About</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#projects" uk-scroll>Projects</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#resume" uk-scroll>Resume</a></li>
-            <li><a class="uk-button-text uk-text-capitalize" href="#github-activity" uk-scroll>GitHub Activity</a></li> <!-- Added GitHub Activity link -->
+            <li><a class="uk-button-text uk-text-capitalize" href="#github-activity" uk-scroll>GitHub Activity</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#contact" uk-scroll>Contact</a></li>
         </ul>
     </div>
@@ -34,9 +34,9 @@
 
 <!-- Home Section with Animated Name and Typed.js -->
 <section class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
-    <h1 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right animate-name">Aadithya Srinivasan</h1> <!-- Animated Name -->
+    <h1 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right animate-name">Aadithya Srinivasan</h1>
     <h3 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right">
-        <span id="typed"></span> <!-- Typed.js text will appear here -->
+        <span id="typed"></span>
     </h3>
     <a href="#about" class="uk-margin-xlarge-left uk-text-capitalize uk-button uk-button-secondary" uk-scroll>About Me</a>
 </section>
@@ -49,12 +49,10 @@
         <h3 class="uk-light">About Me</h3>
         <p>I'm Aadithya Srinivasan, a freshman at the University of Pennsylvania studying Computer Science, with a passion for using technology to drive social impact. I founded EcoHarmony, a global platform promoting recycling awareness, and co-founded IvyRise, a college consulting company helping students navigate the admissions process. My technical experience includes web development, AI/ML, and cybersecurity, with projects ranging from client persona generation to neural networks for skin cancer classification. I’ve also led educational initiatives for middle schoolers and underserved communities, teaching math and computer science. I’m committed to creating sustainable tech-driven solutions that address societal challenges, blending innovation with a desire to help others.</p>
     </div>
-    <!-- Profile Image -->
     <div class="profile-image-container uk-margin-xlarge-right">
         <img src="images/profile.jpg" alt="Aadithya Srinivasan" class="profile-image">
     </div>
 </section>
-
 
 <!-- Skills Section -->
 <section id="skills" class="fade-in uk-margin-large-top uk-margin-large-bottom">
@@ -63,7 +61,7 @@
         <div class="skill">
             <h4>Python</h4>
             <div class="skill-bar">
-                <div class="skill-level" data-skill="90"></div>
+                <div class="skill-level" data-skill="85"></div>
             </div>
         </div>
         <div class="skill">
@@ -75,13 +73,13 @@
         <div class="skill">
             <h4>Web Development</h4>
             <div class="skill-bar">
-                <div class="skill-level" data-skill="80"></div>
+                <div class="skill-level" data-skill="60"></div>
             </div>
         </div>
         <div class="skill">
             <h4>Cybersecurity</h4>
             <div class="skill-bar">
-                <div class="skill-level" data-skill="75"></div>
+                <div class="skill-level" data-skill="70"></div>
             </div>
         </div>
     </div>
@@ -89,48 +87,67 @@
 
 <hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
 
-<!-- Projects Section -->
+<!-- Projects Section with Detailed Summary Cards -->
 <section id="projects" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
     <h3 class="uk-margin-xlarge-left uk-light">Projects</h3>
     <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-        
-        <!-- Project 1 -->
         <div class="uk-margin uk-card uk-card-secondary uk-card-body">
             <h4><b>Speed Typing Game</b></h4>
-            <p>This is a typing game/website I created using Javascript, HTML, and CSS. The game autogenerates quotes for the user to type out in order to measure their WPM speed, and creates a leaderboard using local cookies.</p>
+            <p>This typing game/website uses JavaScript, HTML, and CSS to autogenerate quotes for users to type out, measuring WPM and creating a leaderboard using local cookies.</p>
+            <ul>
+                <li><strong>Languages Used:</strong> JavaScript, HTML, CSS</li>
+                <li><strong>Tools/Frameworks:</strong> Vanilla JavaScript, DOM Manipulation</li>
+                <li><strong>Duration:</strong> 1 week</li>
+                <li><strong>Challenges/Optimization:</strong> Efficient DOM updates, optimized for mobile.</li>
+            </ul>
             <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io/speedtyping/">
-                <span uk-icon="icon: link"></span> https://asrinivasan75.github.io/speedtyping/
+                <span uk-icon="icon: link"></span> Visit Project
             </a>
         </div>
-        
-        <!-- Project 2: EcoHarmony -->
+
         <div class="uk-margin uk-card uk-card-secondary uk-card-body">
             <h4><b>EcoHarmony</b></h4>
-            <p>EcoHarmony is a global web platform I founded for recycling awareness. It has over 150 members and has tracked more than 18,500 pounds recycled, fostering environmental responsibility worldwide.</p>
+            <p>EcoHarmony is a global platform for recycling awareness. It has over 150 members and has tracked more than 18,500 pounds of recycled materials.</p>
+            <ul>
+                <li><strong>Languages Used:</strong> HTML, CSS, JavaScript</li>
+                <li><strong>Tools/Frameworks:</strong> Webpack, React</li>
+                <li><strong>Duration:</strong> Ongoing project</li>
+                <li><strong>Challenges/Optimization:</strong> User engagement and scaling for global reach.</li>
+            </ul>
             <a class="uk-button-text uk-text-decoration-none" href="https://ecoharmony.us">
-                <span uk-icon="icon: link"></span> https://ecoharmony.us
+                <span uk-icon="icon: link"></span> Visit Project
             </a>
         </div>
 
-        <!-- Project 3: Client Persona Generator -->
         <div class="uk-margin uk-card uk-card-secondary uk-card-body">
             <h4><b>Client Persona Generator</b></h4>
-            <p>A machine learning project where I built a client persona generator using GANs. This model was designed during my internship at Aristotle to generate realistic client personas for marketing and research purposes.</p>
+            <p>This machine learning model generates client personas using GANs. It was designed during an internship at Aristotle to create realistic marketing personas.</p>
+            <ul>
+                <li><strong>Languages Used:</strong> Python</li>
+                <li><strong>Tools/Frameworks:</strong> GANs, TensorFlow</li>
+                <li><strong>Duration:</strong> 2 months</li>
+                <li><strong>Challenges/Optimization:</strong> Balancing realism and variance in generated personas.</li>
+            </ul>
         </div>
 
-        <!-- Project 4: Skin Cancer Classification -->
         <div class="uk-margin uk-card uk-card-secondary uk-card-body">
             <h4><b>Skin Cancer Classification Using CNNs</b></h4>
             <p>A deep learning model designed to classify skin cancer types using convolutional neural networks (CNNs). This project was part of my exploration into AI/ML in healthcare.</p>
+            <ul>
+                <li><strong>Languages Used:</strong> Python</li>
+                <li><strong>Tools/Frameworks:</strong> TensorFlow, Keras</li>
+                <li><strong>Duration:</strong> 1 week</li>
+                <li><strong>Challenges/Optimization:</strong> Accuracy improvements through hyperparameter tuning.</li>
+            </ul>
             <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/Skin-Cancer-Recognition-CNN">
-                <span uk-icon="icon: link"></span> https://github.com/asrinivasan75/Skin-Cancer-Recognition-CNN
+                <span uk-icon="icon: link"></span> Visit Project
             </a>
         </div>
 
     </div>
 </section>
 
-<!-- Resume Download Section with Animation -->
+<!-- Resume Download Section -->
 <section id="resume" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
     <h3 class="uk-margin-xlarge-left uk-light">Download My Resume</h3>
     <div class="uk-margin-xlarge-left">
@@ -140,23 +157,17 @@
     </div>
 </section>
 
-<!-- GitHub Profile Summary Cards -->
+<!-- GitHub Activity Section -->
 <section id="github-activity" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
     <h3 class="uk-margin-xlarge-left uk-light">GitHub Activity</h3>
     <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-        <!-- GitHub Stats Card -->
         <img src="https://github-readme-stats.vercel.app/api?username=asrinivasan75&show_icons=true&theme=tokyonight" alt="GitHub Stats">
-
-        <!-- GitHub Streak Card -->
         <img src="https://github-readme-streak-stats.herokuapp.com/?user=asrinivasan75&theme=tokyonight" alt="GitHub Streaks">
-
-        <!-- Top Languages Card -->
         <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=asrinivasan75&layout=compact&theme=tokyonight" alt="Top Languages">
     </div>
 </section>
 
-
-<!-- Contact Form Section -->
+<!-- Contact Section -->
 <section id="contact" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
     <h3 class="uk-margin-xlarge-left uk-light">Contact Me</h3>
     <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
@@ -257,7 +268,7 @@
     document.getElementById('progress-bar').style.width = progress + '%';
   });
 
-  // Skill bar animation on scroll
+  // Skill bar animation with color change on fill
   document.addEventListener("DOMContentLoaded", function() {
     const skillLevels = document.querySelectorAll('.skill-level');
     window.addEventListener('scroll', () => {
@@ -267,7 +278,18 @@
             const screenPosition = window.innerHeight;
             if (skillPosition < screenPosition) {
                 skill.style.width = skillValue + '%';
+                skill.classList.add('filled');
             }
+        });
+    });
+  });
+
+  // Smooth Scroll for Anchor Links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
         });
     });
   });
