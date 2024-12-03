@@ -163,8 +163,8 @@ html {
 
 /* Profile Image Styling */
 .profile-image-container {
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 250px;
+    max-height: 250px;
     border-radius: 50%;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -178,4 +178,25 @@ html {
 .profile-image-container:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* About Me Section Styling */
+#about {
+    background-color: rgba(0, 0, 0, 0.85); 
+    color: #ffffff; /* White text for readability */
+    padding: 10px 10px; /* Add padding for space around content */
+    border-radius: 0px; /* Optional rounded corners for aesthetic */
+    margin-bottom: 20px; /* Space after the section */
+}
+
+/* About Me Header Styling */
+#about h3 {
+    color: #ffffff; /* White color for the header */
+}
+
+/* Skill Names Styling */
+.skill h4 {
+    color: #ffffff; /* White color for skill names */
+    font-weight: bold; /* Optional: Make the text bold */
+    margin-bottom: 5px; /* Add spacing below the skill name */
 }
