@@ -9,7 +9,7 @@
     <script src="js/uikit-icons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
-    <title>Portfolio</title>
+    <title>Aadithya Srinivasan's Portfolio</title>
 </head>
 <body>
 
@@ -33,7 +33,7 @@
 </nav>
 
 <!-- Home Section with Animated Name and Typed.js -->
-<section class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
+<section class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-small-bottom">
     <h1 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right animate-name">Aadithya Srinivasan</h1>
     <h3 class="uk-margin-xlarge-left uk-light uk-text-left uk-margin-xlarge-right">
         <span id="typed"></span>
@@ -44,11 +44,11 @@
 <hr class="uk-margin-xlarge-top uk-margin-xlarge-left uk-margin-xlarge-right">
 
 <!-- About Me Section with Profile Image -->
-<section id="about" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom uk-flex uk-flex-middle uk-flex-between" style="position: relative; background-color: rgba(0, 0, 0, 0.85); padding: 40px 0;">
+<section id="about" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-small-top uk-margin-large-bottom uk-flex uk-flex-middle uk-flex-between" style="position: relative; background-color: rgba(0, 0, 0, 0.85); padding: 40px 0;">
   <div class="uk-margin-xlarge-left" style="color: #fff; max-width: 60%;">
       <h3>About Me</h3>
       <p>
-          I'm Aadithya Srinivasan, a freshman at the University of Pennsylvania School of Engineering. I'm dual majoring in Computer Science and Mathematics with a minor in Statistics and Data Science. I founded EcoHarmony, a global platform promoting recycling awareness, and co-founded IvyRise, a college consulting company helping students navigate the admissions process. My technical experience includes web development, AI/ML, and cybersecurity, with projects ranging from client persona generation to neural networks for skin cancer classification. I’ve also led educational initiatives for middle schoolers and underserved communities, teaching math and computer science. In my free time, I love learning new poker spots through GTOWizard or grinding my chess rating! Reach out to me for anything CS/Math related and I'm always up for a challenge!
+          I'm Aadithya Srinivasan, a freshman at the University of Pennsylvania School of Engineering and Applied Sciences. I'm dual majoring in Computer Science and Mathematics with a minor in Statistics and Data Science. I founded EcoHarmony, a global platform promoting recycling awareness, and co-founded IvyRise, a college consulting company helping students navigate the admissions process. My technical experience includes web development, AI/ML, and cybersecurity, with projects ranging from client persona generation to neural networks for skin cancer classification. I’ve also led educational initiatives for middle schoolers and underserved communities, teaching math and computer science. In my free time, I love learning new poker spots through GTOWizard or grinding my chess rating! Reach out to me for anything CS/Math related and I'm always up for a challenge!
       </p>
   </div>
   <div class="profile-image-container uk-margin-xlarge-right">
@@ -58,7 +58,7 @@
 
 
 <!-- Skills Section -->
-<section id="skills" class="fade-in uk-margin-large-top uk-margin-large-bottom">
+<section id="skills" class="fade-in uk-margin-small-top uk-margin-large-bottom">
     <h3 class="uk-margin-xlarge-left uk-light">Skills</h3>
     <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
         <div class="skill">
@@ -238,20 +238,26 @@
       },
       "move": {
         "enable": true,
-        "speed": 6,
+        "speed": 10,
         "direction": "none",
         "random": false,
         "straight": false,
         "out_mode": "out",
-        "bounce": false
+        "bounce": true
       }
     },
     "interactivity": {
+      "detect_on": "canvas",
       "events": {
         "onhover": {
           "enable": true,
           "mode": "repulse"
-        }
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
       }
     },
     "retina_detect": true
@@ -259,13 +265,13 @@
 
   // Typed.js initialization
   new Typed('#typed', {
-    strings: ['Programmer', 'CTF Fanatic', 'AI/ML Enthusiast'],
-    typeSpeed: 60,
-    backSpeed: 40,
+    strings: ['Programmer', 'Poker Fanatic', 'AI/ML Enthusiast'],
+    typeSpeed: 1000,
+    backSpeed: 1000,
     loop: true,
-    backDelay: 1500,
-    startDelay: 500,
-    showCursor: true,
+    backDelay: 500,
+    startDelay: 100000,
+    showCursor: false,
     cursorChar: '|',
   });
 
