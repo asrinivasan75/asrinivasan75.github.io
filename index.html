@@ -24,6 +24,7 @@
     <div class="uk-navbar-right">
         <ul class="uk-navbar-nav uk-light">
             <li><a class="uk-button-text uk-text-capitalize" href="#about" uk-scroll>About</a></li>
+            <li><a class="uk-button-text uk-text-capitalize" href="#experience" uk-scroll>Experience</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#projects" uk-scroll>Projects</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#resume" uk-scroll>Resume</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#github-activity" uk-scroll>GitHub Activity</a></li>
@@ -48,7 +49,16 @@
   <div class="uk-margin-xlarge-left" style="color: #fff; max-width: 60%;">
       <h3>About Me</h3>
       <p>
-          I'm Aadithya Srinivasan, a freshman at the University of Pennsylvania School of Engineering and Applied Sciences. I'm dual majoring in Computer Science and Mathematics with a minor in Statistics and Data Science. I founded EcoHarmony, a global platform promoting recycling awareness, and co-founded IvyRise, a college consulting company helping students navigate the admissions process. My technical experience includes web development, AI/ML, and cybersecurity, with projects ranging from client persona generation to neural networks for skin cancer classification. I’ve also led educational initiatives for middle schoolers and underserved communities, teaching math and computer science. In my free time, I love learning new poker spots through GTOWizard or grinding my chess rating! Reach out to me for anything CS/Math related and I'm always up for a challenge!
+          I'm Aadithya Srinivasan, a student at the University of Pennsylvania pursuing a B.S.E. in Computer Science and Mathematics with coursework in Machine Learning, Algorithms, Big Data Analytics, and Human–Computer Interaction. I'm passionate about building scalable systems and intelligent models at the intersection of software engineering, data analytics, and quantitative research.
+      </p>
+      <p>
+          I've interned as a Data Science Intern at Nayya, where I engineered SQL + Python pipelines processing over 100 million medical and pharmacy claims, built anomaly detection systems, and delivered analytics dashboards for cost optimization and pricing strategy. Previously, at Aristotle (Your AI SDR), I developed AI-driven backend services using AWS, TypeScript, and Python, prototyping generative persona models and NLP-based features to improve client targeting.
+      </p>
+      <p>
+          Beyond internships, I enjoy designing and deploying advanced AI/ML projects—such as a UCI-compatible Chess Engine with PyTorch-based evaluation, a Reinforcement Learning PokerBot, and a full-stack Supplement Recommender SaaS using React, Node, and PostgreSQL. My technical work blends algorithmic depth with end-to-end system design, reflecting my drive to create performant, explainable, and practical AI systems.
+      </p>
+      <p>
+          Outside of academics, I'm active in Penn's quantitative and mathematical communities, including the Wharton Investment & Trading Group, Penn Poker Club, and Penn Undergraduate Mathematics Society. I also compete in chess (2300 rating, USCF 99th percentile) and enjoy strategy games, problem-solving, and exploring probabilistic models in real-world contexts.
       </p>
   </div>
   <div class="profile-image-container uk-margin-xlarge-right">
@@ -56,6 +66,76 @@
   </div>
 </section>
 
+<hr class="uk-margin-xlarge-top uk-margin-xlarge-left uk-margin-xlarge-right">
+
+<!-- Experience Timeline Section -->
+<section id="experience" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
+  <h3 class="uk-margin-xlarge-left uk-light">Experience</h3>
+  <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+
+      <!-- Nayya -->
+      <div class="timeline-item">
+        <div class="timeline-date">
+          April 2025 –<br>Aug 2025
+        </div>
+        <div class="timeline-marker"></div>
+        <div class="timeline-card">
+          <div class="timeline-company">Nayya</div>
+          <div class="timeline-role">Data Analytics/Data Science Intern</div>
+          <div class="timeline-location">📍 New York City, NY</div>
+          <ul class="timeline-responsibilities">
+            <li>Engineered scalable SQL + Python pipelines processing 100M+ pharmacy/medical claims with Athena, PostgreSQL, dbt; uncovered cost drivers and formulary misalignments, supporting pricing strategy</li>
+            <li>Automated anomaly detection across millions of rows (outliers, duplicates) with Pandas/NumPy, integrating results into regulatory royalty reporting flows; validated with actuaries to ensure financial accuracy</li>
+            <li>Delivered interactive Sigma dashboards with trend forecasting and variance analysis, enabling executives to make data-driven product and pricing decisions</li>
+          </ul>
+          <div class="timeline-expand-hint">Hover to see details</div>
+        </div>
+      </div>
+
+      <!-- Aristotle -->
+      <div class="timeline-item">
+        <div class="timeline-date">
+          Jun 2023 –<br>Sep 2023
+        </div>
+        <div class="timeline-marker"></div>
+        <div class="timeline-card">
+          <div class="timeline-company">Aristotle — Your AI SDR</div>
+          <div class="timeline-role">Software Engineer Intern</div>
+          <div class="timeline-location">📍 Remote</div>
+          <ul class="timeline-responsibilities">
+            <li>Prototyped generative-adversarial persona models and deployed AI-driven backend services (TypeScript, Python, AWS) for automated sales enablement</li>
+            <li>Integrated NLP-based API features to improve lead targeting and response personalization, optimized lead-matching pipeline, cutting latency 20%, improving real-time client demo success rates</li>
+          </ul>
+          <div class="timeline-expand-hint">Hover to see details</div>
+        </div>
+      </div>
+
+      <!-- NJIT HSSRI -->
+      <div class="timeline-item">
+        <div class="timeline-date">
+          Jun 2023 –<br>Aug 2023
+        </div>
+        <div class="timeline-marker"></div>
+        <div class="timeline-card">
+          <div class="timeline-company">New Jersey Institute of Technology (HSSRI)</div>
+          <div class="timeline-role">Student Research Intern</div>
+          <div class="timeline-location">📍 Newark, NJ</div>
+          <ul class="timeline-responsibilities">
+            <li>Conducted computational modeling of visual perception systems using TensorFlow, scikit-learn, and PsychoPy</li>
+            <li>Designed and evaluated ML models on experimental datasets, applying statistical methods to quantify perceptual accuracy</li>
+            <li>Presented findings at NJIT Research Symposium</li>
+          </ul>
+          <div class="timeline-expand-hint">Hover to see details</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
 
 <!-- Skills Section -->
 <section id="skills" class="fade-in uk-margin-small-top uk-margin-large-bottom">
@@ -64,11 +144,17 @@
         <div class="skill">
             <h4>Python</h4>
             <div class="skill-bar">
-                <div class="skill-level" data-skill="85"></div>
+                <div class="skill-level" data-skill="95"></div>
             </div>
         </div>
         <div class="skill">
-            <h4>AI/ML</h4>
+            <h4>Machine Learning</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="90"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>TensorFlow/Scikit-learn</h4>
             <div class="skill-bar">
                 <div class="skill-level" data-skill="85"></div>
             </div>
@@ -76,13 +162,31 @@
         <div class="skill">
             <h4>Web Development</h4>
             <div class="skill-bar">
-                <div class="skill-level" data-skill="60"></div>
+                <div class="skill-level" data-skill="80"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>React/JavaScript</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="75"></div>
             </div>
         </div>
         <div class="skill">
             <h4>Cybersecurity</h4>
             <div class="skill-bar">
-                <div class="skill-level" data-skill="70"></div>
+                <div class="skill-level" data-skill="80"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>Competitive Programming</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="85"></div>
+            </div>
+        </div>
+        <div class="skill">
+            <h4>Data Analysis</h4>
+            <div class="skill-bar">
+                <div class="skill-level" data-skill="85"></div>
             </div>
         </div>
     </div>
@@ -90,80 +194,190 @@
 
 <hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
 
-<!-- Projects Section with Detailed Summary Cards -->
+<!-- Projects Section -->
 <section id="projects" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
   <h3 class="uk-margin-xlarge-left uk-light">Projects</h3>
+
   <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+    <div id="projectsContainer">
 
-    <div class="uk-margin uk-card uk-card-secondary uk-card-body">
-      <h4><b>Dynamic Resume Builder</b></h4>
-      <p>Created a dynamic resume builder that allows users to generate and customize resumes, with an option to export as PDF.</p>
-      <ul>
-          <li><strong>Languages Used:</strong> HTML, CSS, JavaScript</li>
-          <li><strong>Tools/Frameworks:</strong> ReactJS</li>
-          <li><strong>Duration:</strong> December 2024 - January 2025</li>
-          <li><strong>Challenges/Optimization:</strong> Ensuring aesthetic design and proper PDF creation.</li>
-      </ul>
-      <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io/dynamic-resume-builder/">
-          <span uk-icon="icon: link"></span> Visit Project
-      </a>
-    </div>
-
-      <div class="uk-margin uk-card uk-card-secondary uk-card-body">
-          <h4><b>Stock Price Prediction Using Machine Learning Models</b></h4>
-          <p>Implemented and compared machine learning and neural network models to predict future stock prices using Apple Stock Data.</p>
+      <!-- Project 1: Chess Engine Analysis Platform -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>Chess Engine Analysis Platform</h4>
+          <p>Full-stack chess engine with UCI protocol compatibility, PyTorch-based NNUE evaluation, and web-based analysis interface featuring real-time PV streaming.</p>
           <ul>
-              <li><strong>Languages Used:</strong> Python</li>
-              <li><strong>Tools/Frameworks:</strong> TensorFlow, Scikit-learn</li>
-              <li><strong>Duration:</strong> August 2024 - Present</li>
-              <li><strong>Challenges/Optimization:</strong> Fine-tuned model hyperparameters to increase prediction accuracy.</li>
+            <li><strong>Backend:</strong> C++20 engine with alpha-beta search, transposition tables, killer heuristics, LMR, null-move pruning</li>
+            <li><strong>Neural Network:</strong> PyTorch NNUE (768→512→1) with HalfKP features, SPRT testing framework, ELO tracking</li>
+            <li><strong>Web Stack:</strong> FastAPI + WebSockets, React 18 + TypeScript, PostgreSQL, Redis, Celery</li>
+            <li><strong>Features:</strong> Real-time analysis streaming, interactive chessboard (react-chessboard), evaluation graphs (Recharts)</li>
+            <li><strong>Performance:</strong> Optimized with -O3, bitboard operations, CI/CD with GitHub Actions</li>
+            <li><strong>Algorithms:</strong> Minimax, iterative deepening, quiescence search, move ordering, Zobrist hashing</li>
           </ul>
-          <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-">
-              <span uk-icon="icon: link"></span> Visit Project
+          <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/chess-engine">
+            <span uk-icon="icon: link"></span> View on GitHub
           </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
       </div>
 
-      <div class="uk-margin uk-card uk-card-secondary uk-card-body">
-          <h4><b>Personal Website</b></h4>
-          <p>Coded and launched a personal website using HTML, CSS, and ReactJS to showcase my portfolio and projects. It's where you are right now!</p>
+      <!-- Project 2: Supplement Tracker & Recommendation System -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>Supplement Tracker & Recommendation SaaS</h4>
+          <p>Full-stack personalized supplement tracking platform with AI-driven recommendations, compliance monitoring, and adherence analytics achieving 20% improvement in user habit compliance.</p>
           <ul>
-              <li><strong>Languages Used:</strong> HTML, CSS, JavaScript</li>
-              <li><strong>Tools/Frameworks:</strong> ReactJS</li>
-              <li><strong>Duration:</strong> August 2024 - Present</li>
-              <li><strong>Challenges/Optimization:</strong> Responsive design and accessibility improvements.</li>
+            <li><strong>Backend:</strong> Node.js + Express 5.1, MongoDB Atlas with Mongoose ODM, JWT authentication (bcryptjs)</li>
+            <li><strong>AI Engine:</strong> OpenAI GPT-3.5-turbo via OpenRouter API with custom prompt engineering for health profile analysis</li>
+            <li><strong>Frontend:</strong> React 19 + Tailwind CSS 3.4, Recharts for visualizations, lucide-react icons</li>
+            <li><strong>Features:</strong> Multi-step health assessment, AI supplement recommendations with scientific reasoning, daily logging with streak tracking</li>
+            <li><strong>Analytics:</strong> Weekly adherence %, longest streak calculation, missed days tracking, per-supplement intake trends</li>
+            <li><strong>Architecture:</strong> RESTful API, JWT stateless auth, compound indexes (user+plan+date), imperial↔metric conversion</li>
+            <li><strong>Roadmap:</strong> RL-based adaptive dosing using user adherence data for dynamic recommendation adjustments</li>
           </ul>
-          <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io">
-              <span uk-icon="icon: link"></span> Visit Project
+          <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/supplement-tracker">
+            <span uk-icon="icon: link"></span> View on GitHub
           </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
       </div>
 
-      <div class="uk-margin uk-card uk-card-secondary uk-card-body">
-          <h4><b>PokerBot</b></h4>
-          <p>Developed an amateur PokerBot that can simulate gameplay actions like call, raise, and fold using reinforcement learning.</p>
+      <!-- Project 3: PokerBot with Reinforcement Learning -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>PokerBot with Reinforcement Learning</h4>
+          <p>Intelligent PokerBot using reinforcement learning algorithms to simulate realistic gameplay with strategic call, raise, and fold decisions based on game state analysis.</p>
           <ul>
-              <li><strong>Languages Used:</strong> Python</li>
-              <li><strong>Tools/Frameworks:</strong> Keras, NumPy</li>
-              <li><strong>Duration:</strong> August 2024 - September 2024</li>
-              <li><strong>Challenges/Optimization:</strong> Integrated RL strategies to improve decision-making efficiency.</li>
+            <li><strong>Languages:</strong> Python</li>
+            <li><strong>Frameworks:</strong> Keras, NumPy, OpenAI Gym</li>
+            <li><strong>Duration:</strong> August 2024 - September 2024</li>
+            <li><strong>Algorithms:</strong> Q-learning and policy gradient methods for decision optimization</li>
+            <li><strong>Features:</strong> Game state evaluation, dynamic betting strategies, opponent modeling</li>
+            <li><strong>Innovation:</strong> Implemented reward shaping for long-term strategic play beyond immediate hand outcomes</li>
           </ul>
           <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/PokerBot">
-              <span uk-icon="icon: link"></span> Visit Project
+            <span uk-icon="icon: link"></span> View on GitHub
           </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
       </div>
 
-      
+      <!-- Project 4: Stock Price Prediction ML -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>Stock Price Prediction Using ML</h4>
+          <p>Comprehensive machine learning system comparing multiple models (LSTM, GRU, Random Forest) for stock price prediction, achieving 85%+ accuracy through hyperparameter optimization.</p>
+          <ul>
+            <li><strong>Languages:</strong> Python</li>
+            <li><strong>Frameworks:</strong> TensorFlow, Scikit-learn, Pandas, NumPy</li>
+            <li><strong>Dataset:</strong> Historical Apple Stock Data with technical indicators</li>
+            <li><strong>Models:</strong> LSTM neural networks, GRU, Random Forest, XGBoost</li>
+            <li><strong>Features:</strong> Feature engineering (moving averages, RSI, MACD), time series cross-validation</li>
+            <li><strong>Results:</strong> 85%+ accuracy in short-term predictions, comprehensive model comparison analysis</li>
+            <li><strong>Duration:</strong> August 2024 - Present</li>
+          </ul>
+          <a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-">
+            <span uk-icon="icon: link"></span> View on GitHub
+          </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
+      </div>
 
+      <!-- Project 5: Dynamic Resume Builder -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>Dynamic Resume Builder</h4>
+          <p>Interactive web application for creating professional resumes with real-time preview, multiple templates, and PDF export functionality using modern web technologies.</p>
+          <ul>
+            <li><strong>Languages:</strong> HTML5, CSS3, JavaScript</li>
+            <li><strong>Frameworks:</strong> ReactJS, jsPDF library</li>
+            <li><strong>Duration:</strong> December 2024 - January 2025</li>
+            <li><strong>Features:</strong> Real-time preview updates, multiple professional templates, PDF export with custom formatting</li>
+            <li><strong>Design:</strong> Fully responsive design, clean UI/UX, drag-and-drop section reordering</li>
+            <li><strong>Accessibility:</strong> WCAG 2.1 compliant, keyboard navigation support</li>
+          </ul>
+          <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io/dynamic-resume-builder/">
+            <span uk-icon="icon: link"></span> Visit Project
+          </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
+      </div>
+
+      <!-- Project 6: EcoHarmony -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>EcoHarmony - Global Recycling Platform</h4>
+          <p>Comprehensive sustainability platform promoting recycling awareness worldwide with educational content, interactive tools, and community engagement features.</p>
+          <ul>
+            <li><strong>Languages:</strong> Python, JavaScript, HTML/CSS</li>
+            <li><strong>Stack:</strong> React frontend, Node.js backend, MongoDB database</li>
+            <li><strong>Duration:</strong> January 2024 - Present</li>
+            <li><strong>Impact:</strong> 10,000+ users across 15+ countries</li>
+            <li><strong>Features:</strong> Educational resources, recycling location finder, community forums, impact tracking dashboard</li>
+            <li><strong>Mission:</strong> Promoting environmental awareness and sustainable practices through technology</li>
+          </ul>
+          <a class="uk-button-text uk-text-decoration-none" href="#">
+            <span uk-icon="icon: link"></span> Learn More
+          </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
+      </div>
+
+      <!-- Project 7: Personal Portfolio -->
+      <div class="project-slide">
+        <div class="project-card">
+          <h4>Personal Portfolio Website</h4>
+          <p>Modern, responsive portfolio website with interactive animations, GitHub integration, and professional styling showcasing projects and technical skills.</p>
+          <ul>
+            <li><strong>Languages:</strong> HTML5, CSS3, JavaScript</li>
+            <li><strong>Libraries:</strong> UIkit 3.14 framework, Particles.js, Typed.js</li>
+            <li><strong>Duration:</strong> August 2024 - Present</li>
+            <li><strong>Features:</strong> 3D project carousel, animated skill bars, real-time GitHub stats, smooth scroll navigation</li>
+            <li><strong>Design:</strong> Responsive across all devices, dark theme with green accents, particle background effects</li>
+            <li><strong>Performance:</strong> Optimized loading, SEO-friendly, accessibility best practices</li>
+          </ul>
+          <a class="uk-button-text uk-text-decoration-none" href="https://asrinivasan75.github.io">
+            <span uk-icon="icon: link"></span> Visit Live Site
+          </a>
+          <div class="project-expand-hint">Hover to see details</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <div style="display: flex; justify-content: center; align-items: center; gap: 30px;">
+        <button id="prevBtn" class="carousel-button">
+          <span style="font-size: 20px;">←</span> Previous
+        </button>
+        <div style="text-align: center;">
+          <span id="projectCounter" style="color: #4CAF50; font-size: 18px; font-weight: bold;"></span>
+          <div style="margin-top: 10px; color: #999; font-size: 12px;">Use ← → arrow keys to navigate</div>
+        </div>
+        <button id="nextBtn" class="carousel-button">
+          Next <span style="font-size: 20px;">→</span>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
 
 <!-- Resume Download Section -->
 <section id="resume" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
-    <h3 class="uk-margin-xlarge-left uk-light">Download My Resume</h3>
-    <div class="uk-margin-xlarge-left">
-        <a href="resume.pdf" download class="resume-button-animated">
-            <span uk-icon="file-pdf"></span> Download Resume
-        </a>
+    <h3 class="uk-margin-xlarge-left uk-light">Resume</h3>
+    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
+        <div class="uk-card uk-card-secondary uk-card-body uk-margin">
+            <h4>Download My Updated Resume</h4>
+            <p>Access my comprehensive resume featuring my latest projects, skills, and achievements. Updated with current experience in AI/ML, web development, and competitive programming.</p>
+            <div class="uk-margin-small">
+                <span class="uk-badge uk-badge-success">Recently Updated</span>
+                <span class="uk-badge uk-badge-primary">PDF Format</span>
+            </div>
+            <a href="resume.pdf" download class="uk-button uk-button-primary uk-margin-small-top">
+                <span uk-icon="file-pdf"></span> Download Resume (PDF)
+            </a>
+        </div>
     </div>
 </section>
 
@@ -266,13 +480,13 @@
 
   // Typed.js initialization
   new Typed('#typed', {
-    strings: ['Programmer', 'Poker Fanatic', 'AI/ML Enthusiast'],
-    typeSpeed: 1000,
-    backSpeed: 1000,
+    strings: ['Computer Science Student', 'AI/ML Engineer', 'Competitive Programmer', 'Software Developer', 'Poker Enthusiast'],
+    typeSpeed: 50,
+    backSpeed: 30,
     loop: true,
-    backDelay: 500,
-    startDelay: 100000,
-    showCursor: false,
+    backDelay: 1000,
+    startDelay: 500,
+    showCursor: true,
     cursorChar: '|',
   });
 
@@ -298,6 +512,83 @@
             }
         });
     });
+
+    // Initialize 3D Projects Carousel
+    let currentProject = 0;
+    const projectSlides = document.querySelectorAll('.project-slide');
+    const totalProjects = projectSlides.length;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const counter = document.getElementById('projectCounter');
+
+    function showProject(index, direction) {
+      // Remove active from all slides
+      projectSlides.forEach(slide => {
+        slide.classList.remove('active');
+        slide.style.animation = 'none';
+      });
+
+      // Add appropriate 3D animation to new slide
+      const newSlide = projectSlides[index];
+      newSlide.classList.add('active');
+
+      if (direction === 'next') {
+        newSlide.style.animation = 'popInFromRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      } else if (direction === 'prev') {
+        newSlide.style.animation = 'popInFromLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      } else {
+        // Initial load - simple fade in
+        newSlide.style.animation = 'popInFromRight 0.8s ease-out';
+      }
+
+      // Update counter with animation
+      if (counter) {
+        counter.style.opacity = '0';
+        counter.style.transform = 'scale(0.8)';
+        setTimeout(() => {
+          counter.textContent = `Project ${index + 1} of ${totalProjects}`;
+          counter.style.transition = 'all 0.3s ease';
+          counter.style.opacity = '1';
+          counter.style.transform = 'scale(1)';
+        }, 100);
+      }
+
+      // Update button states
+      if (prevBtn) prevBtn.disabled = (index === 0);
+      if (nextBtn) nextBtn.disabled = (index === totalProjects - 1);
+    }
+
+    function nextProject() {
+      if (currentProject < totalProjects - 1) {
+        currentProject++;
+        showProject(currentProject, 'next');
+      }
+    }
+
+    function prevProject() {
+      if (currentProject > 0) {
+        currentProject--;
+        showProject(currentProject, 'prev');
+      }
+    }
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight') {
+        nextProject();
+      } else if (e.key === 'ArrowLeft') {
+        prevProject();
+      }
+    });
+
+    if (prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', prevProject);
+      nextBtn.addEventListener('click', nextProject);
+    }
+
+    if (projectSlides.length > 0) {
+      showProject(0);
+    }
   });
 
   // Smooth Scroll for Anchor Links

@@ -2,10 +2,29 @@ html {
     font-family: IBM Plex Mono;
 }
 
+body {
+    background: transparent;
+    position: relative;
+    z-index: 1;
+}
+
+/* Standardized Section Spacing */
+section {
+    padding: 40px 0;
+}
+
+section h3 {
+    margin-bottom: 30px;
+}
+
+section hr {
+    margin: 0;
+}
+
 #particles-js {
-    position: absolute;
+    position: fixed;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background-color: #000;
     top: 0;
     left: 0;
@@ -199,4 +218,448 @@ html {
     color: #ffffff; /* White color for skill names */
     font-weight: bold; /* Optional: Make the text bold */
     margin-bottom: 5px; /* Add spacing below the skill name */
+}
+
+/* Simple Projects Display */
+.project-slide {
+    display: none !important;
+}
+
+.project-slide.active {
+    display: block !important;
+    animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.carousel-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: IBM Plex Mono;
+}
+
+.carousel-button:hover {
+    background-color: #45A049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.carousel-button:active {
+    transform: translateY(0);
+}
+
+.carousel-button:disabled {
+    background-color: #666;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.carousel-button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Project card enhanced styling with collapsible details */
+.project-card {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+    border: 1px solid #4CAF50;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    height: 100%;
+    overflow: visible;
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.project-card:hover::before {
+    left: 100%;
+}
+
+.project-card:hover {
+    box-shadow: 0 15px 40px rgba(76, 175, 80, 0.3);
+    border-color: #45A049;
+    transform: scale(1.02);
+}
+
+.project-card h4 {
+    color: #4CAF50;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.project-card p {
+    color: #e0e0e0;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.project-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+
+.project-card:hover ul,
+.project-card.expanded ul {
+    max-height: 600px;
+    opacity: 1;
+}
+
+.project-card ul li {
+    color: #c0c0c0;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.project-card ul li:before {
+    content: "▸";
+    color: #4CAF50;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.project-card .uk-button-text {
+    color: #4CAF50;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.project-card .uk-button-text:hover {
+    color: #45A049;
+    transform: translateX(5px);
+}
+
+.project-expand-hint {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+    margin-top: 15px;
+    transition: color 0.3s ease;
+}
+
+.project-card:hover .project-expand-hint {
+    color: #4CAF50;
+}
+
+/* Scrollbar styling for project cards */
+.project-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.project-card::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 10px;
+}
+
+.project-card::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 10px;
+}
+
+.project-card::-webkit-scrollbar-thumb:hover {
+    background: #45A049;
+}
+
+/* CRITICAL: 3D Pop-out Carousel - must be at end to override everything */
+#projectsContainer {
+    position: relative;
+    overflow: visible;
+    min-height: 650px;
+    perspective: 2000px;
+    perspective-origin: center center;
+}
+
+div.project-slide {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    width: 100%;
+    left: 0;
+    top: 0;
+    pointer-events: none !important;
+    transform-style: preserve-3d;
+}
+
+div.project-slide.active {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    pointer-events: auto !important;
+    transform-style: preserve-3d;
+}
+
+/* 3D Pop-out animations */
+@keyframes popInFromRight {
+    0% {
+        opacity: 0;
+        transform: translateX(200px) translateZ(-400px) rotateY(-45deg) scale(0.7);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(0) translateZ(100px) rotateY(0deg) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateZ(0) rotateY(0deg) scale(1);
+    }
+}
+
+@keyframes popInFromLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-200px) translateZ(-400px) rotateY(45deg) scale(0.7);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(0) translateZ(100px) rotateY(0deg) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateZ(0) rotateY(0deg) scale(1);
+    }
+}
+
+@keyframes popOutToLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0) translateZ(0) rotateY(0deg) scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(-100px) translateZ(100px) rotateY(-20deg) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-300px) translateZ(-400px) rotateY(-45deg) scale(0.5);
+    }
+}
+
+@keyframes popOutToRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) translateZ(0) rotateY(0deg) scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(100px) translateZ(100px) rotateY(20deg) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(300px) translateZ(-400px) rotateY(45deg) scale(0.5);
+    }
+}
+
+/* Enhanced project card with 3D effects */
+.project-card {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Experience Timeline Styles */
+.timeline-container {
+    position: relative;
+    padding: 50px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 50px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #4CAF50, #45A049);
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 60px;
+    padding-left: 120px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.3s; }
+.timeline-item:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.timeline-marker {
+    position: absolute;
+    left: 37px;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #4CAF50;
+    border: 4px solid #000;
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3), 0 0 20px rgba(76, 175, 80, 0.5);
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+    transform: scale(1.3);
+    box-shadow: 0 0 0 6px rgba(76, 175, 80, 0.4), 0 0 30px rgba(76, 175, 80, 0.8);
+}
+
+.timeline-date {
+    position: absolute;
+    left: -100px;
+    top: 0;
+    width: 120px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+    color: #4CAF50;
+    line-height: 1.3;
+}
+
+.timeline-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    border: 1px solid #4CAF50;
+    border-radius: 15px;
+    padding: 25px 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.timeline-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(76, 175, 80, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.timeline-card:hover::before {
+    left: 100%;
+}
+
+.timeline-card:hover {
+    transform: translateX(10px) scale(1.02);
+    box-shadow: 0 10px 40px rgba(76, 175, 80, 0.3);
+    border-color: #45A049;
+}
+
+.timeline-company {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 5px;
+}
+
+.timeline-role {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    margin-bottom: 5px;
+}
+
+.timeline-location {
+    font-size: 0.9rem;
+    color: #999;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.timeline-responsibilities {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+
+.timeline-card:hover .timeline-responsibilities,
+.timeline-card.expanded .timeline-responsibilities {
+    max-height: 500px;
+    opacity: 1;
+}
+
+.timeline-responsibilities li {
+    color: #c0c0c0;
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+    line-height: 1.6;
+}
+
+.timeline-responsibilities li:before {
+    content: "▸";
+    color: #4CAF50;
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.timeline-expand-hint {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.timeline-card:hover .timeline-expand-hint {
+    color: #4CAF50;
 }

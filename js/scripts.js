@@ -15,24 +15,10 @@ backToTopButton.addEventListener("click", (e) => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-// Typed.js initialization
-document.addEventListener('DOMContentLoaded', function () {
-    new Typed('#typed', {
-      strings: ['Programmer', 'CTF Fanatic', 'AI/ML Enthusiast'],
-      typeSpeed: 50,
-      backSpeed: 30,
-      loop: true,
-      smartBackspace: true,
-      showCursor: true,
-      cursorChar: '|',
-    });
-  });
-  
-  // Scroll Progress Indicator
-  window.addEventListener('scroll', function () {
-    let scroll = document.documentElement.scrollTop || document.body.scrollTop;
-    let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    let progress = (scroll / scrollHeight) * 100;
-    document.getElementById('progress-bar').style.width = progress + '%';
-  });
-  
+// Scroll Progress Indicator
+window.addEventListener('scroll', function () {
+  let scroll = document.documentElement.scrollTop || document.body.scrollTop;
+  let scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  let progress = (scroll / scrollHeight) * 100;
+  document.getElementById('progress-bar').style.width = progress + '%';
+});
