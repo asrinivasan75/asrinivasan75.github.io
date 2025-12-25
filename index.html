@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts - Inter (Stripe-inspired modern font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/uikit.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/uikit.js"></script>
@@ -27,8 +31,12 @@
             <li><a class="uk-button-text uk-text-capitalize" href="#experience" uk-scroll>Experience</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#projects" uk-scroll>Projects</a></li>
             <li><a class="uk-button-text uk-text-capitalize" href="#resume" uk-scroll>Resume</a></li>
-            <li><a class="uk-button-text uk-text-capitalize" href="#github-activity" uk-scroll>GitHub Activity</a></li>
-            <li><a class="uk-button-text uk-text-capitalize" href="#contact" uk-scroll>Contact</a></li>
+            <li><a class="uk-button-text uk-text-decoration-none" href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer">
+                <span uk-icon="icon: github"></span> GitHub
+            </a></li>
+            <li><a class="uk-button-text uk-text-decoration-none" href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer">
+                <span uk-icon="icon: linkedin"></span> LinkedIn
+            </a></li>
         </ul>
     </div>
 </nav>
@@ -137,62 +145,6 @@
 
 <hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
 
-<!-- Skills Section -->
-<section id="skills" class="fade-in uk-margin-small-top uk-margin-large-bottom">
-    <h3 class="uk-margin-xlarge-left uk-light">Skills</h3>
-    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-        <div class="skill">
-            <h4>Python</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="95"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>Machine Learning</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="90"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>TensorFlow/Scikit-learn</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="85"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>Web Development</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="80"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>React/JavaScript</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="75"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>Cybersecurity</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="80"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>Competitive Programming</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="85"></div>
-            </div>
-        </div>
-        <div class="skill">
-            <h4>Data Analysis</h4>
-            <div class="skill-bar">
-                <div class="skill-level" data-skill="85"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<hr class="uk-margin-xlarge-left uk-margin-xlarge-right">
 
 <!-- Projects Section -->
 <section id="projects" class="fade-in uk-margin-small-left uk-margin-small-right uk-margin-xlarge-top uk-margin-xlarge-bottom">
@@ -351,8 +303,8 @@
           <span style="font-size: 20px;">←</span> Previous
         </button>
         <div style="text-align: center;">
-          <span id="projectCounter" style="color: #4CAF50; font-size: 18px; font-weight: bold;"></span>
-          <div style="margin-top: 10px; color: #999; font-size: 12px;">Use ← → arrow keys to navigate</div>
+          <span id="projectCounter" style="color: #FF8C42; font-size: 18px; font-weight: bold;"></span>
+          <div style="margin-top: 10px; color: #6B6B7A; font-size: 12px;">Use ← → arrow keys to navigate</div>
         </div>
         <button id="nextBtn" class="carousel-button">
           Next <span style="font-size: 20px;">→</span>
@@ -363,52 +315,81 @@
 </section>
 
 
-<!-- Resume Download Section -->
+<!-- Resume and Skills Section (Side by Side) -->
 <section id="resume" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
-    <h3 class="uk-margin-xlarge-left uk-light">Resume</h3>
     <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-        <div class="uk-card uk-card-secondary uk-card-body uk-margin">
-            <h4>Download My Updated Resume</h4>
-            <p>Access my comprehensive resume featuring my latest projects, skills, and achievements. Updated with current experience in AI/ML, web development, and competitive programming.</p>
-            <div class="uk-margin-small">
-                <span class="uk-badge uk-badge-success">Recently Updated</span>
-                <span class="uk-badge uk-badge-primary">PDF Format</span>
+        <div class="resume-skills-container">
+            <!-- Resume Download Section -->
+            <div class="resume-section">
+                <h3 class="uk-light">Resume</h3>
+                <div class="resume-card uk-card-body uk-margin">
+                    <h4>Download My Updated Resume</h4>
+                    <p>Access my comprehensive resume featuring my latest projects, skills, and achievements. Updated with current experience in AI/ML, web development, and competitive programming.</p>
+                    <div class="uk-margin-small">
+                        <span class="uk-badge resume-badge">Recently Updated</span>
+                        <span class="uk-badge resume-badge">PDF Format</span>
+                    </div>
+                    <a href="resume.pdf" download class="uk-button uk-button-primary uk-margin-small-top">
+                        <span uk-icon="file-pdf"></span> Download Resume (PDF)
+                    </a>
+                </div>
             </div>
-            <a href="resume.pdf" download class="uk-button uk-button-primary uk-margin-small-top">
-                <span uk-icon="file-pdf"></span> Download Resume (PDF)
-            </a>
+
+            <!-- Skills Section (Compact) -->
+            <div class="skills-section">
+                <h3 class="uk-light">Skills</h3>
+                <div class="skills-compact">
+                    <div class="skill">
+                        <h4>Python</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="95"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>Machine Learning</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="90"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>TensorFlow/Scikit-learn</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>Web Development</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="80"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>React/JavaScript</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="75"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>Cybersecurity</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="80"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>Competitive Programming</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <h4>Data Analysis</h4>
+                        <div class="skill-bar">
+                            <div class="skill-level" data-skill="85"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
-
-<!-- GitHub Activity Section -->
-<section id="github-activity" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
-    <h3 class="uk-margin-xlarge-left uk-light">GitHub Activity</h3>
-    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-        <img src="https://github-readme-stats.vercel.app/api?username=asrinivasan75&show_icons=true&theme=tokyonight" alt="GitHub Stats">
-        <img src="https://github-readme-streak-stats.herokuapp.com/?user=asrinivasan75&theme=tokyonight" alt="GitHub Streaks">
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=asrinivasan75&layout=compact&theme=tokyonight" alt="Top Languages">
-    </div>
-</section>
-
-<!-- Contact Section -->
-<section id="contact" class="fade-in uk-margin-xlarge-top uk-margin-xlarge-bottom">
-    <h3 class="uk-margin-xlarge-left uk-light">Contact Me</h3>
-    <div class="uk-margin-xlarge-left uk-margin-xlarge-right">
-        <form action="mailto:aadithya.srinivasan@gmail.com" method="post" enctype="text/plain">
-            <div class="uk-margin">
-                <input class="uk-input" type="text" placeholder="Your Name" required>
-            </div>
-            <div class="uk-margin">
-                <input class="uk-input" type="email" placeholder="Your Email" required>
-            </div>
-            <div class="uk-margin">
-                <textarea class="uk-textarea" rows="5" placeholder="Your Message" required></textarea>
-            </div>
-            <div class="uk-margin">
-                <button class="uk-button uk-button-primary" type="submit">Send</button>
-            </div>
-        </form>
     </div>
 </section>
 
@@ -427,7 +408,7 @@
         }
       },
       "color": {
-        "value": "#ffffff"
+        "value": "#FF6B35"
       },
       "shape": {
         "type": "circle",
@@ -437,7 +418,7 @@
         }
       },
       "opacity": {
-        "value": 0.5,
+        "value": 0.4,
         "random": false
       },
       "size": {
@@ -447,8 +428,8 @@
       "line_linked": {
         "enable": true,
         "distance": 150,
-        "color": "#ffffff",
-        "opacity": 0.4,
+        "color": "#FF6B35",
+        "opacity": 0.25,
         "width": 1
       },
       "move": {
@@ -513,7 +494,7 @@
         });
     });
 
-    // Initialize 3D Projects Carousel
+    // Initialize Projects Carousel
     let currentProject = 0;
     const projectSlides = document.querySelectorAll('.project-slide');
     const totalProjects = projectSlides.length;
@@ -528,7 +509,7 @@
         slide.style.animation = 'none';
       });
 
-      // Add appropriate 3D animation to new slide
+      // Add appropriate animation to new slide
       const newSlide = projectSlides[index];
       newSlide.classList.add('active');
 
@@ -631,3 +612,4 @@
 
 </body>
 </html>
+
