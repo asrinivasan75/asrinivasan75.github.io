@@ -1,36 +1,13 @@
 /* ==============================================
    EMBER NOIR v2 — Scroll-Driven Interactions
-   GSAP + ScrollTrigger + Lenis
+   GSAP + ScrollTrigger (no Lenis)
    ============================================== */
 
 (function () {
     'use strict';
 
-    /* ------------------------------------------
-       0. LENIS SMOOTH SCROLL
-       ------------------------------------------ */
-    let lenis;
-    if (typeof Lenis !== 'undefined') {
-        lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            touchMultiplier: 1.5,
-        });
-
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            // Let GSAP ticker drive Lenis (avoids double-rAF)
-            lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => lenis.raf(time * 1000));
-            gsap.ticker.lagSmoothing(0);
-        } else {
-            // Fallback: drive Lenis with rAF
-            function raf(time) {
-                lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-        }
-    }
+    // Progressive enhancement: swap no-js → js
+    document.documentElement.classList.replace('no-js', 'js');
 
     // GSAP + ScrollTrigger setup
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -155,7 +132,6 @@
             mouse.y = e.clientY - rect.top;
         });
 
-        // Pause when hero is off screen
         const heroObserver = new IntersectionObserver(([entry]) => {
             heroVisible = entry.isIntersecting;
         }, { threshold: 0 });
@@ -185,14 +161,13 @@
         function updateRing() {
             ringX += (cursorX - ringX) * 0.12;
             ringY += (cursorY - ringY) * 0.12;
-            ring.style.transform = `translate(${ringX - (cursorEl.classList.contains('is-hovering') ? 32 : 20)}px, ${ringY - (cursorEl.classList.contains('is-hovering') ? 32 : 20)}px)`;
+            const offset = cursorEl.classList.contains('is-hovering') ? 32 : 20;
+            ring.style.transform = `translate(${ringX - offset}px, ${ringY - offset}px)`;
             requestAnimationFrame(updateRing);
         }
         updateRing();
 
-        // Hover states
-        const hoverTargets = document.querySelectorAll('a, button, [data-magnetic]');
-        hoverTargets.forEach(el => {
+        document.querySelectorAll('a, button, [data-magnetic]').forEach(el => {
             el.addEventListener('mouseenter', () => cursorEl.classList.add('is-hovering'));
             el.addEventListener('mouseleave', () => cursorEl.classList.remove('is-hovering'));
         });
@@ -254,28 +229,30 @@
         }, '-=0.3');
 
         // Hero parallax on scroll
-        gsap.to('.hero-content', {
-            y: -100,
-            opacity: 0,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-            }
-        });
+        if (typeof ScrollTrigger !== 'undefined') {
+            gsap.to('.hero-content', {
+                y: -100,
+                opacity: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                }
+            });
 
-        gsap.to('.scroll-indicator', {
-            opacity: 0,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.hero',
-                start: '10% top',
-                end: '30% top',
-                scrub: true,
-            }
-        });
+            gsap.to('.scroll-indicator', {
+                opacity: 0,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: '10% top',
+                    end: '30% top',
+                    scrub: true,
+                }
+            });
+        }
     }
 
     /* ------------------------------------------
@@ -296,9 +273,7 @@
                     words.forEach((word, i) => {
                         const start = i / count;
                         const end = (i + 1) / count;
-                        const mid = (start + end) / 2;
-                        const isActive = p >= start && p < end;
-                        word.classList.toggle('is-active', isActive);
+                        word.classList.toggle('is-active', p >= start && p < end);
                     });
                 }
             });
@@ -318,7 +293,6 @@
         });
     }
 
-    // About text paragraphs
     document.querySelectorAll('.about-text p').forEach((p, i) => {
         if (typeof ScrollTrigger !== 'undefined') {
             ScrollTrigger.create({
@@ -332,11 +306,10 @@
         }
     });
 
-
     /* ------------------------------------------
-       8. EXPERIENCE CARDS (reveal)
+       7. EXPERIENCE CARDS (reveal)
        ------------------------------------------ */
-    document.querySelectorAll('.exp-card').forEach((card, i) => {
+    document.querySelectorAll('.exp-card').forEach((card) => {
         if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             gsap.from(card, {
                 y: 60,
@@ -353,7 +326,7 @@
     });
 
     /* ------------------------------------------
-       9. PROJECTS HORIZONTAL SCROLL
+       8. PROJECTS HORIZONTAL SCROLL
        ------------------------------------------ */
     const projectsTrack = document.getElementById('projectsTrack');
     if (projectsTrack && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && window.innerWidth > 768) {
@@ -379,7 +352,7 @@
     }
 
     /* ------------------------------------------
-       10. SECTION LABELS + GENERAL REVEALS
+       9. SECTION LABELS + GENERAL REVEALS
        ------------------------------------------ */
     document.querySelectorAll('.section-label, .projects-sub, .sr').forEach(el => {
         if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -398,10 +371,10 @@
     });
 
     /* ------------------------------------------
-       11. FOOTER REVEAL
+       10. FOOTER REVEAL
        ------------------------------------------ */
     const footerHeading = document.querySelector('.footer-heading');
-    if (footerHeading && typeof gsap !== 'undefined') {
+    if (footerHeading && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.from(footerHeading, {
             y: 60,
             opacity: 0,
@@ -416,7 +389,7 @@
     }
 
     /* ------------------------------------------
-       12. NAVIGATION
+       11. NAVIGATION
        ------------------------------------------ */
     const nav = document.getElementById('nav');
     const navToggle = document.getElementById('navToggle');
@@ -443,28 +416,26 @@
     }
 
     /* ------------------------------------------
-       13. SMOOTH SCROLL FOR ANCHOR LINKS
+       12. SMOOTH SCROLL FOR ANCHOR LINKS
        ------------------------------------------ */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
             const href = anchor.getAttribute('href');
             if (href === '#') {
                 e.preventDefault();
-                if (lenis) lenis.scrollTo(0);
-                else window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 return;
             }
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
-                if (lenis) lenis.scrollTo(target);
-                else target.scrollIntoView({ behavior: 'smooth' });
+                target.scrollIntoView({ behavior: 'smooth' });
             }
         });
     });
 
     /* ------------------------------------------
-       14. SCROLL PROGRESS BAR
+       13. SCROLL PROGRESS BAR
        ------------------------------------------ */
     const progress = document.getElementById('progress');
     if (progress) {

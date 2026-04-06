@@ -1,6 +1,6 @@
 /* ==============================================
    EMBER NOIR v2 — Scroll-Driven Portfolio
-   Syne + Outfit | GSAP + Lenis
+   Syne + Outfit | GSAP ScrollTrigger
    ============================================== */
 
 /* --- Tokens --- */
@@ -38,12 +38,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
+    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
 
 body {
     font-family: var(--font-body);
@@ -322,12 +320,18 @@ a {
     display: block;
 }
 
+/* Visible by default — JS (.js class) hides for entrance animation */
 .reveal-line-inner {
     display: block;
+}
+
+html.js .reveal-line-inner {
     transform: translateY(110%);
 }
 
-.reveal-fade {
+.reveal-fade {}
+
+html.js .reveal-fade {
     opacity: 0;
     transform: translateY(20px);
 }
@@ -348,6 +352,9 @@ a {
     flex-direction: column;
     align-items: center;
     gap: 12px;
+}
+
+html.js .scroll-indicator {
     opacity: 0;
 }
 
@@ -543,6 +550,9 @@ a {
     border-radius: 16px;
     overflow: hidden;
     position: relative;
+}
+
+html.js .image-reveal {
     clip-path: inset(0 100% 0 0);
 }
 
@@ -576,6 +586,9 @@ a {
     color: var(--text-primary);
     margin-bottom: 18px;
     line-height: 1.8;
+}
+
+html.js .about-text p {
     opacity: 0;
     transform: translateY(20px);
 }
@@ -974,11 +987,6 @@ a {
         max-width: 280px;
     }
 
-    .stats-row {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-    }
-
     .exp-header {
         flex-direction: column;
     }
@@ -1086,9 +1094,46 @@ a {
 
 
 /* ==============================================
+   NO-JS FALLBACKS
+   ============================================== */
+
+/* Words: collapse section, show first word statically */
+html.no-js .words-section {
+    height: auto;
+}
+
+html.no-js .words-sticky {
+    position: relative;
+    height: auto;
+    padding: 120px 0;
+}
+
+html.no-js .word {
+    position: relative;
+    display: none;
+}
+
+html.no-js .word.is-active {
+    display: block;
+    opacity: 1;
+    transform: none;
+}
+
+/* Projects: scrollable row */
+html.no-js .projects-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Image visible */
+html.no-js .image-reveal img {
+    transform: none;
+}
+
+/* ==============================================
    SCROLL REVEAL UTILITY
    ============================================== */
-.sr {
+html.js .sr {
     opacity: 0;
     transform: translateY(24px);
 }
