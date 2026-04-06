@@ -38,12 +38,10 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
+    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
-/* smooth scroll only when GSAP isn't managing scroll (no-js fallback) */
-html.no-js { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);

@@ -286,21 +286,14 @@
     }
 
     /* ------------------------------------------
-       9. SMOOTH SCROLL FOR ANCHORS
+       9. BACK TO TOP (logo click)
+       Native anchor navigation + CSS scroll-behavior: smooth
+       handles all other #hash links correctly.
        ------------------------------------------ */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
-            const href = anchor.getAttribute('href');
-            if (href === '#') {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                return;
-            }
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });
 
