@@ -1,21 +1,39 @@
 /* ==============================================
    EMBER NOIR v2 — Scroll-Driven Interactions
-   GSAP + ScrollTrigger (no Lenis)
+   GSAP ScrollTrigger (pins only) + IntersectionObserver (reveals)
    ============================================== */
 
 (function () {
     'use strict';
 
-    // Progressive enhancement: swap no-js → js
+    // Progressive enhancement
     document.documentElement.classList.replace('no-js', 'js');
 
-    // GSAP + ScrollTrigger setup
+    // GSAP setup
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
     }
 
     /* ------------------------------------------
-       1. PARTICLE CONSTELLATION (Hero Canvas)
+       1. SCROLL REVEAL (IntersectionObserver)
+       Simple, reliable, no GSAP dependency.
+       ------------------------------------------ */
+    const revealEls = document.querySelectorAll('.scroll-reveal');
+    if (revealEls.length) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        revealEls.forEach(el => revealObserver.observe(el));
+    }
+
+    /* ------------------------------------------
+       2. PARTICLE CONSTELLATION (Hero Canvas)
        ------------------------------------------ */
     const canvas = document.getElementById('heroCanvas');
     if (canvas) {
@@ -51,7 +69,6 @@
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-
                 if (this.x < 0) this.x = canvasW;
                 if (this.x > canvasW) this.x = 0;
                 if (this.y < 0) this.y = canvasH;
@@ -74,7 +91,6 @@
                 ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(224, 122, 95, ${this.alpha})`;
                 ctx.fill();
-
                 if (this.r > 1.5) {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
@@ -86,9 +102,7 @@
 
         function initParticles() {
             particles.length = 0;
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new Particle());
-            }
+            for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
         }
 
         function drawConnections() {
@@ -98,11 +112,10 @@
                     const dy = particles[i].y - particles[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < CONNECTION_DIST) {
-                        const alpha = (1 - dist / CONNECTION_DIST) * 0.12;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(224, 122, 95, ${alpha})`;
+                        ctx.strokeStyle = `rgba(224, 122, 95, ${(1 - dist / CONNECTION_DIST) * 0.12})`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                     }
@@ -111,31 +124,23 @@
         }
 
         function animate() {
-            if (!heroVisible) {
-                requestAnimationFrame(animate);
-                return;
-            }
+            if (!heroVisible) { requestAnimationFrame(animate); return; }
             ctx.clearRect(0, 0, canvasW, canvasH);
             particles.forEach(p => { p.update(); p.draw(); });
             drawConnections();
             requestAnimationFrame(animate);
         }
 
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            initParticles();
-        });
-
+        window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
         document.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
             mouse.x = e.clientX - rect.left;
             mouse.y = e.clientY - rect.top;
         });
 
-        const heroObserver = new IntersectionObserver(([entry]) => {
+        new IntersectionObserver(([entry]) => {
             heroVisible = entry.isIntersecting;
-        }, { threshold: 0 });
-        heroObserver.observe(document.getElementById('hero'));
+        }, { threshold: 0 }).observe(document.getElementById('hero'));
 
         resizeCanvas();
         initParticles();
@@ -143,12 +148,11 @@
     }
 
     /* ------------------------------------------
-       2. CUSTOM CURSOR
+       3. CUSTOM CURSOR
        ------------------------------------------ */
     const cursorEl = document.getElementById('cursor');
     if (cursorEl && window.innerWidth > 768) {
-        let cursorX = 0, cursorY = 0;
-        let ringX = 0, ringY = 0;
+        let cursorX = 0, cursorY = 0, ringX = 0, ringY = 0;
         const dot = cursorEl.querySelector('.cursor-dot');
         const ring = cursorEl.querySelector('.cursor-ring');
 
@@ -158,14 +162,13 @@
             dot.style.transform = `translate(${cursorX - 3}px, ${cursorY - 3}px)`;
         });
 
-        function updateRing() {
+        (function updateRing() {
             ringX += (cursorX - ringX) * 0.12;
             ringY += (cursorY - ringY) * 0.12;
             const offset = cursorEl.classList.contains('is-hovering') ? 32 : 20;
             ring.style.transform = `translate(${ringX - offset}px, ${ringY - offset}px)`;
             requestAnimationFrame(updateRing);
-        }
-        updateRing();
+        })();
 
         document.querySelectorAll('a, button, [data-magnetic]').forEach(el => {
             el.addEventListener('mouseenter', () => cursorEl.classList.add('is-hovering'));
@@ -174,16 +177,14 @@
     }
 
     /* ------------------------------------------
-       3. MAGNETIC BUTTONS
+       4. MAGNETIC BUTTONS
        ------------------------------------------ */
     if (window.innerWidth > 768) {
         document.querySelectorAll('[data-magnetic]').forEach(el => {
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                const dx = (e.clientX - cx) * 0.25;
-                const dy = (e.clientY - cy) * 0.25;
+                const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.25;
+                const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.25;
                 el.style.transform = `translate(${dx}px, ${dy}px)`;
             });
             el.addEventListener('mouseleave', () => {
@@ -195,201 +196,71 @@
     }
 
     /* ------------------------------------------
-       4. HERO ENTRANCE ANIMATION
+       5. HERO ENTRANCE + PARALLAX
        ------------------------------------------ */
     if (typeof gsap !== 'undefined') {
         const tl = gsap.timeline({ delay: 0.3 });
+        tl.to('.hero-eyebrow .reveal-line-inner', { y: '0%', duration: 1, ease: 'expo.out' })
+          .to('.hero-name .reveal-line-inner', { y: '0%', duration: 1.1, ease: 'expo.out', stagger: 0.1 }, '-=0.7')
+          .to('.hero-sub .reveal-line-inner', { y: '0%', duration: 1, ease: 'expo.out' }, '-=0.6')
+          .to('.reveal-fade', { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, '-=0.5')
+          .to('.scroll-indicator', { opacity: 1, duration: 0.8, ease: 'power2.out' }, '-=0.3');
 
-        tl.to('.hero-eyebrow .reveal-line-inner', {
-            y: '0%',
-            duration: 1,
-            ease: 'expo.out',
-        })
-        .to('.hero-name .reveal-line-inner', {
-            y: '0%',
-            duration: 1.1,
-            ease: 'expo.out',
-            stagger: 0.1,
-        }, '-=0.7')
-        .to('.hero-sub .reveal-line-inner', {
-            y: '0%',
-            duration: 1,
-            ease: 'expo.out',
-        }, '-=0.6')
-        .to('.reveal-fade', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'expo.out',
-        }, '-=0.5')
-        .to('.scroll-indicator', {
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power2.out',
-        }, '-=0.3');
-
-        // Hero parallax on scroll
         if (typeof ScrollTrigger !== 'undefined') {
             gsap.to('.hero-content', {
-                y: -100,
-                opacity: 0,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.hero',
-                    start: 'top top',
-                    end: 'bottom top',
-                    scrub: true,
-                }
+                y: -100, opacity: 0, ease: 'none',
+                scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
             });
-
             gsap.to('.scroll-indicator', {
-                opacity: 0,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.hero',
-                    start: '10% top',
-                    end: '30% top',
-                    scrub: true,
-                }
+                opacity: 0, ease: 'none',
+                scrollTrigger: { trigger: '.hero', start: '10% top', end: '30% top', scrub: true }
             });
         }
     }
 
     /* ------------------------------------------
-       5. SCROLL WORDS SECTION
+       6. SCROLL WORDS SECTION
        ------------------------------------------ */
     const wordsSection = document.getElementById('words');
-    if (wordsSection) {
+    if (wordsSection && typeof ScrollTrigger !== 'undefined') {
         const words = wordsSection.querySelectorAll('.word');
-
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.create({
-                trigger: wordsSection,
-                start: 'top top',
-                end: 'bottom bottom',
-                onUpdate: (self) => {
-                    const p = self.progress;
-                    const count = words.length;
-                    words.forEach((word, i) => {
-                        const start = i / count;
-                        const end = (i + 1) / count;
-                        word.classList.toggle('is-active', p >= start && p < end);
-                    });
-                }
-            });
-        }
-    }
-
-    /* ------------------------------------------
-       6. ABOUT: IMAGE REVEAL + TEXT FADE
-       ------------------------------------------ */
-    const imageReveal = document.querySelector('.image-reveal');
-    if (imageReveal && typeof ScrollTrigger !== 'undefined') {
         ScrollTrigger.create({
-            trigger: imageReveal,
-            start: 'top 80%',
-            onEnter: () => imageReveal.classList.add('is-revealed'),
-            once: true,
+            trigger: wordsSection,
+            start: 'top top',
+            end: 'bottom bottom',
+            onUpdate: (self) => {
+                const p = self.progress;
+                const count = words.length;
+                words.forEach((word, i) => {
+                    word.classList.toggle('is-active', p >= i / count && p < (i + 1) / count);
+                });
+            }
         });
     }
 
-    document.querySelectorAll('.about-text p').forEach((p, i) => {
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.create({
-                trigger: p,
-                start: 'top 85%',
-                onEnter: () => {
-                    setTimeout(() => p.classList.add('is-visible'), i * 100);
-                },
-                once: true,
-            });
-        }
-    });
-
     /* ------------------------------------------
-       7. EXPERIENCE CARDS (reveal)
-       ------------------------------------------ */
-    document.querySelectorAll('.exp-card').forEach((card) => {
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            gsap.from(card, {
-                y: 60,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'expo.out',
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                }
-            });
-        }
-    });
-
-    /* ------------------------------------------
-       8. PROJECTS HORIZONTAL SCROLL
+       7. PROJECTS HORIZONTAL SCROLL
        ------------------------------------------ */
     const projectsTrack = document.getElementById('projectsTrack');
     if (projectsTrack && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && window.innerWidth > 768) {
         const projectsSection = document.querySelector('.projects');
 
-        function getScrollAmount() {
-            return projectsTrack.scrollWidth - window.innerWidth + 64;
-        }
-
         gsap.to(projectsTrack, {
-            x: () => -getScrollAmount(),
+            x: () => -(projectsTrack.scrollWidth - window.innerWidth + 64),
             ease: 'none',
             scrollTrigger: {
                 trigger: projectsSection,
                 start: 'top top',
-                end: () => `+=${getScrollAmount()}`,
+                end: () => `+=${projectsTrack.scrollWidth - window.innerWidth + 64}`,
                 pin: true,
-                scrub: 1,
+                scrub: 0.5,
                 invalidateOnRefresh: true,
-                anticipatePin: 1,
             }
         });
     }
 
     /* ------------------------------------------
-       9. SECTION LABELS + GENERAL REVEALS
-       ------------------------------------------ */
-    document.querySelectorAll('.section-label, .projects-sub, .sr').forEach(el => {
-        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-            gsap.from(el, {
-                y: 24,
-                opacity: 0,
-                duration: 0.8,
-                ease: 'expo.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 88%',
-                    toggleActions: 'play none none none',
-                }
-            });
-        }
-    });
-
-    /* ------------------------------------------
-       10. FOOTER REVEAL
-       ------------------------------------------ */
-    const footerHeading = document.querySelector('.footer-heading');
-    if (footerHeading && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.from(footerHeading, {
-            y: 60,
-            opacity: 0,
-            duration: 1,
-            ease: 'expo.out',
-            scrollTrigger: {
-                trigger: footerHeading,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-            }
-        });
-    }
-
-    /* ------------------------------------------
-       11. NAVIGATION
+       8. NAVIGATION
        ------------------------------------------ */
     const nav = document.getElementById('nav');
     const navToggle = document.getElementById('navToggle');
@@ -406,7 +277,6 @@
             navToggle.classList.toggle('is-active');
             navLinks.classList.toggle('is-open');
         });
-
         navLinks.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', () => {
                 navToggle.classList.remove('is-active');
@@ -416,7 +286,7 @@
     }
 
     /* ------------------------------------------
-       12. SMOOTH SCROLL FOR ANCHOR LINKS
+       9. SMOOTH SCROLL FOR ANCHORS
        ------------------------------------------ */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
@@ -435,7 +305,7 @@
     });
 
     /* ------------------------------------------
-       13. SCROLL PROGRESS BAR
+       10. SCROLL PROGRESS BAR
        ------------------------------------------ */
     const progress = document.getElementById('progress');
     if (progress) {

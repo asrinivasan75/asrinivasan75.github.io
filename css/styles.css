@@ -38,10 +38,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+/* smooth scroll only when GSAP isn't managing scroll (no-js fallback) */
+html.no-js { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);
@@ -552,25 +554,10 @@ html.js .scroll-indicator {
     position: relative;
 }
 
-html.js .image-reveal {
-    clip-path: inset(0 100% 0 0);
-}
-
 .image-reveal img {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    transform: scale(1.2);
-    transition: transform 1.2s var(--ease-expo);
-}
-
-.image-reveal.is-revealed {
-    clip-path: inset(0 0% 0 0);
-    transition: clip-path 1s var(--ease-expo);
-}
-
-.image-reveal.is-revealed img {
-    transform: scale(1);
 }
 
 .about-lead {
@@ -586,18 +573,6 @@ html.js .image-reveal {
     color: var(--text-primary);
     margin-bottom: 18px;
     line-height: 1.8;
-}
-
-html.js .about-text p {
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.about-text p.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.7s var(--ease-expo),
-                transform 0.7s var(--ease-expo);
 }
 
 
@@ -1096,51 +1071,23 @@ html.js .about-text p {
 /* ==============================================
    NO-JS FALLBACKS
    ============================================== */
-
-/* Words: collapse section, show first word statically */
-html.no-js .words-section {
-    height: auto;
-}
-
-html.no-js .words-sticky {
-    position: relative;
-    height: auto;
-    padding: 120px 0;
-}
-
-html.no-js .word {
-    position: relative;
-    display: none;
-}
-
-html.no-js .word.is-active {
-    display: block;
-    opacity: 1;
-    transform: none;
-}
-
-/* Projects: scrollable row */
-html.no-js .projects-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Image visible */
-html.no-js .image-reveal img {
-    transform: none;
-}
+html.no-js .words-section { height: auto; }
+html.no-js .words-sticky { position: relative; height: auto; padding: 120px 0; }
+html.no-js .word { position: relative; display: none; }
+html.no-js .word.is-active { display: block; opacity: 1; transform: none; }
+html.no-js .projects-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 /* ==============================================
-   SCROLL REVEAL UTILITY
+   SCROLL REVEAL (IntersectionObserver-driven)
    ============================================== */
-html.js .sr {
+html.js .scroll-reveal {
     opacity: 0;
-    transform: translateY(24px);
-}
-
-.sr.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(28px);
     transition: opacity 0.7s var(--ease-expo),
                 transform 0.7s var(--ease-expo);
+}
+
+html.js .scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
