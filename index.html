@@ -3,367 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aadithya Srinivasan — Portfolio</title>
+    <title>Aadithya Srinivasan</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/uikit.js"></script>
-    <script src="js/uikit-icons.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 </head>
 <body>
 
-<!-- Grain texture overlay -->
+<!-- Grain overlay -->
 <div class="grain"></div>
 
-<!-- Cursor glow -->
-<div class="cursor-glow" id="cursorGlow"></div>
+<!-- Custom cursor -->
+<div class="cursor" id="cursor">
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+</div>
 
 <!-- Scroll progress -->
-<div id="progressBar"></div>
+<div class="progress" id="progress"></div>
 
 <!-- Navigation -->
-<nav id="mainNav">
+<nav id="nav">
     <div class="nav-inner">
-        <a href="#" class="nav-logo">AS</a>
+        <a href="#" class="nav-logo" data-magnetic>AS</a>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
+            <span></span><span></span>
         </button>
         <div class="nav-links" id="navLinks">
-            <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#projects">Projects</a>
-            <a href="#skills">Skills</a>
-            <a href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="#about" data-magnetic>About</a>
+            <a href="#experience" data-magnetic>Experience</a>
+            <a href="#projects" data-magnetic>Projects</a>
+            <a href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer" data-magnetic>GitHub</a>
+            <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn</a>
         </div>
     </div>
 </nav>
 
-<!-- ==================== HERO ==================== -->
-<section id="hero">
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
     <canvas id="heroCanvas"></canvas>
     <div class="hero-content">
-        <div class="hero-label reveal-up" style="--delay: 0.1s">Portfolio</div>
-        <h1 class="hero-name reveal-up" style="--delay: 0.3s">Aadithya<br>Srinivasan</h1>
-        <div class="hero-typed reveal-up" style="--delay: 0.5s">
-            <span id="typed"></span>
+        <div class="hero-eyebrow">
+            <span class="reveal-line"><span class="reveal-line-inner">Portfolio &mdash; 2026</span></span>
         </div>
-        <div class="hero-cta reveal-up" style="--delay: 0.7s">
-            <a href="#about" class="btn btn-primary">Explore</a>
-            <a href="resume.pdf" download class="btn btn-ghost">Resume &darr;</a>
+        <h1 class="hero-name">
+            <span class="reveal-line"><span class="reveal-line-inner">Aadithya</span></span>
+            <span class="reveal-line"><span class="reveal-line-inner">Srinivasan</span></span>
+        </h1>
+        <div class="hero-sub">
+            <span class="reveal-line"><span class="reveal-line-inner">CS &amp; Mathematics @ University of Pennsylvania</span></span>
+        </div>
+        <div class="hero-cta reveal-fade">
+            <a href="#about" class="btn btn-primary" data-magnetic><span>Explore Work</span></a>
+            <a href="resume.pdf" download class="btn btn-ghost" data-magnetic>
+                <span>Resume</span>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v8m0 0L4 7m3 3l3-3M2 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+    </div>
+    <div class="scroll-indicator" id="scrollIndicator">
+        <span>Scroll</span>
+        <div class="scroll-line"><div class="scroll-line-fill"></div></div>
+    </div>
+</section>
+
+<!-- ===== SCROLL WORDS ===== -->
+<section class="words-section" id="words">
+    <div class="words-sticky">
+        <div class="word is-active" data-index="0">
+            <span class="word-main">Engineer<span class="accent-dot">.</span></span>
+            <span class="word-sub">Building systems that scale</span>
+        </div>
+        <div class="word" data-index="1">
+            <span class="word-main">Researcher<span class="accent-dot">.</span></span>
+            <span class="word-sub">Pushing boundaries in ML &amp; AI</span>
+        </div>
+        <div class="word" data-index="2">
+            <span class="word-main">Builder<span class="accent-dot">.</span></span>
+            <span class="word-sub">From concept to production</span>
         </div>
     </div>
 </section>
 
-<!-- ==================== ABOUT ==================== -->
-<section id="about" class="section">
+<!-- ===== ABOUT ===== -->
+<section class="about section" id="about">
     <div class="container">
+        <h2 class="section-label"><span class="label-num">01</span> About</h2>
         <div class="about-grid">
-            <div class="about-image-wrap scroll-reveal">
-                <div class="about-image-frame">
+            <div class="about-image">
+                <div class="image-reveal">
                     <img src="images/profile.jpg" alt="Aadithya Srinivasan">
                 </div>
             </div>
             <div class="about-text">
-                <h2 class="section-heading scroll-reveal">About Me</h2>
-                <p class="scroll-reveal">
-                    I'm a student at the University of Pennsylvania pursuing a B.S.E. in Computer Science and Mathematics with coursework in Machine Learning, Algorithms, Big Data Analytics, and Human&ndash;Computer Interaction. I'm passionate about building scalable systems and intelligent models at the intersection of software engineering, data analytics, and quantitative research.
-                </p>
-                <p class="scroll-reveal">
-                    I've interned as a Data Science Intern at Nayya, where I engineered SQL + Python pipelines processing over 100 million medical and pharmacy claims, built anomaly detection systems, and delivered analytics dashboards for cost optimization and pricing strategy. Previously, at Aristotle (Your AI SDR), I developed AI-driven backend services using AWS, TypeScript, and Python.
-                </p>
-                <p class="scroll-reveal">
-                    Beyond internships, I enjoy designing and deploying advanced AI/ML projects &mdash; such as a UCI-compatible Chess Engine with PyTorch-based evaluation, a Reinforcement Learning PokerBot, and a full-stack Supplement Recommender SaaS. My technical work blends algorithmic depth with end-to-end system design.
-                </p>
-                <p class="scroll-reveal">
-                    Outside of academics, I'm active in Penn's quantitative and mathematical communities, including the Wharton Investment &amp; Trading Group, Penn Poker Club, and Penn Undergraduate Mathematics Society. I also compete in chess (2300 rating, USCF 99th percentile) and enjoy strategy games and probabilistic modeling.
-                </p>
+                <p class="about-lead">I'm a student at the University of Pennsylvania pursuing a B.S.E. in Computer Science and Mathematics.</p>
+                <p>My coursework spans Machine Learning, Algorithms, Big Data Analytics, and Human&ndash;Computer Interaction. I build at the intersection of software engineering, data analytics, and quantitative research.</p>
+                <p>I've engineered SQL + Python pipelines processing 100M+ claims at Nayya, built AI-driven backend services at Aristotle, and created everything from real-time trading platforms to chess engines with neural evaluation.</p>
+                <p>Outside academics, I compete in chess (2300 USCF, 99th percentile) and am active in Penn's Wharton Investment &amp; Trading Group, Poker Club, and Undergraduate Math Society.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ==================== EXPERIENCE ==================== -->
-<section id="experience" class="section">
+<!-- ===== EXPERIENCE ===== -->
+<section class="experience section" id="experience">
     <div class="container">
-        <h2 class="section-heading scroll-reveal">Experience</h2>
-        <div class="timeline">
-            <div class="timeline-track"></div>
-
-            <!-- Nayya -->
-            <div class="timeline-entry scroll-reveal" style="--delay: 0.1s">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card" data-expandable>
-                    <div class="timeline-header">
+        <h2 class="section-label"><span class="label-num">02</span> Experience</h2>
+        <div class="exp-cards">
+            <article class="exp-card" style="--index: 0">
+                <div class="exp-card-inner">
+                    <div class="exp-header">
                         <div>
-                            <h3 class="timeline-company">Nayya</h3>
-                            <p class="timeline-role">Data Analytics / Data Science Intern</p>
+                            <h3 class="exp-company">Nayya</h3>
+                            <p class="exp-role">Data Analytics / Data Science Intern</p>
                         </div>
-                        <div class="timeline-meta">
-                            <span class="timeline-date">Apr &ndash; Aug 2025</span>
-                            <span class="timeline-location">New York City, NY</span>
+                        <div class="exp-meta">
+                            <span class="exp-date">Apr &ndash; Aug 2025</span>
+                            <span class="exp-loc">New York City, NY</span>
                         </div>
                     </div>
-                    <ul class="timeline-details">
-                        <li>Engineered scalable SQL + Python pipelines processing 100M+ pharmacy/medical claims with Athena, PostgreSQL, dbt; uncovered cost drivers and formulary misalignments, supporting pricing strategy</li>
-                        <li>Automated anomaly detection across millions of rows (outliers, duplicates) with Pandas/NumPy, integrating results into regulatory royalty reporting flows; validated with actuaries to ensure financial accuracy</li>
-                        <li>Delivered interactive Sigma dashboards with trend forecasting and variance analysis, enabling executives to make data-driven product and pricing decisions</li>
+                    <ul class="exp-details">
+                        <li>Engineered scalable SQL + Python pipelines processing 100M+ pharmacy/medical claims with Athena, PostgreSQL, dbt; uncovered cost drivers and formulary misalignments</li>
+                        <li>Automated anomaly detection across millions of rows with Pandas/NumPy, integrating results into regulatory reporting flows</li>
+                        <li>Delivered interactive Sigma dashboards with trend forecasting and variance analysis for executive decision-making</li>
                     </ul>
-                    <span class="expand-hint">Click to expand</span>
                 </div>
-            </div>
-
-            <!-- Aristotle -->
-            <div class="timeline-entry scroll-reveal" style="--delay: 0.2s">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card" data-expandable>
-                    <div class="timeline-header">
+            </article>
+            <article class="exp-card" style="--index: 1">
+                <div class="exp-card-inner">
+                    <div class="exp-header">
                         <div>
-                            <h3 class="timeline-company">Aristotle &mdash; Your AI SDR</h3>
-                            <p class="timeline-role">Software Engineer Intern</p>
+                            <h3 class="exp-company">Aristotle &mdash; Your AI SDR</h3>
+                            <p class="exp-role">Software Engineer Intern</p>
                         </div>
-                        <div class="timeline-meta">
-                            <span class="timeline-date">Jun &ndash; Sep 2023</span>
-                            <span class="timeline-location">Remote</span>
+                        <div class="exp-meta">
+                            <span class="exp-date">Jun &ndash; Sep 2023</span>
+                            <span class="exp-loc">Remote</span>
                         </div>
                     </div>
-                    <ul class="timeline-details">
-                        <li>Prototyped generative-adversarial persona models and deployed AI-driven backend services (TypeScript, Python, AWS) for automated sales enablement</li>
-                        <li>Integrated NLP-based API features to improve lead targeting and response personalization, optimized lead-matching pipeline, cutting latency 20%, improving real-time client demo success rates</li>
+                    <ul class="exp-details">
+                        <li>Prototyped generative-adversarial persona models and deployed AI-driven backend services (TypeScript, Python, AWS)</li>
+                        <li>Integrated NLP-based API features, optimized lead-matching pipeline, cutting latency 20% and improving demo success rates</li>
                     </ul>
-                    <span class="expand-hint">Click to expand</span>
                 </div>
-            </div>
-
-            <!-- NJIT -->
-            <div class="timeline-entry scroll-reveal" style="--delay: 0.3s">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card" data-expandable>
-                    <div class="timeline-header">
+            </article>
+            <article class="exp-card" style="--index: 2">
+                <div class="exp-card-inner">
+                    <div class="exp-header">
                         <div>
-                            <h3 class="timeline-company">NJIT (HSSRI)</h3>
-                            <p class="timeline-role">Student Research Intern</p>
+                            <h3 class="exp-company">NJIT (HSSRI)</h3>
+                            <p class="exp-role">Student Research Intern</p>
                         </div>
-                        <div class="timeline-meta">
-                            <span class="timeline-date">Jun &ndash; Aug 2023</span>
-                            <span class="timeline-location">Newark, NJ</span>
+                        <div class="exp-meta">
+                            <span class="exp-date">Jun &ndash; Aug 2023</span>
+                            <span class="exp-loc">Newark, NJ</span>
                         </div>
                     </div>
-                    <ul class="timeline-details">
+                    <ul class="exp-details">
                         <li>Conducted computational modeling of visual perception systems using TensorFlow, scikit-learn, and PsychoPy</li>
                         <li>Designed and evaluated ML models on experimental datasets, applying statistical methods to quantify perceptual accuracy</li>
                         <li>Presented findings at NJIT Research Symposium</li>
                     </ul>
-                    <span class="expand-hint">Click to expand</span>
                 </div>
-            </div>
+            </article>
         </div>
     </div>
 </section>
 
-<!-- ==================== PROJECTS (3D Carousel) ==================== -->
-<section id="projects" class="section">
+<!-- ===== MARQUEE ===== -->
+<div class="marquee">
+    <div class="marquee-track">
+        <span>Python</span><span>JavaScript</span><span>TypeScript</span><span>C++</span>
+        <span>TensorFlow</span><span>PyTorch</span><span>React</span><span>Node.js</span>
+        <span>FastAPI</span><span>AWS</span><span>PostgreSQL</span><span>Docker</span>
+        <span>Redis</span><span>MongoDB</span><span>Next.js</span><span>Supabase</span>
+        <span>scikit-learn</span><span>Pandas</span>
+        <span>Python</span><span>JavaScript</span><span>TypeScript</span><span>C++</span>
+        <span>TensorFlow</span><span>PyTorch</span><span>React</span><span>Node.js</span>
+        <span>FastAPI</span><span>AWS</span><span>PostgreSQL</span><span>Docker</span>
+        <span>Redis</span><span>MongoDB</span><span>Next.js</span><span>Supabase</span>
+        <span>scikit-learn</span><span>Pandas</span>
+    </div>
+</div>
+
+<!-- ===== PROJECTS (Horizontal Scroll) ===== -->
+<section class="projects section" id="projects">
+    <div class="projects-header container">
+        <h2 class="section-label"><span class="label-num">03</span> Projects</h2>
+        <p class="projects-sub">Selected work spanning trading systems, defense tech, AI engines, and full-stack platforms.</p>
+    </div>
+    <div class="projects-wrap">
+        <div class="projects-track" id="projectsTrack">
+            <article class="project-card">
+                <div class="project-card-inner">
+                    <span class="project-num">01</span>
+                    <h3>EventEdge</h3>
+                    <p class="project-subtitle">Real-Time Auto-Trading Platform</p>
+                    <p class="project-desc">End-to-end prediction market trading system serving 50+ users across NBA, MLB, CBB, WCBB, NHL, soccer, and tennis. Compares win probability estimates against Kalshi contract prices every 3s and executes trades automatically.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>Next.js</span><span>Supabase</span><span>Railway</span><span>Stripe</span><span>RSA-PSS</span>
+                    </div>
+                    <a class="project-link" href="https://eventedgehq.com" target="_blank" rel="noopener">Visit EventEdge <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </article>
+            <article class="project-card">
+                <div class="project-card-inner">
+                    <span class="project-num">02</span>
+                    <h3>HarborOS</h3>
+                    <p class="project-subtitle">Maritime Threat Detection</p>
+                    <p class="project-desc">Real-time maritime defense system ingesting live AIS vessel telemetry via WebSocket, running 11 heuristic anomaly detectors, and surfacing operator-actionable alerts with composite risk scoring.</p>
+                    <div class="project-tags">
+                        <span>Next.js</span><span>React</span><span>MapLibre GL</span><span>FastAPI</span><span>Python</span><span>WebSocket</span>
+                    </div>
+                    <span class="project-link project-link--private">Private Repository</span>
+                </div>
+            </article>
+            <article class="project-card">
+                <div class="project-card-inner">
+                    <span class="project-num">03</span>
+                    <h3>Chess Engine</h3>
+                    <p class="project-subtitle">Analysis Platform</p>
+                    <p class="project-desc">Full-stack chess engine with UCI protocol, PyTorch-based NNUE evaluation (768&rarr;512&rarr;1 with HalfKP features), and a web-based analysis interface with real-time PV streaming.</p>
+                    <div class="project-tags">
+                        <span>C++20</span><span>PyTorch</span><span>React 18</span><span>FastAPI</span><span>PostgreSQL</span><span>Redis</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/asrinivasan75/chess-engine" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </article>
+            <article class="project-card">
+                <div class="project-card-inner">
+                    <span class="project-num">04</span>
+                    <h3>Supplement Tracker</h3>
+                    <p class="project-subtitle">AI Recommendation SaaS</p>
+                    <p class="project-desc">Full-stack personalized supplement tracking with AI-driven recommendations, compliance monitoring, and adherence analytics &mdash; 20% improvement in habit compliance.</p>
+                    <div class="project-tags">
+                        <span>Node.js</span><span>React 19</span><span>MongoDB</span><span>OpenAI API</span><span>Tailwind</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/asrinivasan75/supplement-tracker" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </article>
+            <article class="project-card">
+                <div class="project-card-inner">
+                    <span class="project-num">05</span>
+                    <h3>PokerBot</h3>
+                    <p class="project-subtitle">Reinforcement Learning Agent</p>
+                    <p class="project-desc">Intelligent PokerBot using reinforcement learning with Q-learning and policy gradient methods for strategic call, raise, and fold decisions.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>Keras</span><span>NumPy</span><span>OpenAI Gym</span><span>Q-Learning</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/asrinivasan75/PokerBot" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </article>
+            <article class="project-card">
+                <div class="project-card-inner">
+                    <span class="project-num">06</span>
+                    <h3>Stock Prediction</h3>
+                    <p class="project-subtitle">ML Comparison System</p>
+                    <p class="project-desc">Comprehensive ML system comparing LSTM, GRU, Random Forest, and XGBoost for stock price prediction, achieving 85%+ accuracy through hyperparameter optimization.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>TensorFlow</span><span>Scikit-learn</span><span>Pandas</span><span>LSTM</span>
+                    </div>
+                    <a class="project-link" href="https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
     <div class="container">
-        <h2 class="section-heading scroll-reveal">Projects</h2>
-
-        <div class="carousel-viewport scroll-reveal">
-            <div class="carousel-ring" id="carouselRing">
-
-                <!-- 1: EventEdge -->
-                <div class="carousel-cell">
-                    <article class="pcard">
-                        <h3>EventEdge &mdash; Real-Time Auto-Trading Platform</h3>
-                        <p>End-to-end prediction market trading system serving 50+ users across NBA, MLB, CBB, WCBB, NHL, soccer, and tennis. Compares win probability estimates against Kalshi contract prices every 3s and executes trades automatically.</p>
-                        <div class="pcard-tags">
-                            <span>Python</span><span>Next.js</span><span>Supabase</span><span>Railway</span><span>Stripe</span><span>RSA-PSS</span>
-                        </div>
-                        <ul class="pcard-details">
-                            <li>Real-time probability model vs. Kalshi prices, auto-execution via authenticated API with RSA-PSS signing</li>
-                            <li>6 Railway services, Supabase PostgreSQL, Stripe payments, automatic position settlement</li>
-                            <li>Discord webhooks, Resend transactional email, scheduled content distribution to X and Reddit</li>
-                            <li>Async Python workers orchestrating the full trade lifecycle with a Next.js dashboard</li>
-                        </ul>
-                        <a class="pcard-link" href="https://eventedgehq.com" target="_blank" rel="noopener">Visit EventEdge &rarr;</a>
-                    </article>
-                </div>
-
-                <!-- 2: HarborOS -->
-                <div class="carousel-cell">
-                    <article class="pcard">
-                        <h3>HarborOS &mdash; Maritime Threat Detection</h3>
-                        <p>Real-time maritime defense system ingesting live AIS vessel telemetry via WebSocket, running 11 heuristic anomaly detectors, and surfacing operator-actionable alerts with composite risk scoring across the South China Sea, Strait of Hormuz, and Black Sea.</p>
-                        <div class="pcard-tags">
-                            <span>Next.js</span><span>React</span><span>MapLibre GL</span><span>FastAPI</span><span>Python</span><span>WebSocket</span>
-                        </div>
-                        <ul class="pcard-details">
-                            <li>11 heuristic detectors: geofence breach, AIS dark periods, collision risk, kinematic implausibility, and more</li>
-                            <li>Interactive MapLibre GL mapping with satellite imagery overlays</li>
-                            <li>Python/FastAPI async backend with end-to-end operator workflow</li>
-                            <li>Verification dispatch, audit trails, and data archival pipeline</li>
-                        </ul>
-                        <span class="pcard-link pcard-link--private">Private Repository</span>
-                    </article>
-                </div>
-
-                <!-- 3: Chess Engine -->
-                <div class="carousel-cell">
-                    <article class="pcard">
-                        <h3>Chess Engine Analysis Platform</h3>
-                        <p>Full-stack chess engine with UCI protocol, PyTorch-based NNUE evaluation, and a web-based analysis interface with real-time PV streaming.</p>
-                        <div class="pcard-tags">
-                            <span>C++20</span><span>PyTorch</span><span>React 18</span><span>FastAPI</span><span>PostgreSQL</span><span>Redis</span>
-                        </div>
-                        <ul class="pcard-details">
-                            <li>Alpha-beta search, transposition tables, killer heuristics, LMR, null-move pruning</li>
-                            <li>NNUE (768&rarr;512&rarr;1) with HalfKP features, SPRT testing, ELO tracking</li>
-                            <li>FastAPI + WebSockets, React 18 + TypeScript, PostgreSQL, Redis, Celery</li>
-                            <li>Optimized with -O3, bitboard operations, CI/CD via GitHub Actions</li>
-                        </ul>
-                        <a class="pcard-link" href="https://github.com/asrinivasan75/chess-engine" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-                    </article>
-                </div>
-
-                <!-- 4: Supplement Tracker -->
-                <div class="carousel-cell">
-                    <article class="pcard">
-                        <h3>Supplement Tracker &amp; Recommendation SaaS</h3>
-                        <p>Full-stack personalized supplement tracking with AI-driven recommendations, compliance monitoring, and adherence analytics&mdash;20% improvement in habit compliance.</p>
-                        <div class="pcard-tags">
-                            <span>Node.js</span><span>React 19</span><span>MongoDB</span><span>OpenAI API</span><span>Tailwind</span>
-                        </div>
-                        <ul class="pcard-details">
-                            <li>Node.js + Express, MongoDB Atlas, JWT auth with bcryptjs</li>
-                            <li>OpenAI GPT-3.5-turbo via OpenRouter for health profile analysis</li>
-                            <li>Multi-step health assessment, AI recommendations with scientific reasoning</li>
-                            <li>Weekly adherence %, streak tracking, per-supplement intake trends</li>
-                        </ul>
-                        <a class="pcard-link" href="https://github.com/asrinivasan75/supplement-tracker" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-                    </article>
-                </div>
-
-                <!-- 5: PokerBot -->
-                <div class="carousel-cell">
-                    <article class="pcard">
-                        <h3>PokerBot with Reinforcement Learning</h3>
-                        <p>Intelligent PokerBot using reinforcement learning to simulate realistic gameplay with strategic call, raise, and fold decisions based on game state analysis.</p>
-                        <div class="pcard-tags">
-                            <span>Python</span><span>Keras</span><span>NumPy</span><span>OpenAI Gym</span><span>Q-Learning</span>
-                        </div>
-                        <ul class="pcard-details">
-                            <li>Q-learning and policy gradient methods for decision optimization</li>
-                            <li>Game state evaluation, dynamic betting strategies, opponent modeling</li>
-                            <li>Reward shaping for long-term strategic play beyond immediate hand outcomes</li>
-                        </ul>
-                        <a class="pcard-link" href="https://github.com/asrinivasan75/PokerBot" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-                    </article>
-                </div>
-
-                <!-- 6: Stock Prediction -->
-                <div class="carousel-cell">
-                    <article class="pcard">
-                        <h3>Stock Price Prediction Using ML</h3>
-                        <p>Comprehensive ML system comparing LSTM, GRU, Random Forest, and XGBoost for stock price prediction, achieving 85%+ accuracy through hyperparameter optimization.</p>
-                        <div class="pcard-tags">
-                            <span>Python</span><span>TensorFlow</span><span>Scikit-learn</span><span>Pandas</span><span>LSTM</span>
-                        </div>
-                        <ul class="pcard-details">
-                            <li>Feature engineering: moving averages, RSI, MACD, time series cross-validation</li>
-                            <li>LSTM neural networks, GRU, Random Forest, XGBoost comparison</li>
-                            <li>85%+ accuracy in short-term predictions, comprehensive model analysis</li>
-                        </ul>
-                        <a class="pcard-link" href="https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-" target="_blank" rel="noopener">View on GitHub &rarr;</a>
-                    </article>
-                </div>
-
+        <div class="footer-top">
+            <h2 class="footer-heading">Let&rsquo;s connect<span class="accent-dot">.</span></h2>
+            <p class="footer-sub">Always interested in new opportunities, collaborations, and interesting problems.</p>
+            <div class="footer-links">
+                <a href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer" data-magnetic>GitHub</a>
+                <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn</a>
+                <a href="resume.pdf" download data-magnetic>Resume</a>
             </div>
         </div>
-
-        <div class="carousel-controls scroll-reveal">
-            <button class="carousel-btn" id="carouselPrev" aria-label="Previous project">&larr;</button>
-            <span class="carousel-counter" id="carouselCounter"></span>
-            <button class="carousel-btn" id="carouselNext" aria-label="Next project">&rarr;</button>
-        </div>
-        <p class="carousel-hint scroll-reveal">Drag to spin &middot; Arrow keys to navigate</p>
-    </div>
-</section>
-
-<!-- ==================== SKILLS & RESUME ==================== -->
-<section id="skills" class="section">
-    <div class="container">
-        <div class="skills-resume-grid">
-            <div class="skills-col">
-                <h2 class="section-heading scroll-reveal">Skills</h2>
-
-                <div class="skill-domain scroll-reveal">
-                    <h4>Languages</h4>
-                    <div class="skill-tags">
-                        <span>Python</span><span>JavaScript</span><span>TypeScript</span><span>C++</span><span>SQL</span><span>Java</span><span>HTML/CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-domain scroll-reveal">
-                    <h4>ML &amp; AI</h4>
-                    <div class="skill-tags">
-                        <span>TensorFlow</span><span>PyTorch</span><span>scikit-learn</span><span>Keras</span><span>NumPy</span><span>Pandas</span><span>OpenAI API</span>
-                    </div>
-                </div>
-
-                <div class="skill-domain scroll-reveal">
-                    <h4>Web &amp; Backend</h4>
-                    <div class="skill-tags">
-                        <span>React</span><span>Node.js</span><span>Express</span><span>FastAPI</span><span>PostgreSQL</span><span>MongoDB</span><span>Tailwind CSS</span>
-                    </div>
-                </div>
-
-                <div class="skill-domain scroll-reveal">
-                    <h4>Tools &amp; Infra</h4>
-                    <div class="skill-tags">
-                        <span>AWS</span><span>Git</span><span>Docker</span><span>Redis</span><span>Celery</span><span>dbt</span><span>GitHub Actions</span>
-                    </div>
-                </div>
-
-                <div class="skill-domain scroll-reveal">
-                    <h4>Domains</h4>
-                    <div class="skill-tags">
-                        <span>Machine Learning</span><span>Data Analytics</span><span>Competitive Programming</span><span>Cybersecurity</span><span>Quantitative Research</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="resume-col scroll-reveal">
-                <h2 class="section-heading">Resume</h2>
-                <div class="resume-card">
-                    <h4>Download My Resume</h4>
-                    <p>Comprehensive resume featuring my latest projects, skills, and achievements in AI/ML, web development, and competitive programming.</p>
-                    <div class="resume-badges">
-                        <span class="badge">Recently Updated</span>
-                        <span class="badge">PDF Format</span>
-                    </div>
-                    <a href="resume.pdf" download class="btn btn-primary">
-                        <span uk-icon="icon: file-text; ratio: 0.9"></span> Download Resume
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ==================== FOOTER ==================== -->
-<footer class="site-footer">
-    <div class="container footer-inner">
-        <span>&copy; 2025 Aadithya Srinivasan</span>
-        <div class="footer-links">
-            <a href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Aadithya Srinivasan</span>
+            <span>Designed &amp; built from scratch</span>
         </div>
     </div>
 </footer>
 
-<!-- Back to top -->
-<a href="#" id="backToTop" title="Back to Top">&uarr;</a>
-
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
 <script src="js/scripts.js"></script>
 </body>
 </html>
