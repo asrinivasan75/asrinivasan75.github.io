@@ -1,297 +1,315 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aadithya Srinivasan</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Aadithya Srinivasan — pick your floor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --serif:"Instrument Serif",Georgia,serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+    --bg:#08090c;
+  }
+  html,body{height:100%;}
+  body{
+    background:var(--bg);
+    color:#eef0f3;
+    font-family:var(--serif);
+    overflow:hidden;
+  }
+
+  /* prompt */
+  .prompt{
+    position:fixed; top:36px; left:50%;
+    transform:translateX(-50%);
+    font-family:var(--mono); font-size:11px;
+    letter-spacing:.22em; text-transform:uppercase;
+    color:#5a5e69; z-index:20;
+    text-align:center; line-height:1.8;
+    pointer-events:none;
+  }
+  .prompt b{ color:#eef0f3; font-weight:500;}
+
+  /* grid container — 3 columns */
+  .grid{
+    width:100vw; height:100vh;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:1px;
+    background:rgba(238,240,243,0.06);
+  }
+  .quad{
+    position:relative;
+    overflow:hidden;
+    background:var(--bg);
+    cursor:pointer;
+    text-decoration:none;
+    color:inherit;
+    transition: filter .35s, transform .8s cubic-bezier(.2,.8,.2,1);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .quad:hover{ filter: brightness(1.18);}
+  .grid:hover .quad:not(:hover){ filter: brightness(.5);}
+
+  .quad.markets { background:#0a0b0e;}
+  .quad.terminal{ background:#0a0805;}
+  .quad.forest  { background:#06090a;}
+
+  /* card content */
+  .card{
+    position:relative; z-index:3;
+    text-align:center;
+    padding:0 36px;
+    transition: transform .55s cubic-bezier(.2,.8,.2,1);
+  }
+  .quad:hover .card{ transform:translateY(-8px) scale(1.02);}
+
+  .label{
+    font-family:var(--mono); font-size:10px;
+    letter-spacing:.32em; text-transform:uppercase;
+    margin-bottom:22px;
+    opacity:.9;
+  }
+  .markets .label  { color:#3ee08b;}
+  .terminal .label { color:#ffb536; text-shadow:0 0 10px rgba(255,181,54,0.5);}
+  .forest .label   { color:#e8c170; text-shadow:0 0 8px rgba(232,193,112,0.4);}
+
+  h2{
+    font-family:var(--serif); font-weight:400;
+    font-size: clamp(46px, 5vw, 80px);
+    line-height:.96; letter-spacing:-.02em;
+    margin-bottom:18px;
+    color:#f5e9d2;
+  }
+  h2 em{ font-style:italic;}
+  .markets h2 em{ color:#3ee08b;}
+  .terminal h2{ color:#f5e9d2; text-shadow:0 0 18px rgba(255,181,54,0.2);}
+  .terminal h2 em{ color:#ffb536; text-shadow:0 0 18px rgba(255,181,54,0.55);}
+  .forest h2 em{ color:#e8c170;}
+
+  .sub{
+    font-family:var(--mono); font-size:11px;
+    letter-spacing:.16em; text-transform:uppercase;
+    color:#8b8f99; margin-bottom:28px;
+    line-height:1.7;
+  }
+
+  .enter{
+    font-family:var(--mono); font-size:10px;
+    letter-spacing:.25em; text-transform:uppercase;
+    padding:12px 24px; border:1px solid;
+    background:transparent;
+    transition:all .25s; display:inline-flex; align-items:center; gap:10px;
+  }
+  .markets .enter{ border-color:rgba(62,224,139,0.4); color:#3ee08b;}
+  .markets .enter:hover{ background:#3ee08b; color:#0a0b0e;}
+  .terminal .enter{ border-color:rgba(255,181,54,0.4); color:#ffb536;}
+  .terminal .enter:hover{ background:#ffb536; color:#0a0805;}
+  .forest .enter{ border-color:rgba(232,193,112,0.4); color:#e8c170;}
+  .forest .enter:hover{ background:#e8c170; color:#0a0b0e;}
+
+  /* MARKETS bg — drifting price grid + lines */
+  .mkt-bg{
+    position:absolute; inset:0; pointer-events:none;
+    opacity:.15;
+    background-image:
+      linear-gradient(rgba(62,224,139,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(62,224,139,0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+    transition: opacity .4s;
+  }
+  .quad.markets:hover .mkt-bg{ opacity:.3;}
+  .mkt-lines{ position:absolute; inset:0; pointer-events:none;}
+  .mkt-lines svg{ width:100%; height:100%;}
+
+  /* TERMINAL bg — scrolling tape */
+  .term-bg{
+    position:absolute; inset:0; overflow:hidden;
+    pointer-events:none; opacity:.13;
+    transition:opacity .4s;
+  }
+  .quad.terminal:hover .term-bg{ opacity:.34;}
+  .term-bg::before{
+    content:""; position:absolute; inset:0;
+    background: repeating-linear-gradient(180deg, transparent 0, transparent 2px, rgba(0,0,0,0.35) 2px, rgba(0,0,0,0.35) 3px);
+  }
+  .term-scroll{
+    font-family:var(--mono); font-size:10px;
+    color:#ffb536; line-height:2;
+    white-space:nowrap; padding:0 16px;
+    text-shadow:0 0 6px rgba(255,181,54,0.5);
+    animation: tape 30s linear infinite;
+  }
+  @keyframes tape{ 0%{transform:translateY(0);} 100%{transform:translateY(-50%);} }
+
+  /* FOREST bg — candlesticks */
+  .forest-bg{
+    position:absolute; inset:0; pointer-events:none;
+    opacity:.2; transition: opacity .4s;
+    overflow:hidden;
+  }
+  .quad.forest:hover .forest-bg{ opacity:.42;}
+  .forest-bg .cdl{
+    position:absolute; bottom:18%;
+    width:6px; transform-origin: bottom center;
+  }
+  .forest-bg .cdl::before{
+    content:""; position:absolute; left:50%; top:-30%;
+    width:1px; height:30%; background:currentColor;
+    transform:translateX(-50%);
+  }
+  .forest-bg .cdl::after{
+    content:""; position:absolute; left:50%; bottom:-30%;
+    width:1px; height:30%; background:currentColor;
+    transform:translateX(-50%);
+  }
+  .forest-bg .cdl.up{ background:#3ee08b; color:#3ee08b;}
+  .forest-bg .cdl.dn{ background:#ff5e6b; color:#ff5e6b;}
+
+  /* footer */
+  .foot{
+    position:fixed; bottom:18px; left:0; right:0;
+    text-align:center;
+    font-family:var(--mono); font-size:9px;
+    letter-spacing:.2em; text-transform:uppercase;
+    color:#3a3d44; z-index:10;
+    pointer-events:none;
+  }
+  .foot a{ color:#5a5e69; text-decoration:none; margin:0 8px; pointer-events:auto;}
+  .foot a:hover{ color:#eef0f3;}
+
+  /* small badge — open to work */
+  .badge{
+    position:fixed; top:36px; right:32px; z-index:20;
+    font-family:var(--mono); font-size:10px;
+    letter-spacing:.18em; text-transform:uppercase;
+    color:#8b8f99;
+    pointer-events:none;
+  }
+  .badge .dot{
+    display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:#3ee08b; box-shadow:0 0 8px #3ee08b;
+    margin-right:6px; animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 50%{ opacity:.4;} }
+
+  @media (max-width:780px){
+    .grid{
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(3, 1fr);
+    }
+    .grid:hover .quad:not(:hover){ filter:none;}
+    h2{ font-size:38px;}
+    .sub{ font-size:10px;}
+    .prompt{ font-size:10px; top:18px;}
+    .badge{ display:none;}
+  }
+</style>
 </head>
 <body>
 
-<!-- Grain overlay -->
-<div class="grain"></div>
-
-<!-- Custom cursor -->
-<div class="cursor" id="cursor">
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
+<div class="prompt">
+  <span style="color:#8b8f99">aadithya srinivasan · upenn cs / math</span><br>
+  <b>three floors of one portfolio · pick your view</b>
 </div>
 
-<!-- Scroll progress -->
-<div class="progress" id="progress"></div>
+<div class="badge"><span class="dot"></span>Open to work</div>
 
-<!-- Navigation -->
-<nav id="nav">
-    <div class="nav-inner">
-        <a href="#" class="nav-logo" data-magnetic>AS</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-            <span></span><span></span>
-        </button>
-        <div class="nav-links" id="navLinks">
-            <a href="#about" data-magnetic>About</a>
-            <a href="#experience" data-magnetic>Experience</a>
-            <a href="#projects" data-magnetic>Projects</a>
-            <a href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer" data-magnetic>GitHub</a>
-            <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn</a>
-        </div>
-    </div>
-</nav>
+<div class="grid">
 
-<!-- ===== HERO ===== -->
-<section class="hero" id="hero">
-    <canvas id="heroCanvas"></canvas>
-    <div class="hero-content">
-        <div class="hero-eyebrow">
-            <span class="reveal-line"><span class="reveal-line-inner">Portfolio &mdash; 2026</span></span>
-        </div>
-        <h1 class="hero-name">
-            <span class="reveal-line"><span class="reveal-line-inner">Aadithya</span></span>
-            <span class="reveal-line"><span class="reveal-line-inner">Srinivasan</span></span>
-        </h1>
-        <div class="hero-sub">
-            <span class="reveal-line"><span class="reveal-line-inner">CS &amp; Mathematics @ University of Pennsylvania</span></span>
-        </div>
-        <div class="hero-cta reveal-fade">
-            <a href="#projects" class="btn btn-primary" data-magnetic><span>Explore Work</span></a>
-            <a href="resume.pdf" download class="btn btn-ghost" data-magnetic>
-                <span>Resume</span>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v8m0 0L4 7m3 3l3-3M2 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-        </div>
+  <a class="quad markets" href="markets.html">
+    <div class="mkt-bg"></div>
+    <div class="mkt-lines">
+      <svg viewBox="0 0 600 400" preserveAspectRatio="none">
+        <polyline id="mktLine1" fill="none" stroke="rgba(62,224,139,0.5)" stroke-width="1.2" points=""/>
+        <polyline id="mktLine2" fill="none" stroke="rgba(255,94,107,0.3)" stroke-width="1" points=""/>
+      </svg>
     </div>
-    <div class="scroll-indicator" id="scrollIndicator">
-        <span>Scroll</span>
-        <div class="scroll-line"><div class="scroll-line-fill"></div></div>
+    <div class="card">
+      <div class="label">◇ The Exchange</div>
+      <h2>Trade the <em>thesis.</em></h2>
+      <div class="sub">Prediction markets · YES / NO<br>22 contracts · paper trade live</div>
+      <span class="enter">Enter floor →</span>
     </div>
-</section>
+  </a>
 
-<!-- ===== SCROLL WORDS ===== -->
-<section class="words-section" id="words">
-    <div class="words-sticky">
-        <div class="word is-active" data-index="0">
-            <span class="word-main">Engineer<span class="accent-dot">.</span></span>
-            <span class="word-sub">Building systems that scale</span>
-        </div>
-        <div class="word" data-index="1">
-            <span class="word-main">Researcher<span class="accent-dot">.</span></span>
-            <span class="word-sub">Pushing boundaries in ML &amp; AI</span>
-        </div>
-        <div class="word" data-index="2">
-            <span class="word-main">Builder<span class="accent-dot">.</span></span>
-            <span class="word-sub">From concept to production</span>
-        </div>
+  <a class="quad terminal" href="terminal.html">
+    <div class="term-bg">
+      <div class="term-scroll" id="termScroll"></div>
     </div>
-</section>
+    <div class="card">
+      <div class="label">▮ AS://TERM</div>
+      <h2>Read the <em>tape.</em></h2>
+      <div class="sub">Bloomberg-style terminal<br>21 headlines · F-keys · type :help</div>
+      <span class="enter">Connect →</span>
+    </div>
+  </a>
 
-<!-- ===== ABOUT ===== -->
-<section class="about section" id="about">
-    <div class="container">
-        <h2 class="section-label scroll-reveal"><span class="label-num">01</span> About</h2>
-        <div class="about-grid">
-            <div class="about-image scroll-reveal">
-                <div class="image-reveal">
-                    <img src="images/profile.jpg" alt="Aadithya Srinivasan">
-                </div>
-            </div>
-            <div class="about-text">
-                <p class="about-lead scroll-reveal">I'm a student at the University of Pennsylvania pursuing a B.S.E. in Computer Science and Mathematics.</p>
-                <p class="scroll-reveal">My coursework spans Machine Learning, Algorithms, Big Data Analytics, and Human&ndash;Computer Interaction. I build at the intersection of software engineering, data analytics, and quantitative research.</p>
-                <p class="scroll-reveal">I've engineered SQL + Python pipelines processing 100M+ claims at Nayya, built AI-driven backend services at Aristotle, and created everything from real-time trading platforms to chess engines with neural evaluation.</p>
-                <p class="scroll-reveal">Outside academics, I compete in chess (2300 Chess.com, 99th percentile) and am active in Penn's Wharton Investment &amp; Trading Group, Poker Club, and Undergraduate Math Society.</p>
-            </div>
-        </div>
+  <a class="quad forest" href="forest.html">
+    <div class="forest-bg" id="forestBg"></div>
+    <div class="card">
+      <div class="label">⌂ The Forest</div>
+      <h2>Wander the <em>candles.</em></h2>
+      <div class="sub">Candlestick landscape<br>6 labeled candles · ambient field</div>
+      <span class="enter">Wander →</span>
     </div>
-</section>
+  </a>
 
-<!-- ===== EXPERIENCE ===== -->
-<section class="experience section" id="experience">
-    <div class="container">
-        <h2 class="section-label scroll-reveal"><span class="label-num">02</span> Experience</h2>
-        <div class="exp-cards">
-            <article class="exp-card scroll-reveal" style="--index: 0">
-                <div class="exp-card-inner">
-                    <div class="exp-header">
-                        <div>
-                            <h3 class="exp-company">Nayya</h3>
-                            <p class="exp-role">Data Analytics / Data Science Intern</p>
-                        </div>
-                        <div class="exp-meta">
-                            <span class="exp-date">Apr &ndash; Aug 2025</span>
-                            <span class="exp-loc">New York City, NY</span>
-                        </div>
-                    </div>
-                    <ul class="exp-details">
-                        <li>Engineered scalable SQL + Python pipelines processing 100M+ pharmacy/medical claims with Athena, PostgreSQL, dbt; uncovered cost drivers and formulary misalignments</li>
-                        <li>Automated anomaly detection across millions of rows with Pandas/NumPy, integrating results into regulatory reporting flows</li>
-                        <li>Delivered interactive Sigma dashboards with trend forecasting and variance analysis for executive decision-making</li>
-                    </ul>
-                </div>
-            </article>
-            <article class="exp-card scroll-reveal" style="--index: 1">
-                <div class="exp-card-inner">
-                    <div class="exp-header">
-                        <div>
-                            <h3 class="exp-company">Aristotle &mdash; Your AI SDR</h3>
-                            <p class="exp-role">Software Engineer Intern</p>
-                        </div>
-                        <div class="exp-meta">
-                            <span class="exp-date">Jun &ndash; Sep 2023</span>
-                            <span class="exp-loc">Remote</span>
-                        </div>
-                    </div>
-                    <ul class="exp-details">
-                        <li>Prototyped generative-adversarial persona models and deployed AI-driven backend services (TypeScript, Python, AWS)</li>
-                        <li>Integrated NLP-based API features, optimized lead-matching pipeline, cutting latency 20% and improving demo success rates</li>
-                    </ul>
-                </div>
-            </article>
-            <article class="exp-card scroll-reveal" style="--index: 2">
-                <div class="exp-card-inner">
-                    <div class="exp-header">
-                        <div>
-                            <h3 class="exp-company">NJIT (HSSRI)</h3>
-                            <p class="exp-role">Student Research Intern</p>
-                        </div>
-                        <div class="exp-meta">
-                            <span class="exp-date">Jun &ndash; Aug 2023</span>
-                            <span class="exp-loc">Newark, NJ</span>
-                        </div>
-                    </div>
-                    <ul class="exp-details">
-                        <li>Conducted computational modeling of visual perception systems using TensorFlow, scikit-learn, and PsychoPy</li>
-                        <li>Designed and evaluated ML models on experimental datasets, applying statistical methods to quantify perceptual accuracy</li>
-                        <li>Presented findings at NJIT Research Symposium</li>
-                    </ul>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
-
-<!-- ===== MARQUEE ===== -->
-<div class="marquee">
-    <div class="marquee-track">
-        <span>Python</span><span>JavaScript</span><span>TypeScript</span><span>C++</span>
-        <span>TensorFlow</span><span>PyTorch</span><span>React</span><span>Node.js</span>
-        <span>FastAPI</span><span>AWS</span><span>PostgreSQL</span><span>Docker</span>
-        <span>Redis</span><span>MongoDB</span><span>Next.js</span><span>Supabase</span>
-        <span>scikit-learn</span><span>Pandas</span>
-        <span>Python</span><span>JavaScript</span><span>TypeScript</span><span>C++</span>
-        <span>TensorFlow</span><span>PyTorch</span><span>React</span><span>Node.js</span>
-        <span>FastAPI</span><span>AWS</span><span>PostgreSQL</span><span>Docker</span>
-        <span>Redis</span><span>MongoDB</span><span>Next.js</span><span>Supabase</span>
-        <span>scikit-learn</span><span>Pandas</span>
-    </div>
 </div>
 
-<!-- ===== PROJECTS (Horizontal Scroll) ===== -->
-<section class="projects section" id="projects">
-    <div class="projects-header container">
-        <h2 class="section-label scroll-reveal"><span class="label-num">03</span> Projects</h2>
-        <p class="projects-sub scroll-reveal">Selected work spanning trading systems, defense tech, AI engines, and full-stack platforms.</p>
-    </div>
-    <div class="projects-wrap">
-        <div class="projects-track" id="projectsTrack">
-            <article class="project-card">
-                <div class="project-card-inner">
-                    <span class="project-num">01</span>
-                    <h3>EventEdge</h3>
-                    <p class="project-subtitle">Real-Time Auto-Trading Platform</p>
-                    <p class="project-desc">End-to-end prediction market trading system serving 50+ users across NBA, MLB, CBB, WCBB, NHL, soccer, and tennis. Compares win probability estimates against Kalshi contract prices every 3s and executes trades automatically.</p>
-                    <div class="project-tags">
-                        <span>Python</span><span>Next.js</span><span>Supabase</span><span>Railway</span><span>Stripe</span><span>RSA-PSS</span>
-                    </div>
-                    <a class="project-link" href="https://eventedgehq.com" target="_blank" rel="noopener">Visit EventEdge <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                </div>
-            </article>
-            <article class="project-card">
-                <div class="project-card-inner">
-                    <span class="project-num">02</span>
-                    <h3>HarborOS</h3>
-                    <p class="project-subtitle">Maritime Threat Detection</p>
-                    <p class="project-desc">Real-time maritime defense system ingesting live AIS vessel telemetry via WebSocket, running 11 heuristic anomaly detectors, and surfacing operator-actionable alerts with composite risk scoring.</p>
-                    <div class="project-tags">
-                        <span>Next.js</span><span>React</span><span>MapLibre GL</span><span>FastAPI</span><span>Python</span><span>WebSocket</span>
-                    </div>
-                    <span class="project-link project-link--private">Private Repository</span>
-                </div>
-            </article>
-            <article class="project-card">
-                <div class="project-card-inner">
-                    <span class="project-num">03</span>
-                    <h3>Chess Engine</h3>
-                    <p class="project-subtitle">Analysis Platform</p>
-                    <p class="project-desc">Full-stack chess engine with UCI protocol, PyTorch-based NNUE evaluation (768&rarr;512&rarr;1 with HalfKP features), and a web-based analysis interface with real-time PV streaming.</p>
-                    <div class="project-tags">
-                        <span>C++20</span><span>PyTorch</span><span>React 18</span><span>FastAPI</span><span>PostgreSQL</span><span>Redis</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/asrinivasan75/chess-engine" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                </div>
-            </article>
-            <article class="project-card">
-                <div class="project-card-inner">
-                    <span class="project-num">04</span>
-                    <h3>Supplement Tracker</h3>
-                    <p class="project-subtitle">AI Recommendation SaaS</p>
-                    <p class="project-desc">Full-stack personalized supplement tracking with AI-driven recommendations, compliance monitoring, and adherence analytics &mdash; 20% improvement in habit compliance.</p>
-                    <div class="project-tags">
-                        <span>Node.js</span><span>React 19</span><span>MongoDB</span><span>OpenAI API</span><span>Tailwind</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/asrinivasan75/supplement-tracker" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                </div>
-            </article>
-            <article class="project-card">
-                <div class="project-card-inner">
-                    <span class="project-num">05</span>
-                    <h3>PokerBot</h3>
-                    <p class="project-subtitle">Reinforcement Learning Agent</p>
-                    <p class="project-desc">Intelligent PokerBot using reinforcement learning with Q-learning and policy gradient methods for strategic call, raise, and fold decisions.</p>
-                    <div class="project-tags">
-                        <span>Python</span><span>Keras</span><span>NumPy</span><span>OpenAI Gym</span><span>Q-Learning</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/asrinivasan75/PokerBot" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                </div>
-            </article>
-            <article class="project-card">
-                <div class="project-card-inner">
-                    <span class="project-num">06</span>
-                    <h3>Stock Prediction</h3>
-                    <p class="project-subtitle">ML Comparison System</p>
-                    <p class="project-desc">Comprehensive ML system comparing LSTM, GRU, Random Forest, and XGBoost for stock price prediction, achieving 85%+ accuracy through hyperparameter optimization.</p>
-                    <div class="project-tags">
-                        <span>Python</span><span>TensorFlow</span><span>Scikit-learn</span><span>Pandas</span><span>LSTM</span>
-                    </div>
-                    <a class="project-link" href="https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-" target="_blank" rel="noopener">View on GitHub <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 13L13 1M13 1H3M13 1v10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
+<div class="foot">
+  <a href="https://github.com/asrinivasan75" target="_blank">GitHub</a>·
+  <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank">LinkedIn</a>·
+  <a href="mailto:aadithya.srinivasan@gmail.com">Email</a>·
+  <a href="assets/resume.pdf" download>CV</a>
+</div>
 
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-top">
-            <h2 class="footer-heading">Let&rsquo;s connect<span class="accent-dot">.</span></h2>
-            <p class="footer-sub">Always interested in new opportunities, collaborations, and interesting problems.</p>
-            <div class="footer-links">
-                <a href="https://github.com/asrinivasan75" target="_blank" rel="noopener noreferrer" data-magnetic>GitHub</a>
-                <a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" rel="noopener noreferrer" data-magnetic>LinkedIn</a>
-                <a href="resume.pdf" download data-magnetic>Resume</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <span>&copy; 2026 Aadithya Srinivasan</span>
-            <span>Designed &amp; built from scratch</span>
-        </div>
-    </div>
-</footer>
+<script>
+/* MARKETS — animated price lines */
+function genLine(climb){
+  const N = 60, w = 600, h = 400;
+  let v = h*0.5;
+  const pts = [];
+  for(let i=0;i<N;i++){
+    v += (Math.random()-0.5+climb)*14;
+    v = Math.max(40, Math.min(h-40, v));
+    pts.push(`${(i/(N-1))*w},${v.toFixed(0)}`);
+  }
+  return pts.join(' ');
+}
+function refresh(){
+  document.getElementById('mktLine1').setAttribute('points', genLine(-0.05));
+  document.getElementById('mktLine2').setAttribute('points', genLine( 0.03));
+}
+refresh(); setInterval(refresh, 3500);
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="js/scripts.js"></script>
+/* TERMINAL — scrolling tape */
+const tickers = [
+  'NAYYA-PIPE  100M+ ▲','EVNT-EDGE  +12.4 ▲','CHESS  2300 =','HARBOR-OS  +9.1 ▲',
+  'CHESS-ENG  NNUE ▲','ARIST  -20% ▲','SKILL-PY  98¢ =','SKILL-TS  96¢ =',
+  'POKERBOT  RL ▲','STOCK-ML  85% ▲','SUPP-TRK  +20% ▲','WITG  active =',
+  'PUMS  active =','UPENN  BSE =','STATUS  ● OPEN-TO-WORK ▲'
+];
+const tape = tickers.concat(tickers).map(t=>`<div>▸ ${t}</div>`).join('');
+document.getElementById('termScroll').innerHTML = tape;
+
+/* FOREST — generate candlesticks background */
+(function(){
+  const wrap = document.getElementById('forestBg');
+  let html = '';
+  for(let i=0;i<22;i++){
+    const left = 4 + i*4.4 + Math.random()*1.5;
+    const isUp = Math.random() > 0.4;
+    const h = 18 + Math.random()*48;
+    html += `<div class="cdl ${isUp?'up':'dn'}" style="left:${left}%; height:${h}px; opacity:${0.4+Math.random()*0.6}"></div>`;
+  }
+  wrap.innerHTML = html;
+})();
+</script>
+
 </body>
 </html>

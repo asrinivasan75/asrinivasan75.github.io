@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AS://TERM — Aadithya Srinivasan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0805;
+    --bg-2:#0f0c08;
+    --bg-3:#1a140c;
+    --amber:#ffb536;
+    --amber-d:#c98414;
+    --amber-glow: rgba(255,181,54,0.45);
+    --green:#43e0a4;
+    --red:#ff5e6b;
+    --ink:#f5e9d2;
+    --ink-dim:#9a8b6c;
+    --ink-faint:#5a4f3a;
+    --line: rgba(255,181,54,0.10);
+    --line-strong: rgba(255,181,54,0.25);
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+    --serif:"Instrument Serif",Georgia,serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.55;
+    overflow-x:hidden;
+  }
+  /* CRT scanline */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:200;
+    background: repeating-linear-gradient(180deg, transparent 0, transparent 2px, rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 3px);
+    mix-blend-mode: multiply;
+    opacity:.55;
+  }
+  body::after{
+    /* phosphor vignette */
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:201;
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(10,8,5,0.65) 100%);
+  }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; }
+  
+  /* ============ TOP TICKER ============ */
+  .ticker-bar{
+    height: 28px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line-strong);
+    display:flex; align-items:center; overflow:hidden;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--ink-dim);
+    position: sticky; top:0; z-index: 50;
+    text-shadow: 0 0 6px var(--amber-glow);
+  }
+  .ticker-track{
+    display:inline-flex; gap: 36px; padding-left: 24px; white-space:nowrap;
+    animation: scroll 80s linear infinite;
+  }
+  @keyframes scroll{ to{ transform: translateX(-50%); } }
+  .ticker-track b{ color: var(--amber); font-weight:500; margin-right:6px;}
+  .ticker-track .up{ color: var(--green);}
+  .ticker-track .dn{ color: var(--red);}
+
+  /* ============ FUNCTION BAR ============ */
+  .funcbar{
+    height: 36px;
+    border-bottom: 1px solid var(--line-strong);
+    display:flex; align-items:stretch;
+    background: var(--bg-2);
+    position: sticky; top: 28px; z-index: 49;
+  }
+  .funcbar .prompt{
+    display:flex; align-items:center; gap: 10px;
+    padding: 0 16px; color: var(--amber);
+    font-size: 12px; letter-spacing: .04em;
+    border-right: 1px solid var(--line);
+  }
+  .funcbar .prompt::before{
+    content:""; width: 8px; height: 8px;
+    background: var(--green); border-radius: 50%;
+    box-shadow: 0 0 8px var(--green);
+    animation: blink 1.4s ease-in-out infinite;
+  }
+  @keyframes blink{ 50%{ opacity:.3;} }
+  .funcbar .keys{
+    display:flex; align-items:center; gap: 0;
+    padding-left: 0;
+    flex-grow: 1; overflow-x:auto;
+  }
+  .funcbar .keys button{
+    background: transparent; border:0;
+    padding: 0 16px;
+    color: var(--ink-dim);
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: .12em;
+    border-right: 1px solid var(--line);
+    transition: background .2s, color .2s;
+    height: 100%;
+    text-transform: uppercase;
+  }
+  .funcbar .keys button .num{
+    color: var(--amber); margin-right: 6px;
+  }
+  .funcbar .keys button:hover{ background: var(--bg-3); color: var(--ink);}
+  .funcbar .keys button.active{ background: var(--bg-3); color: var(--amber); text-shadow: 0 0 8px var(--amber-glow);}
+  .funcbar .clock{
+    padding: 0 16px;
+    display:flex; align-items:center; gap:14px;
+    color: var(--ink-dim);
+    font-size: 11px; border-left:1px solid var(--line);
+  }
+  .funcbar .clock b{ color: var(--amber);}
+
+  /* ============ MAIN GRID ============ */
+  main{
+    display:grid;
+    grid-template-columns: 70px 1fr 320px;
+    min-height: calc(100vh - 64px);
+  }
+  /* left rail with vertical labels */
+  .rail{
+    border-right: 1px solid var(--line);
+    background: var(--bg-2);
+    display:flex; flex-direction:column; align-items:center;
+    padding: 16px 0;
+    gap: 18px;
+    font-size: 10px;
+    letter-spacing: .2em;
+  }
+  .rail .lab{
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .rail .lab.on{ color: var(--amber); text-shadow: 0 0 6px var(--amber-glow);}
+  .rail .icon{
+    width: 22px; height: 22px; position: relative;
+    margin-bottom: 8px;
+  }
+  .rail .icon::before, .rail .icon::after{
+    content:""; position:absolute; inset:0;
+    border:1.4px solid var(--amber);
+  }
+  .rail .icon::after{ transform: rotate(45deg) scale(.62);}
+  
+  /* center column */
+  .center{ padding: 26px 32px 60px; min-width:0; }
+  
+  /* right column / hud */
+  .hud{
+    border-left: 1px solid var(--line);
+    background: var(--bg-2);
+    padding: 18px;
+    display:flex; flex-direction:column; gap: 18px;
+    font-size: 11px;
+  }
+
+  /* ============ HEADER (in center) ============ */
+  .head-block{
+    border: 1px solid var(--line-strong);
+    background: var(--bg-2);
+    padding: 22px 24px 18px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .head-block::before{
+    content: "AS://TERM/HOME"; position:absolute; top:-9px; left:18px;
+    background: var(--bg); padding: 2px 8px;
+    font-size:10px; letter-spacing:.18em; color: var(--amber);
+  }
+  .head-block .row{ display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;}
+  .head-block .name-block{ flex-grow:1;}
+  .head-block .ticker{
+    color: var(--amber); font-size: 11px; letter-spacing: .15em; margin-bottom: 6px;
+    text-shadow: 0 0 8px var(--amber-glow);
+  }
+  .head-block h1{
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1; letter-spacing: -.012em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .head-block h1 em{ font-style: italic; color: var(--amber);}
+  .head-block .role{
+    font-size:11px; color: var(--ink-dim); letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .head-block .price-block{
+    text-align: right; min-width: 200px;
+  }
+  .head-block .last{
+    font-family: var(--serif);
+    font-size: 44px; line-height: 1; color: var(--green);
+    text-shadow: 0 0 12px rgba(67,224,164,.4);
+  }
+  .head-block .last-lbl{
+    font-size: 10px; color: var(--ink-faint); letter-spacing: .2em;
+    text-transform:uppercase; margin-bottom: 4px;
+  }
+  .head-block .delta{
+    font-size:11px; color: var(--green); margin-top: 4px;
+    letter-spacing: .08em;
+  }
+  
+  /* ============ HEADLINE TAPE ROWS ============ */
+  .tape-wrap h2{
+    font-family: var(--mono);
+    font-size: 11px; letter-spacing: .22em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-strong);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .tape-wrap h2 span{ color: var(--ink-faint); font-weight:400; letter-spacing:.1em;}
+  
+  .tape-row{
+    display:grid;
+    grid-template-columns: 76px 90px 1fr 80px 90px;
+    gap: 16px;
+    padding: 11px 8px;
+    border-bottom: 1px dashed var(--line);
+    cursor: pointer;
+    align-items: center;
+    transition: background .2s, padding .2s;
+  }
+  .tape-row:hover{
+    background: rgba(255,181,54,0.04);
+    padding-left: 14px;
+  }
+  .tape-row.expanded{
+    background: rgba(255,181,54,0.06);
+  }
+  .tape-row .when{
+    color: var(--ink-faint); font-size: 10px; letter-spacing: .08em;
+  }
+  .tape-row .ticker{
+    color: var(--amber); font-size: 11px; font-weight: 500; letter-spacing: .06em;
+    text-shadow: 0 0 6px var(--amber-glow);
+  }
+  .tape-row .headline{
+    color: var(--ink); font-size: 13px; line-height: 1.5;
+  }
+  .tape-row .headline em{ font-style:normal; color: var(--amber);}
+  .tape-row .delta{
+    text-align: right; font-size: 11.5px; font-weight: 500;
+    letter-spacing: .04em;
+  }
+  .tape-row .delta.up{ color: var(--green);}
+  .tape-row .delta.dn{ color: var(--red);}
+  .tape-row .delta.flat{ color: var(--ink-dim);}
+  .tape-row .vol{
+    text-align: right; color: var(--ink-dim); font-size: 10.5px; letter-spacing: .06em;
+  }
+  
+  /* expanded body */
+  .tape-detail{
+    display:none;
+    grid-column: 1 / -1;
+    padding: 18px 24px 22px 92px;
+    border-top: 1px solid var(--line);
+    background: rgba(0,0,0,0.25);
+    margin: 0 -8px;
+  }
+  .tape-row.expanded + .tape-detail{ display:grid; grid-template-columns: 1.6fr 1fr; gap: 32px;}
+  
+  .tape-detail h3{
+    font-family: var(--serif); font-size: 26px; line-height:1.1; font-weight:400;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .tape-detail h3 em{ font-style: italic; color: var(--amber);}
+  .tape-detail .sub{
+    color: var(--ink-dim); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .tape-detail p{
+    color: var(--ink-dim); font-size: 12.5px; line-height: 1.65;
+    font-family: var(--mono);
+    margin-bottom: 8px;
+  }
+  .tape-detail p strong{ color: var(--ink); font-weight: 500;}
+  .tape-detail ul{ list-style: none; margin-top: 6px;}
+  .tape-detail li{
+    color: var(--ink-dim); font-size: 12px; line-height: 1.6;
+    padding-left: 20px; position: relative; margin-bottom: 6px;
+  }
+  .tape-detail li::before{
+    content:">"; position:absolute; left:0; color: var(--amber);
+  }
+  .tape-detail .stack{ display:flex; flex-wrap:wrap; gap: 6px; margin-top: 12px;}
+  .tape-detail .stack span{
+    font-size: 10px; color: var(--ink-dim);
+    border:1px solid var(--line);
+    padding: 3px 8px; border-radius: 0;
+    letter-spacing: .06em;
+  }
+  .tape-detail .meta-card{
+    border: 1px solid var(--line);
+    padding: 14px;
+    background: var(--bg-2);
+    font-size: 11px;
+  }
+  .tape-detail .meta-card .row{
+    display:flex; justify-content:space-between;
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .tape-detail .meta-card .row:last-child{ border-bottom:0;}
+  .tape-detail .meta-card .lbl{ color: var(--ink-faint); letter-spacing: .12em; text-transform:uppercase; font-size:10px;}
+  .tape-detail .meta-card .val{ color: var(--ink); font-size: 11.5px;}
+  .tape-detail .meta-card .val.up{ color: var(--green);}
+  .tape-detail .meta-card .val.amber{ color: var(--amber);}
+  .tape-detail .actions{
+    display:flex; gap: 6px; margin-top: 14px;
+  }
+  .tape-detail .actions a{
+    padding: 8px 14px; border:1px solid var(--line-strong);
+    color: var(--amber); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase;
+    transition: all .2s;
+  }
+  .tape-detail .actions a:hover{ background: var(--amber); color: var(--bg);}
+  
+  /* ascii sparkline char-line */
+  .ascii-spark{
+    margin-top: 12px;
+    color: var(--green);
+    font-size: 10px; letter-spacing: 0;
+    line-height: 1;
+    white-space: pre;
+    font-family: var(--mono);
+    text-shadow: 0 0 6px rgba(67,224,164,.5);
+  }
+  
+  .section + .section{ margin-top: 36px;}
+
+  /* HUD pieces */
+  .hud .blk{
+    border: 1px solid var(--line);
+    padding: 14px;
+    background: var(--bg);
+    position: relative;
+  }
+  .hud .blk h4{
+    font-size: 10px; letter-spacing: .2em; color: var(--amber);
+    text-transform: uppercase; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--line);
+    text-shadow: 0 0 6px var(--amber-glow);
+  }
+  .hud .row{
+    display:flex; justify-content:space-between;
+    padding: 4px 0; font-size: 11px;
+    color: var(--ink-dim);
+  }
+  .hud .row b{ color: var(--ink); font-weight: 500;}
+  .hud .row .up{ color: var(--green);}
+  .hud .row .dn{ color: var(--red);}
+  
+  .hud .photo{
+    width: 100%; aspect-ratio: 1/1;
+    border:1px solid var(--line); overflow:hidden; position: relative;
+    filter: sepia(.45) saturate(1.1) brightness(.95) contrast(1.05);
+  }
+  .hud .photo img{ width:100%; height:100%; object-fit:cover; }
+  .hud .photo::after{
+    content:""; position:absolute; inset:0;
+    background: repeating-linear-gradient(180deg, transparent 0, transparent 2px, rgba(255,181,54,0.08) 2px, rgba(255,181,54,0.08) 3px);
+    pointer-events: none;
+  }
+  
+  /* mini chart */
+  .hud canvas{ width:100% !important; height: 80px !important;}
+  
+  /* ascii portrait dotmap (fun) */
+  .ascii-id{
+    font-size: 9px; line-height: 1.05;
+    color: var(--amber); white-space: pre;
+    text-align:center;
+    text-shadow: 0 0 4px var(--amber-glow);
+  }
+
+  /* footer */
+  .footer-bar{
+    height: 26px; border-top: 1px solid var(--line-strong);
+    background: var(--bg-2);
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 0 16px;
+    font-size: 10.5px; color: var(--ink-faint); letter-spacing: .1em;
+    position: sticky; bottom: 0; z-index: 40;
+  }
+  .footer-bar .pulse::before{
+    content:""; display:inline-block; width: 6px; height: 6px;
+    background: var(--green); border-radius:50%;
+    margin-right: 6px;
+    box-shadow: 0 0 6px var(--green);
+    animation: blink 1.6s ease-in-out infinite;
+  }
+  
+  /* terminal cursor */
+  .cursor-blink::after{
+    content:"_"; color: var(--amber); margin-left: 2px;
+    animation: cblink 1s steps(2,end) infinite;
+  }
+  @keyframes cblink{ 50%{ opacity:0;} }
+  
+  /* responsive */
+  @media (max-width: 1100px){
+    main{ grid-template-columns: 1fr; }
+    .rail, .hud{ display:none;}
+    .center{ padding: 22px 16px 60px;}
+  }
+  @media (max-width: 700px){
+    .tape-row{ grid-template-columns: 70px 1fr 70px; gap: 10px;}
+    .tape-row .when, .tape-row .vol{ display:none;}
+    .funcbar .clock{ display:none;}
+    .funcbar .keys button{ padding: 0 10px; font-size: 10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<!-- FUNCTION BAR -->
+<div class="funcbar">
+  <div class="prompt">AS://TERM/<span class="cursor-blink"></span></div>
+  <div class="keys" id="funcKeys">
+    <button class="active" data-fn="HOME"><span class="num">F1</span>HOME</button>
+    <button data-fn="WORK"><span class="num">F2</span>WORK</button>
+    <button data-fn="BUILD"><span class="num">F3</span>BUILD</button>
+    <button data-fn="SKILL"><span class="num">F4</span>SKILL</button>
+    <button data-fn="HOBBY"><span class="num">F5</span>HOBBY</button>
+    <button data-fn="EDU"><span class="num">F6</span>EDU</button>
+    <button data-fn="MSG"><span class="num">F7</span>MSG</button>
+  </div>
+  <div class="clock">
+    <span>NYC <b id="clockNY">--:--:--</b></span>
+    <span>UPT <b id="uptime">00:00:12</b></span>
+  </div>
+</div>
+
+<main>
+  <!-- LEFT RAIL -->
+  <aside class="rail">
+    <div class="icon"></div>
+    <div class="lab on">AS</div>
+    <div class="lab">TERM</div>
+    <div class="lab">v.2026</div>
+  </aside>
+  
+  <!-- CENTER -->
+  <section class="center" id="center">
+    <!-- HEAD BLOCK -->
+    <div class="head-block">
+      <div class="row">
+        <div class="name-block">
+          <div class="ticker">AS · UNIVERSITY OF PENNSYLVANIA · CSCI / MATH</div>
+          <h1>Aadithya <em>Srinivasan</em></h1>
+          <div class="role">B.S.E. CS &amp; Math · Engineer · Researcher · Builder</div>
+        </div>
+        <div class="price-block">
+          <div class="last-lbl">Composite Score</div>
+          <div class="last">94.7</div>
+          <div class="delta">▲ +2.4 · YTD ▲ +18.6</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAPE -->
+    <div class="tape-wrap" id="tapeWrap"></div>
+  </section>
+  
+  <!-- HUD -->
+  <aside class="hud">
+    <div class="blk">
+      <h4>OPERATOR</h4>
+      <div class="photo"><img src="assets/profile.jpg" alt="Aadithya Srinivasan"></div>
+      <div style="margin-top:12px">
+        <div class="row"><span>HANDLE</span><b>asrinivasan75</b></div>
+        <div class="row"><span>LOCATION</span><b>Philadelphia, PA</b></div>
+        <div class="row"><span>STATUS</span><b class="up">● OPEN TO WORK</b></div>
+      </div>
+    </div>
+    
+    <div class="blk">
+      <h4>CAREER · 24M</h4>
+      <canvas id="careerChart"></canvas>
+      <div class="row" style="margin-top:8px"><span>TRAJECTORY</span><b class="up">▲ STEEP</b></div>
+      <div class="row"><span>EWMA β</span><b>1.4</b></div>
+    </div>
+    
+    <div class="blk">
+      <h4>VITALS</h4>
+      <div class="row"><span>CHESS.COM</span><b class="up">2300+</b></div>
+      <div class="row"><span>PERCENTILE</span><b>99th</b></div>
+      <div class="row"><span>ROWS PROC.</span><b class="up">100M+</b></div>
+      <div class="row"><span>SHIPPED</span><b>6 systems</b></div>
+      <div class="row"><span>LAT. CUT</span><b class="up">−20%</b></div>
+      <div class="row"><span>HABIT LIFT</span><b class="up">+20%</b></div>
+    </div>
+    
+    <div class="blk">
+      <h4>QUICK ACTIONS</h4>
+      <div class="row" style="margin-top:0; padding:6px 0; border-bottom:1px dashed var(--line)"><a href="https://github.com/asrinivasan75" target="_blank" style="color:var(--amber)">▸ GITHUB</a><span>↗</span></div>
+      <div class="row" style="padding:6px 0; border-bottom:1px dashed var(--line)"><a href="https://www.linkedin.com/in/aadithya-srinivasan-777936269/" target="_blank" style="color:var(--amber)">▸ LINKEDIN</a><span>↗</span></div>
+      <div class="row" style="padding:6px 0; border-bottom:1px dashed var(--line)"><a href="mailto:aadithya.srinivasan@gmail.com" style="color:var(--amber)">▸ EMAIL</a><span>↗</span></div>
+      <div class="row" style="padding:6px 0"><a href="assets/resume.pdf" download style="color:var(--amber)">▸ DOWNLOAD CV</a><span>↓</span></div>
+    </div>
+  </aside>
+</main>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <span class="pulse">FEED LIVE · LAST PRINT 17:42:09 EST</span>
+  <span>AS://TERM v.2026.04 · © Aadithya Srinivasan · all data sourced from primary record</span>
+  <span>F12 HELP · ESC CLOSE</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+/* =================================================================
+   TAPE ROWS — every facet of Aadithya as a tape headline
+   ================================================================= */
+window.ROWS = (window.ROWS||[]);
+const ROWS = window.ROWS = [
+  // ---------- WORK ----------
+  { fn:"WORK", when:"17:38", ticker:"NAYYA-PIPE", headline:"Engineered SQL+Python pipelines processing <em>100M+</em> pharmacy/medical claims · Athena, PostgreSQL, dbt", delta:"▲ 100M", deltaCls:"up", vol:"3.4k",
+    detail:{
+      h:"Nayya · Data Analytics / Data Science Intern",
+      sub:"APR — AUG 2025 · NEW YORK CITY",
+      desc:"Nayya is a benefits-experience platform processing tens of millions of pharmacy and medical claims for enterprise clients. I owned the data side of cost-driver and formulary analysis.",
+      bullets:[
+        "Engineered scalable SQL + Python pipelines processing <strong>100M+</strong> pharmacy/medical claims with Athena, PostgreSQL, dbt — surfacing cost drivers and formulary misalignments.",
+        "Automated anomaly detection across millions of rows with Pandas / NumPy, integrating output directly into regulatory reporting flows.",
+        "Delivered interactive Sigma dashboards with trend forecasting and variance analysis for executive decision-making."
+      ],
+      stack:["Python","SQL","Athena","PostgreSQL","dbt","Pandas","NumPy","Sigma"],
+      meta:[ ["TICKER","NAYYA-PIPE","amber"],["WINDOW","APR — AUG 2025"],["LOC","NEW YORK CITY"],["ROWS","100M+", "up"],["IMPACT","REGULATORY REPORTING"] ],
+      spark:"steady-up"
+    }
+  },
+  { fn:"WORK", when:"17:36", ticker:"ARIST-AISDR", headline:"Deployed AI-driven backend at Aristotle · NLP lead-matching · <em>−20% latency</em>", delta:"▲ +0.7", deltaCls:"up", vol:"0.9k",
+    detail:{
+      h:"Aristotle — Your AI SDR · SWE Intern",
+      sub:"JUN — SEP 2023 · REMOTE",
+      desc:"AI-driven outbound sales platform. Persona modeling and lead-matching infrastructure.",
+      bullets:[
+        "Prototyped <strong>generative-adversarial persona models</strong>; deployed AI-driven backend services in TypeScript, Python, and AWS.",
+        "Integrated NLP API features and optimized lead-matching pipeline — <strong>cut latency 20%</strong> and improved demo conversion."
+      ],
+      stack:["TypeScript","Python","AWS","NLP","GAN"],
+      meta:[ ["TICKER","ARIST-AISDR","amber"],["WINDOW","JUN — SEP 2023"],["LOC","REMOTE"],["LATENCY","−20%","up"] ],
+      spark:"climb"
+    }
+  },
+  { fn:"WORK", when:"17:34", ticker:"NJIT-HSSRI", headline:"Computational visual perception research · presented findings at NJIT Symposium", delta:"= flat", deltaCls:"flat", vol:"0.7k",
+    detail:{
+      h:"NJIT — HSSRI · Student Research Intern",
+      sub:"JUN — AUG 2023 · NEWARK, NJ",
+      desc:"Computational visual perception lab. Modeling and statistical evaluation of perception systems.",
+      bullets:[
+        "Computational modeling of visual perception systems with TensorFlow, scikit-learn, and PsychoPy.",
+        "Designed and evaluated ML models on experimental datasets; presented findings at the <strong>NJIT Research Symposium</strong>."
+      ],
+      stack:["TensorFlow","scikit-learn","PsychoPy","Statistics"],
+      meta:[ ["TICKER","NJIT-HSSRI","amber"],["WINDOW","JUN — AUG 2023"],["LOC","NEWARK, NJ"],["OUTPUT","SYMPOSIUM"] ],
+      spark:"steady"
+    }
+  },
+  
+  // ---------- BUILD ----------
+  { fn:"BUILD", when:"17:32", ticker:"EVNT-EDGE", headline:"EventEdge live · auto-trades prediction-market contracts every <em>3s</em> across 7 sports", delta:"▲ +12.4", deltaCls:"up", vol:"1.9k",
+    detail:{
+      h:"EventEdge · Real-time auto-trading platform",
+      sub:"PRODUCTION · 50+ USERS",
+      desc:"End-to-end prediction-market trading system. Pulls live odds, computes win-probability estimates, compares against Kalshi contract prices every 3 seconds, and executes trades automatically.",
+      bullets:[
+        "Active across <strong>NBA, MLB, CBB, WCBB, NHL, soccer, tennis</strong>.",
+        "<strong>3-second</strong> trading loop · odds → model → comparison → trade.",
+        "RSA-PSS signed payloads · Stripe billing · Railway deploy."
+      ],
+      stack:["Python","Next.js","Supabase","Railway","Stripe","RSA-PSS"],
+      meta:[ ["TICKER","EVNT-EDGE","amber"],["STATUS","LIVE","up"],["USERS","50+"],["URL","eventedgehq.com"] ],
+      spark:"climb",
+      url:"https://eventedgehq.com"
+    }
+  },
+  { fn:"BUILD", when:"17:30", ticker:"HARBOR-OS", headline:"HarborOS detects maritime threats · live AIS over WebSocket · <em>11 detectors</em>", delta:"▲ +9.1", deltaCls:"up", vol:"0.8k",
+    detail:{
+      h:"HarborOS · Maritime threat detection",
+      sub:"PRIVATE · DEMO ON REQUEST",
+      desc:"Real-time maritime defense system ingesting live AIS vessel telemetry over WebSocket, running 11 anomaly detectors in parallel, and surfacing operator-actionable alerts with composite risk scoring.",
+      bullets:[
+        "<strong>11 heuristic detectors</strong>: spoofing, loitering, dark activity, port deviation, etc.",
+        "Composite risk score per vessel; alerts threaded into operator console.",
+        "MapLibre GL live render · WebSocket-driven track updates."
+      ],
+      stack:["Next.js","React","MapLibre","FastAPI","Python","WebSocket"],
+      meta:[ ["TICKER","HARBOR-OS","amber"],["REPO","PRIVATE"],["DETECTORS","11"],["STREAM","AIS / WS"] ],
+      spark:"climb"
+    }
+  },
+  { fn:"BUILD", when:"17:28", ticker:"CHESS-ENG", headline:"Custom NNUE chess engine · <em>768→512→1</em> with HalfKP features · UCI + web analyzer", delta:"▲ +6.8", deltaCls:"up", vol:"0.6k",
+    detail:{
+      h:"Chess Engine · NNUE evaluator + analysis platform",
+      sub:"OPEN SOURCE · GITHUB.COM/ASRINIVASAN75/CHESS-ENGINE",
+      desc:"Full-stack chess engine speaking the UCI protocol, with a PyTorch-trained NNUE evaluator (768→512→1, HalfKP feature representation), and a web analyzer streaming principal variations live.",
+      bullets:[
+        "<strong>NNUE 768→512→1</strong> · HalfKP features · cache-efficient inference.",
+        "C++20 bitboard move generator · UCI protocol.",
+        "FastAPI bridge + React 18 UI · live PV streaming via WebSocket · PostgreSQL + Redis."
+      ],
+      stack:["C++20","PyTorch","React 18","FastAPI","PostgreSQL","Redis"],
+      meta:[ ["TICKER","CHESS-ENG","amber"],["REPO","PUBLIC"],["NET","NNUE 768→512→1"],["IFC","UCI"] ],
+      spark:"climb",
+      url:"https://github.com/asrinivasan75/chess-engine"
+    }
+  },
+  { fn:"BUILD", when:"17:26", ticker:"SUPP-TRK", headline:"Supplement Tracker · AI recommender · <em>+20% habit compliance</em>", delta:"▲ +4.1", deltaCls:"up", vol:"0.5k",
+    detail:{
+      h:"Supplement Tracker · AI recommendation SaaS",
+      sub:"OPEN SOURCE · GITHUB.COM/ASRINIVASAN75/SUPPLEMENT-TRACKER",
+      desc:"Full-stack personalized supplement tracking with AI-driven recommendations, compliance monitoring, and adherence analytics.",
+      bullets:[
+        "<strong>20% improvement</strong> in habit compliance among test users.",
+        "OpenAI-backed recommendation engine · React 19 frontend · MongoDB.",
+        "Reminder system + streak tracking with daily check-ins."
+      ],
+      stack:["Node.js","React 19","MongoDB","OpenAI","Tailwind"],
+      meta:[ ["TICKER","SUPP-TRK","amber"],["REPO","PUBLIC"],["LIFT","+20%","up"] ],
+      spark:"climb",
+      url:"https://github.com/asrinivasan75/supplement-tracker"
+    }
+  },
+  { fn:"BUILD", when:"17:24", ticker:"POKERBOT", headline:"PokerBot RL agent · Q-learning + policy gradient · call/raise/fold decisioning", delta:"▲ +1.8", deltaCls:"up", vol:"0.3k",
+    detail:{
+      h:"PokerBot · Reinforcement-learning agent",
+      sub:"OPEN SOURCE · GITHUB.COM/ASRINIVASAN75/POKERBOT",
+      desc:"Intelligent PokerBot using reinforcement learning with Q-learning and policy gradient methods.",
+      bullets:[
+        "Q-learning baseline + policy-gradient agent.",
+        "OpenAI Gym wrapper around custom poker environment.",
+        "Trained against scripted opponents and self-play with reward shaping."
+      ],
+      stack:["Python","Keras","NumPy","OpenAI Gym","Q-Learning"],
+      meta:[ ["TICKER","POKERBOT","amber"],["REPO","PUBLIC"],["METHOD","RL"] ],
+      spark:"choppy",
+      url:"https://github.com/asrinivasan75/PokerBot"
+    }
+  },
+  { fn:"BUILD", when:"17:22", ticker:"STOCK-ML", headline:"Stock prediction comparison · LSTM/GRU/RF/XGBoost · <em>85%+ accuracy</em>", delta:"▲ +3.6", deltaCls:"up", vol:"0.4k",
+    detail:{
+      h:"Stock Prediction · ML comparison harness",
+      sub:"OPEN SOURCE",
+      desc:"Comprehensive ML system comparing LSTM, GRU, Random Forest, and XGBoost for stock price prediction, with hyperparameter optimization across all four model classes.",
+      bullets:[
+        "<strong>85%+ accuracy</strong> after hyperparameter tuning.",
+        "Side-by-side evaluation harness across 4 model classes.",
+        "Walk-forward time-aware validation."
+      ],
+      stack:["Python","TensorFlow","scikit-learn","Pandas","XGBoost"],
+      meta:[ ["TICKER","STOCK-ML","amber"],["REPO","PUBLIC"],["ACC","85%+","up"] ],
+      spark:"climb",
+      url:"https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-"
+    }
+  },
+  
+  // ---------- SKILLS ----------
+  { fn:"SKILL", when:"17:20", ticker:"SKILL-PY", headline:"Python · daily driver · pipelines, ML, backend", delta:"= 98¢", deltaCls:"up", vol:"0.2k",
+    detail:{
+      h:"Python · daily driver",
+      sub:"DATA · ML · BACKEND",
+      desc:"Daily-use language across data pipelines, ML model development, and backend services.",
+      bullets:[
+        "100M+ row Nayya pipelines.",
+        "PyTorch model training (NNUE, RL agents).",
+        "FastAPI services (Chess analyzer, EventEdge model layer)."
+      ],
+      stack:["Python","Pandas","NumPy","PyTorch","TensorFlow","scikit-learn","FastAPI","dbt"],
+      meta:[ ["BID","98¢","up"],["USE","DAILY"] ],
+      spark:"climb"
+    }
+  },
+  { fn:"SKILL", when:"17:19", ticker:"SKILL-TS", headline:"TypeScript · Next.js + Node · full-stack production work", delta:"= 96¢", deltaCls:"up", vol:"0.2k",
+    detail:{
+      h:"TypeScript · full-stack",
+      sub:"FRONTEND · BACKEND · TYPE-SAFE CONTRACTS",
+      desc:"Type-safe full-stack development across React/Next.js and Node services. Used in EventEdge, HarborOS, Aristotle, Supplement Tracker.",
+      bullets:[
+        "Next.js production deployments (EventEdge).",
+        "Type-safe API contracts between FastAPI/Node services and React frontends.",
+        "Realtime WebSocket clients (HarborOS)."
+      ],
+      stack:["TypeScript","Next.js","React","Node.js","WebSocket"],
+      meta:[ ["BID","96¢","up"],["USE","DAILY"] ],
+      spark:"climb"
+    }
+  },
+  { fn:"SKILL", when:"17:18", ticker:"SKILL-CPP", headline:"C++20 · performance-critical engines · bitboards, NNUE", delta:"= 88¢", deltaCls:"flat", vol:"0.1k",
+    detail:{
+      h:"C++20 · systems performance",
+      sub:"ENGINE-LEVEL CODE",
+      desc:"C++20 for inner loops where performance matters. Built the chess engine's bitboard move generator and NNUE evaluator.",
+      bullets:[
+        "Magic bitboards for move generation.",
+        "UCI protocol implementation.",
+        "Cache-efficient NNUE inference (HalfKP, 768→512→1)."
+      ],
+      stack:["C++20","CMake","Bitboards","NNUE"],
+      meta:[ ["BID","88¢","up"],["USE","ENGINE WORK"] ],
+      spark:"choppy"
+    }
+  },
+  { fn:"SKILL", when:"17:17", ticker:"SKILL-ML", headline:"ML · trained models in production · PyTorch + TF + sklearn", delta:"= 94¢", deltaCls:"up", vol:"0.2k",
+    detail:{
+      h:"ML · trained, evaluated, shipped",
+      sub:"PYTORCH · TENSORFLOW · SCIKIT-LEARN",
+      desc:"Trained models that have shipped or run in evaluation pipelines: NNUE position evaluator, NLP persona models at Aristotle, anomaly detectors at Nayya, perception models at NJIT, time-series ensembles for stock prediction, RL agent in PokerBot.",
+      bullets:[
+        "PyTorch (engine) + TensorFlow (research) + scikit-learn (baselines).",
+        "Hyperparameter optimization, cross-validation, walk-forward evaluation.",
+        "RL with Q-learning + policy gradient (PokerBot)."
+      ],
+      stack:["PyTorch","TensorFlow","scikit-learn","XGBoost","RL"],
+      meta:[ ["BID","94¢","up"],["MODELS SHIPPED","6+","up"] ],
+      spark:"climb"
+    }
+  },
+  { fn:"SKILL", when:"17:16", ticker:"SKILL-DATA", headline:"Data · SQL/Athena/Postgres/dbt · production-scale pipelines", delta:"= 97¢", deltaCls:"up", vol:"0.2k",
+    detail:{
+      h:"Data · pipelines at scale",
+      sub:"SQL · ATHENA · DBT · WAREHOUSING",
+      desc:"100M+ row pipelines at Nayya. Athena over S3 lakes, PostgreSQL warehouses, dbt for transformation, Pandas for ad-hoc.",
+      bullets:[
+        "100M+ pharmacy/medical claims processed.",
+        "dbt models for cost-driver and formulary analysis.",
+        "Sigma dashboards with forecasting and variance analysis."
+      ],
+      stack:["SQL","Athena","PostgreSQL","dbt","Pandas","Sigma"],
+      meta:[ ["BID","97¢","up"],["ROWS","100M+","up"] ],
+      spark:"climb"
+    }
+  },
+  
+  // ---------- HOBBY ----------
+  { fn:"HOBBY", when:"17:14", ticker:"CHESS-2300", headline:"Chess.com 2300+ · <em>99th percentile</em> · tournament play", delta:"= 2300", deltaCls:"up", vol:"2.1k",
+    detail:{
+      h:"Chess · 2300 / 99th percentile",
+      sub:"CHESS.COM · TOURNAMENT CLASSICAL & RAPID",
+      desc:"Tournament-level classical and rapid play. Strongest in quiet positional games where one tempo decides the endgame. The endgame study is what most informs my approach to engineering — make the position you want, then convert.",
+      bullets:[
+        "Peak rating: <strong>2300+</strong> · top 1% on Chess.com.",
+        "Active in tournament play, classical and rapid.",
+        "Inspired the homemade <strong>Chess Engine</strong> project."
+      ],
+      meta:[ ["RATING","2300+","up"],["PCTL","99th"],["MODE","CLASSICAL/RAPID"] ],
+      spark:"steady"
+    }
+  },
+  { fn:"HOBBY", when:"17:12", ticker:"PENN-WITG", headline:"Wharton Investment & Trading Group · quantitative track member", delta:"= active", deltaCls:"flat", vol:"0.5k",
+    detail:{
+      h:"WITG · quantitative equity track",
+      sub:"WHARTON INVESTMENT & TRADING GROUP",
+      desc:"Member, quantitative track. Equities models, factor research, and event markets. EventEdge lives in this gym.",
+      bullets:[
+        "Quantitative equity research.",
+        "Event-market modeling (carries directly into EventEdge).",
+        "Pitch sessions and back-test review."
+      ],
+      meta:[ ["GROUP","WITG"],["TRACK","QUANT"] ],
+      spark:"steady"
+    }
+  },
+  { fn:"HOBBY", when:"17:10", ticker:"PENN-POKER", headline:"Penn Poker Club · cash games + tournaments · decision-under-uncertainty practice", delta:"= active", deltaCls:"flat", vol:"0.4k",
+    detail:{
+      h:"Poker · Penn Poker Club",
+      sub:"CASH + TOURNAMENT",
+      desc:"Active member. Cash games and tournaments — the goal is to get good at making decisions when the information is intentionally bad. Same gym as engineering, different equipment. Inspired the PokerBot RL project.",
+      bullets:[
+        "Cash + tournament play.",
+        "Inspired the PokerBot RL project.",
+        "Probability + psychology + bankroll discipline."
+      ],
+      meta:[ ["GROUP","PENN POKER"] ],
+      spark:"choppy"
+    }
+  },
+  { fn:"HOBBY", when:"17:08", ticker:"PUMS", headline:"Penn Undergraduate Math Society · combinatorics & probability theory", delta:"= active", deltaCls:"flat", vol:"0.2k",
+    detail:{
+      h:"PUMS · Penn Undergraduate Math Society",
+      sub:"COMBINATORICS · PROBABILITY",
+      desc:"Member. Combinatorics and probability theory are the favorite rooms in the house.",
+      bullets:[
+        "Combinatorics and probability seminars.",
+        "Problem-solving sessions and competition prep.",
+        "Coursework: ML, Algorithms, Big Data Analytics, HCI."
+      ],
+      meta:[ ["GROUP","PUMS"] ],
+      spark:"steady"
+    }
+  },
+  
+  // ---------- EDU ----------
+  { fn:"EDU", when:"17:06", ticker:"UPENN-CS-MATH", headline:"University of Pennsylvania · B.S.E. Computer Science &amp; Mathematics", delta:"= active", deltaCls:"flat", vol:"—",
+    detail:{
+      h:"University of Pennsylvania · CIS &amp; MATH",
+      sub:"B.S.E. COMPUTER SCIENCE · CONCURRENT B.A. MATHEMATICS",
+      desc:"Concurrent degree program in CIS (Engineering) and Mathematics. Coursework spans Machine Learning, Algorithms, Big Data Analytics, and Human–Computer Interaction.",
+      bullets:[
+        "<strong>Coursework</strong>: ML, Algorithms, Big Data Analytics, HCI, Linear Algebra, Probability.",
+        "Active groups: WITG, Penn Poker Club, PUMS.",
+        "Building at the intersection of software, data, and quantitative research."
+      ],
+      meta:[ ["INST","UPENN"],["DEG","BSE CSCI + BA MATH"] ],
+      spark:"steady"
+    }
+  },
+  
+  // ---------- MSG ----------
+  { fn:"MSG", when:"17:04", ticker:"OPEN-FOR", headline:"Open to internships, collaborations, hard problems · respond to all primary inbound", delta:"● OPEN", deltaCls:"up", vol:"—",
+    detail:{
+      h:"Open to good problems.",
+      sub:"INBOUND · ALL CHANNELS",
+      desc:"Internships, collaborations, anything that's hard and useful. I read every email.",
+      bullets:[
+        "Email · aadithya.srinivasan@gmail.com",
+        "GitHub · github.com/asrinivasan75",
+        "LinkedIn · linkedin.com/in/aadithya-srinivasan-777936269",
+        "CV · download via right rail."
+      ],
+      meta:[ ["STATUS","OPEN","up"],["RESPONSE TIME","< 24H"] ],
+      spark:"steady"
+    }
+  }
+];
+
+/* =================================================================
+   TOP TICKER
+   ================================================================= */
+function buildTopTicker(){
+  const items = [
+    ['NAYYA-PIPE','▲','100M+','up'],
+    ['EVNT-EDGE','▲','+12.4','up'],
+    ['CHESS','=','2300','up'],
+    ['HARBOR','▲','+9.1','up'],
+    ['CHESS-ENG','▲','NNUE','up'],
+    ['ARIST','▲','-20%','up'],
+    ['SKILL-PY','=','98¢','up'],
+    ['SKILL-TS','=','96¢','up'],
+    ['SKILL-CPP','=','88¢','flat'],
+    ['POKERBOT','▲','+1.8','up'],
+    ['STOCK-ML','▲','85%','up'],
+    ['SUPP-TRK','▲','+20%','up'],
+    ['WITG','=','active','flat'],
+    ['PUMS','=','active','flat'],
+    ['NJIT','=','symp','flat'],
+    ['UPENN','=','BSE','flat'],
+    ['STATUS','●','OPEN-TO-WORK','up']
+  ];
+  document.getElementById('tickerTrack').innerHTML = [...items, ...items].map(([t,d,v,c])=>{
+    return `<span><b>${t}</b> <span class="${c==='up'?'up':c==='dn'?'dn':''}">${d} ${v}</span></span>`;
+  }).join('');
+}
+buildTopTicker();
+
+/* =================================================================
+   CLOCK + UPTIME
+   ================================================================= */
+const startTime = Date.now();
+function tickClock(){
+  const now = new Date();
+  const ny = new Intl.DateTimeFormat('en-US',{
+    timeZone:'America/New_York', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+  }).format(now);
+  document.getElementById('clockNY').textContent = ny;
+  const elapsed = Math.floor((Date.now()-startTime)/1000);
+  const hh = String(Math.floor(elapsed/3600)).padStart(2,'0');
+  const mm = String(Math.floor((elapsed%3600)/60)).padStart(2,'0');
+  const ss = String(elapsed%60).padStart(2,'0');
+  document.getElementById('uptime').textContent = `${hh}:${mm}:${ss}`;
+}
+tickClock(); setInterval(tickClock, 1000);
+
+/* =================================================================
+   ASCII SPARKLINE GENERATION
+   ================================================================= */
+function asciiSpark(kind){
+  const chars = '▁▂▃▄▅▆▇█';
+  const N = 80;
+  const out = [];
+  let v = 0.5;
+  for(let i=0;i<N;i++){
+    const t = i/N;
+    if(kind==='climb'){ v = 0.2 + t*0.7 + (Math.random()-0.5)*0.05; }
+    else if(kind==='steady'){ v = 0.85 + Math.sin(i*0.3)*0.04 + (Math.random()-0.5)*0.03; }
+    else if(kind==='steady-up'){ v = 0.7 + t*0.2 + Math.sin(i*0.3)*0.04; }
+    else if(kind==='choppy'){ v += (Math.random()-0.5)*0.3; v = Math.max(.2, Math.min(.8, v)); }
+    else { v = 0.5 + Math.sin(i*0.2)*0.2; }
+    const idx = Math.max(0, Math.min(chars.length-1, Math.floor(v*chars.length)));
+    out.push(chars[idx]);
+  }
+  return out.join('');
+}
+
+/* =================================================================
+   RENDER TAPE
+   ================================================================= */
+let activeFn = 'HOME';
+let expandedRow = null;
+
+function renderTape(){
+  const wrap = document.getElementById('tapeWrap');
+  const filtered = activeFn==='HOME' ? ROWS : ROWS.filter(r=>r.fn===activeFn);
+  
+  // group by category for HOME, otherwise no grouping
+  let html = '';
+  if(activeFn==='HOME'){
+    const cats = ['WORK','BUILD','SKILL','HOBBY','EDU','MSG'];
+    cats.forEach(c=>{
+      const rows = ROWS.filter(r=>r.fn===c);
+      if(!rows.length) return;
+      html += `<div class="section">
+        <h2>${c} · TAPE <span>${rows.length} HEADLINES</span></h2>
+        <div class="rows">${rows.map((r,i)=>renderRow(r, c+'-'+i)).join('')}</div>
+      </div>`;
+    });
+  } else {
+    html += `<div class="section">
+      <h2>${activeFn} · TAPE <span>${filtered.length} HEADLINES</span></h2>
+      <div class="rows">${filtered.map((r,i)=>renderRow(r, activeFn+'-'+i)).join('')}</div>
+    </div>`;
+  }
+  wrap.innerHTML = html;
+  bindRows();
+}
+
+function renderRow(r, key){
+  const detailHTML = renderDetail(r);
+  return `
+    <div class="tape-row" data-key="${key}">
+      <div class="when">${r.when}</div>
+      <div class="ticker">${r.ticker}</div>
+      <div class="headline">${r.headline}</div>
+      <div class="delta ${r.deltaCls}">${r.delta}</div>
+      <div class="vol">VOL ${r.vol}</div>
+    </div>
+    <div class="tape-detail" data-detail="${key}">${detailHTML}</div>
+  `;
+}
+
+function renderDetail(r){
+  const d = r.detail || {};
+  const stack = (d.stack||[]).map(s=>`<span>${s}</span>`).join('');
+  const bullets = (d.bullets||[]).map(b=>`<li>${b}</li>`).join('');
+  const meta = (d.meta||[]).map(([l,v,cls])=>`
+    <div class="row"><span class="lbl">${l}</span><span class="val ${cls||''}">${v}</span></div>
+  `).join('');
+  const url = d.url ? `<a href="${d.url}" target="_blank" rel="noopener">VIEW LIVE ↗</a>` : '';
+  
+  return `
+    <div>
+      <h3>${(d.h||r.headline).replace(/\b(Aadithya)\b/g,'<em>$1</em>')}</h3>
+      <div class="sub">${d.sub||''}</div>
+      <p>${d.desc||''}</p>
+      ${bullets ? `<ul>${bullets}</ul>` : ''}
+      ${stack ? `<div class="stack">${stack}</div>` : ''}
+      <div class="ascii-spark">${asciiSpark(d.spark||'climb')}</div>
+    </div>
+    <div>
+      <div class="meta-card">
+        ${meta}
+      </div>
+      <div class="actions">
+        ${url}
+      </div>
+    </div>
+  `;
+}
+
+function bindRows(){
+  document.querySelectorAll('.tape-row').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      const key = row.dataset.key;
+      // close prior
+      document.querySelectorAll('.tape-row.expanded').forEach(r=> r.classList.remove('expanded'));
+      if(expandedRow === key){
+        expandedRow = null;
+      } else {
+        row.classList.add('expanded');
+        expandedRow = key;
+      }
+    });
+  });
+}
+renderTape();
+
+/* =================================================================
+   FUNCTION KEY NAV
+   ================================================================= */
+document.getElementById('funcKeys').addEventListener('click',(e)=>{
+  const b = e.target.closest('button[data-fn]');
+  if(!b) return;
+  document.querySelectorAll('#funcKeys button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  activeFn = b.dataset.fn;
+  expandedRow = null;
+  renderTape();
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+document.addEventListener('keydown',(e)=>{
+  // F1-F7
+  const m = e.key.match(/^F([1-7])$/);
+  if(m){
+    e.preventDefault();
+    const idx = parseInt(m[1])-1;
+    const btns = document.querySelectorAll('#funcKeys button');
+    if(btns[idx]) btns[idx].click();
+  }
+  if(e.key==='Escape' && expandedRow){
+    document.querySelectorAll('.tape-row.expanded').forEach(r=>r.classList.remove('expanded'));
+    expandedRow = null;
+  }
+});
+
+/* =================================================================
+   CAREER MINI CHART
+   ================================================================= */
+const series = [];
+let v = 30;
+for(let i=0;i<24;i++){
+  v += (Math.random()-0.3)*5 + 1.6;
+  series.push(Math.max(20, Math.min(100, v)));
+}
+const ctx = document.getElementById('careerChart');
+if(ctx){
+  const grad = ctx.getContext('2d').createLinearGradient(0,0,0,80);
+  grad.addColorStop(0, 'rgba(255,181,54,0.45)');
+  grad.addColorStop(1, 'rgba(255,181,54,0)');
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: series.map((_,i)=>i),
+      datasets:[{ data: series, borderColor:'#ffb536', backgroundColor:grad,
+        fill:true, tension:.3, pointRadius:0, borderWidth:1.4 }]
+    },
+    options:{
+      plugins:{ legend:{display:false}, tooltip:{enabled:false}},
+      scales:{ x:{display:false}, y:{display:false} },
+      animation:{ duration: 600 }
+    }
+  });
+}
+</script>
+<script src="js/terminal-live.js"></script>
+</body>
+</html>

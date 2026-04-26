@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Forest — Aadithya Srinivasan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06070a;
+  --panel:#0e1117;
+  --ink:#eef0f3;
+  --ink-2:#8b8f99;
+  --ink-3:#4f535d;
+  --line:rgba(238,240,243,0.07);
+  --line-2:rgba(238,240,243,0.16);
+  --green:#3ee08b;
+  --red:#ff5e6b;
+  --gold:#e8c170;
+  --serif:'Instrument Serif',serif;
+  --mono:'JetBrains Mono',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  width:100%;height:100%;overflow:hidden;
+  background:var(--bg);color:var(--ink);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+canvas{display:block;}
+#scene{position:fixed;inset:0;z-index:1;}
+
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:6;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+  background:linear-gradient(180deg,rgba(6,7,10,0.85),rgba(6,7,10,0));
+}
+.topbar a{color:inherit;text-decoration:none;}
+.topbar a:hover{color:var(--ink);}
+.topbar .left{display:flex;gap:24px;align-items:center;}
+.topbar .brand{
+  font-family:var(--serif);font-style:italic;font-size:18px;letter-spacing:0;text-transform:none;color:var(--ink);
+}
+.topbar .right{display:flex;gap:18px;align-items:center;}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px var(--green);margin-right:6px;animation:pulseDot 2s ease-in-out infinite;}
+@keyframes pulseDot{ 50%{ opacity:.4;} }
+
+.intro{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;
+  pointer-events:none;text-align:center;opacity:0;transition:opacity 1.4s;
+}
+.intro.show{opacity:1;}
+.intro .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--ink-3);text-transform:uppercase;margin-bottom:10px;}
+.intro h1{font-family:var(--serif);font-style:italic;font-weight:400;font-size:56px;line-height:1;color:var(--ink);margin-bottom:14px;}
+.intro p{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--ink-2);text-transform:uppercase;line-height:1.7;}
+
+/* bottom ticker */
+.ticker-wrap{
+  position:fixed;bottom:0;left:0;right:0;z-index:6;
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-2);background:rgba(6,7,10,0.55);
+  border-top:1px solid var(--line);
+  padding:9px 0;overflow:hidden;backdrop-filter:blur(4px);
+}
+.ticker-track{
+  display:inline-flex;gap:32px;white-space:nowrap;
+  animation:ticker 90s linear infinite;
+}
+@keyframes ticker{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.ticker-track span{display:inline-flex;gap:8px;align-items:center;}
+.ticker-track .up{color:var(--green);}
+.ticker-track .dn{color:var(--red);}
+.ticker-track b{color:var(--ink);font-weight:500;letter-spacing:.06em;}
+
+/* hover label */
+.label-card{
+  position:fixed;z-index:7;pointer-events:none;
+  background:rgba(14,17,23,0.92);border:1px solid var(--line-2);
+  padding:12px 16px;backdrop-filter:blur(8px);
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  color:var(--ink);min-width:240px;
+  opacity:0;transform:translate(14px,14px);transition:opacity .15s;
+}
+.label-card.show{opacity:1;}
+.label-card .top{display:flex;justify-content:space-between;text-transform:uppercase;
+  margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--line);color:var(--ink-2);font-size:9px;}
+.label-card .ohlc{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:10px;color:var(--ink-3);}
+.label-card .ohlc b{color:var(--ink);font-weight:500;}
+.label-card .ohlc .o{color:var(--gold);}
+.label-card .ohlc .h{color:var(--green);}
+.label-card .ohlc .l{color:var(--red);}
+.label-card .name{
+  font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink);
+  text-transform:none;letter-spacing:0;margin-bottom:4px;
+}
+.label-card .hint{
+  margin-top:10px;color:var(--gold);font-size:9px;letter-spacing:.18em;
+}
+
+/* contract overlay (shared with book/markets) */
+.overlay{
+  position:fixed;inset:0;z-index:30;background:rgba(6,7,10,0.85);backdrop-filter:blur(14px);
+  display:none;align-items:flex-start;justify-content:center;padding:60px 40px;overflow-y:auto;
+}
+.overlay.open{display:flex;animation:fadeIn .3s;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.contract{width:100%;max-width:920px;background:var(--panel);border:1px solid var(--line-2);font-family:var(--sans);}
+.contract-head{display:flex;justify-content:space-between;align-items:flex-start;padding:22px 30px;border-bottom:1px solid var(--line);}
+.contract-head .ticker-big{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:6px;}
+.contract-head h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:30px;line-height:1.15;color:var(--ink);max-width:600px;}
+.contract-head h2 em{color:var(--gold);}
+.contract-head .close{font-family:var(--mono);font-size:10px;letter-spacing:.18em;background:transparent;border:1px solid var(--line-2);
+  color:var(--ink-2);padding:8px 14px;cursor:pointer;text-transform:uppercase;}
+.contract-head .close:hover{color:var(--ink);border-color:var(--ink);}
+.contract-body{padding:24px 30px;}
+.price-banner{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--line);}
+.price-banner .lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ink-3);text-transform:uppercase;margin-bottom:6px;}
+.price-banner .v{font-family:var(--serif);font-size:28px;font-weight:400;line-height:1;margin-bottom:4px;}
+.price-banner .v.up{color:var(--green);}
+.price-banner .v.dn{color:var(--red);}
+.price-banner .delta{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.08em;}
+.body-section{margin-top:22px;}
+.body-section h3{font-family:var(--mono);font-size:10px;letter-spacing:.22em;color:var(--ink-3);text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--line);}
+.body-section p{font-family:var(--sans);font-size:14px;line-height:1.6;color:var(--ink);}
+.body-section ul{list-style:none;}
+.body-section li{padding:6px 0 6px 18px;position:relative;font-size:13px;color:var(--ink);line-height:1.55;}
+.body-section li::before{content:"▸";position:absolute;left:0;color:var(--gold);font-size:10px;top:8px;}
+.body-section li strong{color:var(--gold);font-weight:500;}
+.stack{display:flex;flex-wrap:wrap;gap:6px;}
+.stack span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:5px 9px;background:rgba(255,255,255,0.04);border:1px solid var(--line);color:var(--ink-2);}
+.tranche{display:grid;grid-template-columns:170px 1fr;gap:24px;}
+.tranche .when{font-family:var(--mono);font-size:11px;color:var(--ink-2);}
+.tranche .when b{display:block;color:var(--ink);font-size:12px;margin-bottom:4px;letter-spacing:.04em;}
+.tranche .role{font-family:var(--serif);font-style:italic;font-size:18px;color:var(--ink);margin-bottom:8px;}
+.btn-pri{display:inline-flex;padding:10px 16px;background:var(--green);color:#000;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:0;}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:50;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-family:var(--mono);transition:opacity .8s;}
+.loader.out{opacity:0;pointer-events:none;}
+.loader .ascii{font-size:11px;color:var(--gold);text-shadow:0 0 6px rgba(232,193,112,0.4);letter-spacing:.18em;margin-bottom:16px;}
+.loader .bar{width:200px;height:1px;background:var(--line);position:relative;margin-bottom:10px;}
+.loader .bar::after{content:"";position:absolute;left:0;top:0;height:100%;width:0;background:var(--gold);animation:loaderFill 1.6s ease-out forwards;}
+@keyframes loaderFill{ from{width:0;} to{width:100%;} }
+.loader .lbl{font-size:10px;color:var(--ink-3);letter-spacing:.18em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+
+<div class="topbar">
+  <div class="left">
+    <a href="index.html" class="brand">Aadithya Srinivasan</a>
+    <span style="color:var(--ink-3);">/</span>
+    <span>The Forest</span>
+  </div>
+  <div class="right">
+    <span><span class="dot"></span>Open to work</span>
+    <a href="index.html">Home</a>
+    <a href="markets.html">Markets</a>
+    <a href="terminal.html">Terminal</a>
+    <a href="mailto:aadithya.srinivasan@gmail.com">Contact</a>
+  </div>
+</div>
+
+<div class="intro" id="intro">
+  <div class="lbl">Aadithya Srinivasan · candlestick portfolio</div>
+  <h1>A forest of bars</h1>
+  <p>Drag to orbit · scroll to dolly · 6 candles are labeled · click any to inspect</p>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tapeTrack"></div>
+</div>
+
+<div class="label-card" id="labelCard">
+  <div class="top">
+    <span class="t-id">AS-XXXX</span>
+    <span class="t-cat">CAT</span>
+  </div>
+  <div class="name">—</div>
+  <div class="ohlc">
+    <span>OPEN <b class="o">—</b></span>
+    <span>HIGH <b class="h">—</b></span>
+    <span>LOW <b class="l">—</b></span>
+    <span>CLOSE <b>—</b></span>
+  </div>
+  <div class="hint">CLICK TO INSPECT</div>
+</div>
+
+<div class="overlay" id="overlay"><div class="contract" id="contract"></div></div>
+
+<div class="loader" id="loader">
+  <div class="ascii">┌─[ GROWING THE FOREST ]─┐</div>
+  <div class="bar"></div>
+  <div class="lbl">Seeding candles · calibrating fog</div>
+</div>
+
+<script src="js/data.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="js/forest.js"></script>
+
+</body>
+</html>
