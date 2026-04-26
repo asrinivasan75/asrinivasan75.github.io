@@ -118,6 +118,16 @@
     font-size: 11px; border-left:1px solid var(--line);
   }
   .funcbar .clock b{ color: var(--amber);}
+  .funcbar .clock .floors-link{
+    color: var(--amber); text-decoration: none;
+    letter-spacing: .14em; padding: 4px 10px;
+    border: 1px solid var(--line-strong);
+    text-shadow: 0 0 6px var(--amber-glow);
+    transition: background .2s, color .2s;
+  }
+  .funcbar .clock .floors-link:hover{
+    background: var(--amber); color: var(--bg); text-shadow: none;
+  }
 
   /* ============ MAIN GRID ============ */
   main{
@@ -450,6 +460,7 @@
     <button data-fn="MSG"><span class="num">F7</span>MSG</button>
   </div>
   <div class="clock">
+    <a href="index.html" class="floors-link" title="Back to floor chooser">↩ FLOORS</a>
     <span>NYC <b id="clockNY">--:--:--</b></span>
     <span>UPT <b id="uptime">00:00:12</b></span>
   </div>
