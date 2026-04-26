@@ -555,18 +555,18 @@
   <div class="hero-stats">
     <div class="s">
       <div class="l">Open Markets</div>
-      <div class="v"><em>14</em></div>
+      <div class="v"><em>8</em></div>
       <div class="d">across 5 categories</div>
     </div>
     <div class="s">
       <div class="l">Resolved</div>
-      <div class="v">9 / 9</div>
+      <div class="v">12 / 12</div>
       <div class="d">100% YES outcomes</div>
     </div>
     <div class="s">
       <div class="l">24h Volume</div>
-      <div class="v">$ 12.4k</div>
-      <div class="d"><span style="color:var(--yes)">▲ 8.2%</span></div>
+      <div class="v">$ 14.8k</div>
+      <div class="d"><span style="color:var(--yes)">▲ 19.4%</span></div>
     </div>
   </div>
 </section>
@@ -618,15 +618,12 @@
    ============================================================ */
 function buildTape(){
   const items = [
+    ['IBM-2026','▲','SIGNED', 'up'],
     ['NAYYA-PIPE','▲','100M+ rows', 'up'],
     ['EVNT-EDGE','▲','97¢', 'up'],
     ['CHESS-2300','▲','99th pct', 'up'],
     ['HARBOR-OS','▲','11 detectors', 'up'],
-    ['AS-INTERN-26','▲','73¢', 'up'],
-    ['CHESS-ENG','—','NNUE 768→512→1', 'flat'],
-    ['POKERBOT','▲','RL', 'up'],
-    ['STOCK-ML','▲','85%', 'up'],
-    ['SUPP-TRK','▲','+20%', 'up'],
+    ['RANGE','▲','10k+ hands', 'up'],
     ['AS-FUT-2400','▼','41¢', 'dn'],
     ['WITG','—','quant', 'flat'],
     ['PUMS','—','combinatorics', 'flat'],
@@ -634,7 +631,8 @@ function buildTape(){
     ['NJIT-HSSRI','▲','symposium', 'up'],
     ['SKILL-PY','▲','98¢', 'up'],
     ['SKILL-TS','▲','96¢', 'up'],
-    ['SKILL-CPP','—','88¢', 'flat']
+    ['SKILL-CPP','—','88¢', 'flat'],
+    ['SKILL-DATA','▲','97¢', 'up']
   ];
   // duplicate for seamless scroll
   const html = [...items, ...items].map(([t,d,p,cls])=>{

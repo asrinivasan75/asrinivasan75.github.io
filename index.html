@@ -289,9 +289,9 @@ refresh(); setInterval(refresh, 3500);
 
 /* TERMINAL — scrolling tape */
 const tickers = [
-  'NAYYA-PIPE  100M+ ▲','EVNT-EDGE  +12.4 ▲','CHESS  2300 =','HARBOR-OS  +9.1 ▲',
-  'CHESS-ENG  NNUE ▲','ARIST  -20% ▲','SKILL-PY  98¢ =','SKILL-TS  96¢ =',
-  'POKERBOT  RL ▲','STOCK-ML  85% ▲','SUPP-TRK  +20% ▲','WITG  active =',
+  'IBM-AWS  SIGNED ▲','NAYYA-PIPE  100M+ ▲','EVNT-EDGE  +12.4 ▲','CHESS  2300 =',
+  'HARBOR-OS  +9.1 ▲','RANGE  10k hands ▲','ARIST  -20% ▲','SKILL-PY  98¢ =',
+  'SKILL-TS  96¢ =','SKILL-CPP  88¢ =','SKILL-DATA  97¢ ▲','WITG  active =',
   'PUMS  active =','UPENN  BSE =','STATUS  ● OPEN-TO-WORK ▲'
 ];
 const tape = tickers.concat(tickers).map(t=>`<div>▸ ${t}</div>`).join('');

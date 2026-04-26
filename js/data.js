@@ -25,19 +25,19 @@ window.MARKETS = [
   },
   {
     id:"AS-PROJ-EVENTEDGE", category:"builds", featured:true, resolved:true,
-    cat:"Build", question:"EventEdge ships and serves at least 50 paying users.",
-    summary:"Real-time auto-trading platform · production",
+    cat:"Build", question:"EventEdge ships a multi-user auto-trading platform for Kalshi prediction markets.",
+    summary:"Kalshi auto-trader · 7 sports · 20+ concurrent users",
     yes:97, no:3, vol:"$1.9k", traders:31,
     chart:"climb",
     detail:{
-      criteria:"Resolves YES on launch + verified user count.",
-      desc:"End-to-end prediction-market trading system. Pulls live odds, computes win-probability estimates from historical and contextual features, compares against Kalshi contract prices every 3 seconds, and executes trades automatically across NBA, MLB, CBB, WCBB, NHL, soccer, and tennis markets.",
+      criteria:"Resolves YES on shipped product with authenticated paying users.",
+      desc:"Multi-user automated trading platform for Kalshi prediction markets. Ingests live odds from multiple sources, detects real-time mispricings, and executes authenticated trades across 7 sports. Full-stack SaaS with FastAPI, Next.js, PostgreSQL, Stripe billing, JWT auth, admin tooling, public trade feeds, and a secure self-hosted execution mode for high-volume users.",
       bullets:[
-        "<strong>50+</strong> active users across 7 sports verticals.",
-        "<strong>3-second</strong> trading loop — odds → model → comparison → trade.",
-        "RSA-PSS signed payloads; full Stripe billing layer; deployed on Railway."
+        "Built and deployed a <strong>multi-user automated trader</strong> for Kalshi — ingests live odds from multiple sources, detects mispricings, executes authenticated trades across 7 sports.",
+        "Full-stack SaaS · <strong>FastAPI · Next.js · PostgreSQL · Stripe · JWT auth</strong> · admin tooling · public trade feeds · self-hosted mode for high-volume users.",
+        "Engineered <strong>parallel order execution for 20+ concurrent users</strong> with Kelly sizing, pro-rata liquidity allocation, resting-order cancellation, and layered risk controls (staleness guards, shock filters, cross-source validation)."
       ],
-      stack:["Python","Next.js","Supabase","Railway","Stripe","RSA-PSS"],
+      stack:["Python","FastAPI","Next.js","PostgreSQL","Stripe","JWT"],
       url:"https://eventedgehq.com"
     }
   },
@@ -59,6 +59,25 @@ window.MARKETS = [
   },
 
   // ---------- CAREER ----------
+  {
+    id:"AS-WORK-IBM-2026", category:"career", featured:true, resolved:true,
+    cat:"Career", question:"Aadithya joins IBM as an AWS cloud full-stack intern in Summer 2026.",
+    summary:"May–Aug 2026 · Associate Developer Intern · IBM",
+    yes:99, no:1, vol:"$2.1k", traders:36,
+    chart:"flat-high",
+    detail:{
+      desc:"Incoming Summer 2026 internship at IBM on an AWS cloud full-stack team. Offer signed; start date May 2026.",
+      role:"Associate Developer Intern — AWS Cloud Full Stack",
+      when:{start:"May 2026", end:"Aug 2026", loc:""},
+      bullets:[
+        "Joining IBM as an <strong>Associate Developer Intern — AWS Cloud Full Stack</strong> for Summer 2026.",
+        "Backend + cloud-native development on <strong>AWS infrastructure</strong> (Lambda, S3, EC2).",
+        "Continuing a streak of NYC / remote engineering internships across consumer and enterprise software."
+      ],
+      stack:["AWS","Lambda","S3","EC2","Full Stack"],
+      criteria:"Resolves YES on signed offer letter — already signed."
+    }
+  },
   {
     id:"AS-WORK-ARISTOTLE-2023", category:"career", resolved:true,
     cat:"Career", question:"Aadithya shipped AI-driven backend services at Aristotle in 2023.",
@@ -116,75 +135,20 @@ window.MARKETS = [
     }
   },
   {
-    id:"AS-PROJ-CHESS-ENGINE", category:"builds", resolved:true,
-    cat:"Build", question:"The chess engine evaluates positions with a custom NNUE network.",
-    summary:"C++ engine · PyTorch NNUE · web analyzer",
-    yes:98, no:2, vol:"$0.6k", traders:9,
+    id:"AS-PROJ-RANGE", category:"builds", resolved:true,
+    cat:"Build", question:"Range learns optimal poker decisions via reinforcement learning.",
+    summary:"RL poker agent · Q-learning · 10k+ training hands",
+    yes:92, no:8, vol:"$0.4k", traders:8,
     chart:"climb",
     detail:{
-      desc:"Full-stack chess engine speaking the UCI protocol, with a PyTorch-trained NNUE evaluator (768→512→1, HalfKP feature representation), and a web-based analysis interface streaming principal variations live.",
+      desc:"Reinforcement-learning poker agent that learns call / raise / fold decisioning from self-play and scripted opponents. Q-learning neural network with epsilon-greedy exploration and a strategic reward function tuned for expected-value play.",
       bullets:[
-        "<strong>NNUE 768→512→1</strong> with HalfKP features.",
-        "UCI engine in modern C++20 with bitboard move generation.",
-        "FastAPI bridge + React 18 analyzer with live PV streaming via WebSocket; PostgreSQL + Redis backing store."
+        "<strong>Q-learning neural network</strong> with epsilon-greedy exploration and a strategic reward function for expected value.",
+        "Trained over <strong>10,000+ simulated hands</strong> to optimize decision-making under uncertainty.",
+        "Reward shaping to accelerate strategy convergence across call / raise / fold action space."
       ],
-      stack:["C++20","PyTorch","React 18","FastAPI","PostgreSQL","Redis","NNUE"],
-      url:"https://github.com/asrinivasan75/chess-engine",
-      criteria:"Resolves YES on public repo + working evaluator."
-    }
-  },
-  {
-    id:"AS-PROJ-SUPP", category:"builds", resolved:true,
-    cat:"Build", question:"Supplement Tracker improves user habit compliance ≥ 15%.",
-    summary:"AI recommendation SaaS · adherence analytics",
-    yes:94, no:6, vol:"$0.5k", traders:8,
-    chart:"climb",
-    detail:{
-      desc:"Full-stack personalized supplement tracking with AI-driven recommendations, compliance monitoring, and adherence analytics.",
-      bullets:[
-        "<strong>20% improvement</strong> in habit compliance among test users.",
-        "OpenAI-backed recommendation engine; React 19 frontend; MongoDB store.",
-        "Reminder system + streak tracking with daily check-ins."
-      ],
-      stack:["Node.js","React 19","MongoDB","OpenAI API","Tailwind"],
-      url:"https://github.com/asrinivasan75/supplement-tracker",
-      criteria:"Resolves YES at ≥15% measured improvement; resolved at 20%."
-    }
-  },
-  {
-    id:"AS-PROJ-POKERBOT", category:"builds", resolved:true,
-    cat:"Build", question:"PokerBot makes profitable decisions via reinforcement learning.",
-    summary:"RL agent · Q-learning + policy gradient",
-    yes:91, no:9, vol:"$0.3k", traders:6,
-    chart:"choppy",
-    detail:{
-      desc:"Intelligent PokerBot using reinforcement learning with Q-learning and policy gradient methods for strategic call, raise, and fold decisions.",
-      bullets:[
-        "Q-learning baseline + policy-gradient agent; OpenAI Gym wrapper around a custom poker environment.",
-        "Trained against scripted opponents and self-play.",
-        "Exploration-rate scheduling and reward shaping."
-      ],
-      stack:["Python","Keras","NumPy","OpenAI Gym","Q-Learning"],
-      url:"https://github.com/asrinivasan75/PokerBot",
-      criteria:"Resolves YES on positive expected value vs scripted opponents."
-    }
-  },
-  {
-    id:"AS-PROJ-STOCK", category:"builds", resolved:true,
-    cat:"Build", question:"Stock-prediction model achieves ≥ 80% directional accuracy.",
-    summary:"LSTM / GRU / RF / XGBoost comparison",
-    yes:95, no:5, vol:"$0.4k", traders:7,
-    chart:"climb",
-    detail:{
-      desc:"Comprehensive ML system comparing LSTM, GRU, Random Forest, and XGBoost for stock price prediction, with hyperparameter optimization across all four model classes.",
-      bullets:[
-        "<strong>85%+ accuracy</strong> after hyperparameter tuning.",
-        "Side-by-side evaluation harness across LSTM, GRU, Random Forest, XGBoost.",
-        "Time-aware train/test split; realistic walk-forward validation."
-      ],
-      stack:["Python","TensorFlow","scikit-learn","Pandas","XGBoost"],
-      url:"https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-",
-      criteria:"Resolves YES at ≥80% directional accuracy; resolved at 85%."
+      stack:["Python","Keras","NumPy","RL","Q-Learning"],
+      criteria:"Resolves YES on demonstrated positive expected value vs scripted baselines."
     }
   },
 
@@ -319,19 +283,19 @@ window.MARKETS = [
 
   // ---------- FUTURE — open contracts ----------
   {
-    id:"AS-FUT-INTERN-2026", category:"future",
-    cat:"Future", question:"Aadithya secures a Summer 2026 SWE/quant internship at a top firm.",
-    summary:"Recruiting cycle · 2026",
-    yes:73, no:27, vol:"$1.1k", traders:24,
+    id:"AS-FUT-INTERN-2026", category:"future", resolved:true,
+    cat:"Future", question:"Aadithya secures a Summer 2026 internship at a top firm.",
+    summary:"Resolved YES · IBM AWS Cloud Full Stack",
+    yes:100, no:0, vol:"$1.1k", traders:24,
     chart:"climb",
     detail:{
-      desc:"Recruiting target: SWE, quant, or ML role at a top firm for Summer 2026. Open to internships, collaborations, and hard interesting problems.",
+      desc:"Resolved YES — Aadithya signed with IBM as an Associate Developer Intern on the AWS Cloud Full-Stack team for Summer 2026. The market priced this in late winter at 73¢; settlement printed at the offer signing.",
       bullets:[
-        "Open to: SWE / quant / ML / research engineering roles.",
-        "Geographic preference: NYC / SF / remote-friendly.",
-        "Strongest fits: trading, fintech, infra, applied ML."
+        "<strong>Resolved YES</strong> at IBM · Associate Developer Intern · AWS Cloud Full Stack.",
+        "Window: <strong>May 2026 — Aug 2026</strong>.",
+        "See the AS-WORK-IBM-2026 contract for the full engagement detail."
       ],
-      criteria:"Resolves YES on signed offer letter for Summer 2026."
+      criteria:"Resolved YES on signed offer letter."
     }
   },
   {

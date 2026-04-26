@@ -510,9 +510,9 @@
       <div class="row"><span>CHESS.COM</span><b class="up">2300+</b></div>
       <div class="row"><span>PERCENTILE</span><b>99th</b></div>
       <div class="row"><span>ROWS PROC.</span><b class="up">100M+</b></div>
-      <div class="row"><span>SHIPPED</span><b>6 systems</b></div>
+      <div class="row"><span>SHIPPED</span><b>3 systems</b></div>
       <div class="row"><span>LAT. CUT</span><b class="up">−20%</b></div>
-      <div class="row"><span>HABIT LIFT</span><b class="up">+20%</b></div>
+      <div class="row"><span>NEXT</span><b class="up">IBM · MAY 2026</b></div>
     </div>
     
     <div class="blk">
@@ -540,6 +540,21 @@
 window.ROWS = (window.ROWS||[]);
 const ROWS = window.ROWS = [
   // ---------- WORK ----------
+  { fn:"WORK", when:"17:40", ticker:"IBM-AWS", headline:"Incoming · IBM Associate Developer Intern · <em>AWS Cloud Full Stack</em> · Summer 2026", delta:"▲ SIGNED", deltaCls:"up", vol:"2.1k",
+    detail:{
+      h:"IBM · Associate Developer Intern (AWS Cloud Full Stack) · Incoming",
+      sub:"MAY — AUG 2026 · OFFER SIGNED",
+      desc:"Incoming Summer 2026 internship at IBM on an AWS cloud full-stack team. Backend + cloud-native development on AWS infrastructure. Offer signed; start May 2026.",
+      bullets:[
+        "Joining IBM as an <strong>Associate Developer Intern — AWS Cloud Full Stack</strong> for Summer 2026.",
+        "Backend + cloud-native development on <strong>AWS infrastructure</strong> (Lambda, S3, EC2).",
+        "Continuing a streak of NYC / remote engineering internships across consumer and enterprise software."
+      ],
+      stack:["AWS","Lambda","S3","EC2","Full Stack"],
+      meta:[ ["TICKER","IBM-AWS","amber"],["WINDOW","MAY — AUG 2026"],["TEAM","AWS CLOUD FULL STACK"],["STATUS","SIGNED","up"] ],
+      spark:"flat-high"
+    }
+  },
   { fn:"WORK", when:"17:38", ticker:"NAYYA-PIPE", headline:"Engineered SQL+Python pipelines processing <em>100M+</em> pharmacy/medical claims · Athena, PostgreSQL, dbt", delta:"▲ 100M", deltaCls:"up", vol:"3.4k",
     detail:{
       h:"Nayya · Data Analytics / Data Science Intern",
@@ -585,18 +600,18 @@ const ROWS = window.ROWS = [
   },
   
   // ---------- BUILD ----------
-  { fn:"BUILD", when:"17:32", ticker:"EVNT-EDGE", headline:"EventEdge live · auto-trades prediction-market contracts every <em>3s</em> across 7 sports", delta:"▲ +12.4", deltaCls:"up", vol:"1.9k",
+  { fn:"BUILD", when:"17:32", ticker:"EVNT-EDGE", headline:"EventEdge live · multi-user Kalshi auto-trader · <em>20+ concurrent users</em> across 7 sports", delta:"▲ +12.4", deltaCls:"up", vol:"1.9k",
     detail:{
-      h:"EventEdge · Real-time auto-trading platform",
-      sub:"PRODUCTION · 50+ USERS",
-      desc:"End-to-end prediction-market trading system. Pulls live odds, computes win-probability estimates, compares against Kalshi contract prices every 3 seconds, and executes trades automatically.",
+      h:"EventEdge · Kalshi auto-trading platform",
+      sub:"PRODUCTION · 20+ CONCURRENT USERS · EVENTEDGEHQ.COM",
+      desc:"Multi-user automated trading platform for Kalshi prediction markets. Ingests live odds from multiple sources, detects real-time mispricings, and executes authenticated trades across 7 sports. Full-stack SaaS with FastAPI, Next.js, PostgreSQL, Stripe billing, JWT auth, admin tooling, public trade feeds, and a self-hosted execution mode for high-volume users.",
       bullets:[
-        "Active across <strong>NBA, MLB, CBB, WCBB, NHL, soccer, tennis</strong>.",
-        "<strong>3-second</strong> trading loop · odds → model → comparison → trade.",
-        "RSA-PSS signed payloads · Stripe billing · Railway deploy."
+        "Built and deployed a <strong>multi-user automated trader</strong> for Kalshi · ingests live odds from multiple sources · detects mispricings · executes authenticated trades across <strong>7 sports</strong>.",
+        "Full-stack SaaS · <strong>FastAPI · Next.js · PostgreSQL · Stripe · JWT auth</strong> · admin tooling · public trade feeds · self-hosted mode.",
+        "Engineered <strong>parallel order execution for 20+ concurrent users</strong> with Kelly sizing, pro-rata liquidity allocation, resting-order cancellation, and layered risk controls (staleness guards, shock filters, cross-source validation)."
       ],
-      stack:["Python","Next.js","Supabase","Railway","Stripe","RSA-PSS"],
-      meta:[ ["TICKER","EVNT-EDGE","amber"],["STATUS","LIVE","up"],["USERS","50+"],["URL","eventedgehq.com"] ],
+      stack:["Python","FastAPI","Next.js","PostgreSQL","Stripe","JWT"],
+      meta:[ ["TICKER","EVNT-EDGE","amber"],["STATUS","LIVE","up"],["CONCURRENT","20+"],["URL","eventedgehq.com"] ],
       spark:"climb",
       url:"https://eventedgehq.com"
     }
@@ -616,71 +631,22 @@ const ROWS = window.ROWS = [
       spark:"climb"
     }
   },
-  { fn:"BUILD", when:"17:28", ticker:"CHESS-ENG", headline:"Custom NNUE chess engine · <em>768→512→1</em> with HalfKP features · UCI + web analyzer", delta:"▲ +6.8", deltaCls:"up", vol:"0.6k",
+  { fn:"BUILD", when:"17:28", ticker:"RANGE", headline:"Range RL poker agent · Q-learning + epsilon-greedy · <em>10,000+ training hands</em>", delta:"▲ +4.2", deltaCls:"up", vol:"0.4k",
     detail:{
-      h:"Chess Engine · NNUE evaluator + analysis platform",
-      sub:"OPEN SOURCE · GITHUB.COM/ASRINIVASAN75/CHESS-ENGINE",
-      desc:"Full-stack chess engine speaking the UCI protocol, with a PyTorch-trained NNUE evaluator (768→512→1, HalfKP feature representation), and a web analyzer streaming principal variations live.",
+      h:"Range · Reinforcement-learning poker agent",
+      sub:"RL · Q-LEARNING · KERAS / NUMPY",
+      desc:"Reinforcement-learning poker agent that learns call / raise / fold decisioning from self-play and scripted opponents. Q-learning neural network with epsilon-greedy exploration and a strategic reward function tuned for expected-value play.",
       bullets:[
-        "<strong>NNUE 768→512→1</strong> · HalfKP features · cache-efficient inference.",
-        "C++20 bitboard move generator · UCI protocol.",
-        "FastAPI bridge + React 18 UI · live PV streaming via WebSocket · PostgreSQL + Redis."
+        "<strong>Q-learning neural network</strong> with epsilon-greedy exploration and a strategic reward function for expected value.",
+        "Trained over <strong>10,000+ simulated hands</strong> to optimize decision-making under uncertainty.",
+        "Reward shaping to accelerate strategy convergence across call / raise / fold action space."
       ],
-      stack:["C++20","PyTorch","React 18","FastAPI","PostgreSQL","Redis"],
-      meta:[ ["TICKER","CHESS-ENG","amber"],["REPO","PUBLIC"],["NET","NNUE 768→512→1"],["IFC","UCI"] ],
-      spark:"climb",
-      url:"https://github.com/asrinivasan75/chess-engine"
+      stack:["Python","Keras","NumPy","RL","Q-Learning"],
+      meta:[ ["TICKER","RANGE","amber"],["METHOD","Q-LEARNING"],["TRAINING","10K+ HANDS","up"] ],
+      spark:"climb"
     }
   },
-  { fn:"BUILD", when:"17:26", ticker:"SUPP-TRK", headline:"Supplement Tracker · AI recommender · <em>+20% habit compliance</em>", delta:"▲ +4.1", deltaCls:"up", vol:"0.5k",
-    detail:{
-      h:"Supplement Tracker · AI recommendation SaaS",
-      sub:"OPEN SOURCE · GITHUB.COM/ASRINIVASAN75/SUPPLEMENT-TRACKER",
-      desc:"Full-stack personalized supplement tracking with AI-driven recommendations, compliance monitoring, and adherence analytics.",
-      bullets:[
-        "<strong>20% improvement</strong> in habit compliance among test users.",
-        "OpenAI-backed recommendation engine · React 19 frontend · MongoDB.",
-        "Reminder system + streak tracking with daily check-ins."
-      ],
-      stack:["Node.js","React 19","MongoDB","OpenAI","Tailwind"],
-      meta:[ ["TICKER","SUPP-TRK","amber"],["REPO","PUBLIC"],["LIFT","+20%","up"] ],
-      spark:"climb",
-      url:"https://github.com/asrinivasan75/supplement-tracker"
-    }
-  },
-  { fn:"BUILD", when:"17:24", ticker:"POKERBOT", headline:"PokerBot RL agent · Q-learning + policy gradient · call/raise/fold decisioning", delta:"▲ +1.8", deltaCls:"up", vol:"0.3k",
-    detail:{
-      h:"PokerBot · Reinforcement-learning agent",
-      sub:"OPEN SOURCE · GITHUB.COM/ASRINIVASAN75/POKERBOT",
-      desc:"Intelligent PokerBot using reinforcement learning with Q-learning and policy gradient methods.",
-      bullets:[
-        "Q-learning baseline + policy-gradient agent.",
-        "OpenAI Gym wrapper around custom poker environment.",
-        "Trained against scripted opponents and self-play with reward shaping."
-      ],
-      stack:["Python","Keras","NumPy","OpenAI Gym","Q-Learning"],
-      meta:[ ["TICKER","POKERBOT","amber"],["REPO","PUBLIC"],["METHOD","RL"] ],
-      spark:"choppy",
-      url:"https://github.com/asrinivasan75/PokerBot"
-    }
-  },
-  { fn:"BUILD", when:"17:22", ticker:"STOCK-ML", headline:"Stock prediction comparison · LSTM/GRU/RF/XGBoost · <em>85%+ accuracy</em>", delta:"▲ +3.6", deltaCls:"up", vol:"0.4k",
-    detail:{
-      h:"Stock Prediction · ML comparison harness",
-      sub:"OPEN SOURCE",
-      desc:"Comprehensive ML system comparing LSTM, GRU, Random Forest, and XGBoost for stock price prediction, with hyperparameter optimization across all four model classes.",
-      bullets:[
-        "<strong>85%+ accuracy</strong> after hyperparameter tuning.",
-        "Side-by-side evaluation harness across 4 model classes.",
-        "Walk-forward time-aware validation."
-      ],
-      stack:["Python","TensorFlow","scikit-learn","Pandas","XGBoost"],
-      meta:[ ["TICKER","STOCK-ML","amber"],["REPO","PUBLIC"],["ACC","85%+","up"] ],
-      spark:"climb",
-      url:"https://github.com/asrinivasan75/ML-Based-Stock-Price-Prediction-"
-    }
-  },
-  
+
   // ---------- SKILLS ----------
   { fn:"SKILL", when:"17:20", ticker:"SKILL-PY", headline:"Python · daily driver · pipelines, ML, backend", delta:"= 98¢", deltaCls:"up", vol:"0.2k",
     detail:{
@@ -855,18 +821,16 @@ const ROWS = window.ROWS = [
    ================================================================= */
 function buildTopTicker(){
   const items = [
+    ['IBM-AWS','▲','SIGNED','up'],
     ['NAYYA-PIPE','▲','100M+','up'],
     ['EVNT-EDGE','▲','+12.4','up'],
     ['CHESS','=','2300','up'],
     ['HARBOR','▲','+9.1','up'],
-    ['CHESS-ENG','▲','NNUE','up'],
     ['ARIST','▲','-20%','up'],
     ['SKILL-PY','=','98¢','up'],
     ['SKILL-TS','=','96¢','up'],
     ['SKILL-CPP','=','88¢','flat'],
-    ['POKERBOT','▲','+1.8','up'],
-    ['STOCK-ML','▲','85%','up'],
-    ['SUPP-TRK','▲','+20%','up'],
+    ['RANGE','▲','+4.2','up'],
     ['WITG','=','active','flat'],
     ['PUMS','=','active','flat'],
     ['NJIT','=','symp','flat'],
